@@ -8,11 +8,11 @@ TDD DDD SOA Architecture for Simple Storefront
 ### Architecture
 - Documentation in WIKI for (Module structure, External/Internal flow, etc...)
 - Generic Request Validation
+- OAUTH autnentication
 - Caching 
 
 
 ### Functionality
-- Partner Service Authentication
 - StoreAdmin - \Stores\Register command
 - StoreAdmin - \Product\Create command
 
