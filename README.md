@@ -6,6 +6,7 @@ TDD DDD SOA Architecture for Simple Storefront
 ## Roadmap 
 
 ### Architecture
+- Documentation in WIKI for (Module structure, External/Internal flow, etc...)
 - Generic Request Validation
 - Caching 
 
