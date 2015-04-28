@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7D581130-B9A8-4E44-9562-67E41697A123}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ENTech.Store.Infrastructure</RootNamespace>
+    <AssemblyName>ENTech.Store.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\StringValueAttribute.cs" />
+    <Compile Include="Cache\CacheExtensions.cs" />
+    <Compile Include="Cache\CacheOpts.cs" />
+    <Compile Include="Cache\DictionaryCache.cs" />
+    <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Cache\LockRetryPolicy.cs" />
+    <Compile Include="Cache\MsCache.cs" />
+    <Compile Include="Crypt\CryptEngine.cs" />
+    <Compile Include="Entities\IAuditable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\IEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\ILogicallyDeletable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\QueryableExtensions.cs" />
+    <Compile Include="Helpers\PropertyHelper.cs" />
+    <Compile Include="Services\Commands\IExternalCommand.cs" />
+    <Compile Include="Services\CommonErrorCode.cs" />
+    <Compile Include="Services\Queries\CriteriaBase.cs" />
+    <Compile Include="Services\Factories\InternalCommandFactory.cs" />
+    <Compile Include="Services\Commands\InternalCommandBase.cs" />
+    <Compile Include="Services\Queries\SortCriteria.cs" />
+    <Compile Include="Enums\SortDirection.cs" />
+    <Compile Include="Services\Requests\IExternalRequest.cs" />
+    <Compile Include="Services\Responses\ArgumentError.cs" />
+    <Compile Include="Services\Responses\ArgumentErrorsCollection.cs" />
+    <Compile Include="Services\Commands\IInternalCommand.cs" />
+    <Compile Include="Services\Responses\Error.cs" />
+    <Compile Include="Services\Requests\IInternalRequest.cs" />
+    <Compile Include="Services\Responses\ExternalResponse.cs" />
+    <Compile Include="Services\Responses\InternalResponse.cs" />
+    <Compile Include="Services\Responses\PageResponse.cs" />
+    <Compile Include="Services\UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="Services\Validators\DtoValidator.cs" />
+    <Compile Include="Services\Validators\RequestValidatorAction.cs" />
+    <Compile Include="Services\Validators\IRequestValidator.cs" />
+    <Compile Include="Services\Responses\IResponse.cs" />
+    <Compile Include="Services\Validators\RequestCustomValidatorBase.cs" />
+    <Compile Include="Services\Validators\RequestValidatorErrorCode.cs" />
+    <Compile Include="Services\Validators\RequestValidatorErrorMessage.cs" />
+    <Compile Include="Services\Validators\RequestValidatorErrorMessagesDictionary.cs" />
+    <Compile Include="Services\Validators\RequestValidatorResult.cs" />
+    <Compile Include="Services\Validators\RequestValidatorErrorCodeBase.cs" />
+    <Compile Include="IoC.cs" />
+    <Compile Include="Utils\CallContextUtils.cs" />
+    <Compile Include="Utils\CryptUtils.cs" />
+    <Compile Include="Enums\EnvironmentType.cs" />
+    <Compile Include="Enums\FromEmailType.cs" />
+    <Compile Include="Utils\EnvironmentUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
