@@ -6,10 +6,11 @@ TDD DDD SOA Architecture for Simple Storefront
 ## Roadmap 
 
 ### Architecture
-- Documentation in WIKI for (Module structure, External/Internal flow, etc...)
 - Generic Request Validation
-- OAUTH autnentication
-- Caching 
+- Security: OAUTH autnentication for API Partner
+- Security: OAUTH authentication for Store Admin and Customer
+- Caching
+- Versioning
 
 
 ### Functionality
