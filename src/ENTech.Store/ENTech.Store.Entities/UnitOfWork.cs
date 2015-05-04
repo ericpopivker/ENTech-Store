@@ -3,7 +3,7 @@ using ENTech.Store.Infrastructure.Utils;
 
 namespace ENTech.Store.Entities
 {
-	public class UnitOfWork
+	public class UnitOfWork : IUnitOfWork
 	{
 		private const string CallContextDataKey = "DbContext";
 		private IDbContextFactory _dbContextFactory;
@@ -44,6 +44,12 @@ namespace ENTech.Store.Entities
 		public void Remove<TEntity>(TEntity entity) where TEntity : class
 		{
 			DbContext.DbSet<TEntity>().Remove(entity);
+		}
+
+		public TResult Query<TResult, TCriteria>(IQuery<TCriteria, TResult> query, TCriteria criteria) 
+						where TCriteria : IQueryCriteria
+		{
+			throw new NotImplementedException();
 		}
 
 		public void BeginTransaction()

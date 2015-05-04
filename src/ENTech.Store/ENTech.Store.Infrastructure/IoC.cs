@@ -7,16 +7,21 @@ namespace ENTech.Store.Infrastructure
 {
 	public class IoC
 	{
-		private static readonly Lazy<IUnityContainer> LazyContainer = new Lazy<IUnityContainer>(()=>new UnityContainer());
+		private static readonly Lazy<IUnityContainer> LazyContainer = new Lazy<IUnityContainer>(() => new UnityContainer());
 
 		public static IUnityContainer Container
 		{
-			get { return LazyContainer.Value; } 
+			get { return LazyContainer.Value; }
 		}
 
 		public static T Resolve<T>()
 		{
 			return Container.Resolve<T>();
+		}
+
+		public static T Resolve<T>(string name)
+		{
+			return Container.Resolve<T>(name);
 		}
 	}
 }
