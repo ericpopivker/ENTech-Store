@@ -18,6 +18,7 @@ TDD DDD SOA Architecture for Simple Storefront
 - Versioning
 - Logging
 - Web Hooks
+- Image/File Upload
 
 
 ### Functionality
