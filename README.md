@@ -2,6 +2,12 @@
 TDD DDD SOA Architecture for Simple Storefront
 
 
+### Features
+- SOA
+- DDD
+- Everything is unit testable
+- Bounded Modules
+
 
 ## Roadmap 
 
