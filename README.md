@@ -15,6 +15,7 @@ TDD DDD SOA Architecture for Simple Storefront
 
 
 ### Functionality
-- StoreAdmin - \Stores\Register command
-- StoreAdmin - \Product\Create command
+- StoreAdmin - \Stores POST command
+- StoreAdmin - \Stores\<Id> command
+- StoreAdmin - \Product POST command
 
