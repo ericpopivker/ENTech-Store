@@ -8,9 +8,10 @@ TDD DDD SOA Architecture for Simple Storefront
 ### Architecture
 - Generic Request Validation
 - Security: OAUTH autnentication for API Partner
-- Security: OAUTH authentication for Store Admin and Customer
 - Caching
 - Versioning
+- Logging
+- Web Hooks
 
 
 ### Functionality
