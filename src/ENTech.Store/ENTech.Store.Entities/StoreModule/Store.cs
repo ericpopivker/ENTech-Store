@@ -22,23 +22,12 @@ namespace ENTech.Store.Entities.StoreModule
 
 		public string Name { get; set; }
 
-		public string Logo { get; set; }
-
-		public int? AddressId { get; set; }
-
-
-		[ForeignKey("AddressId")]
-		public virtual Address Address { get; set; }
-
-		
-		[MaxLength(20)]
-		public string Phone { get; set; }
 
 		[MaxLength(255)]
 		public string Email { get; set; }
 
-		[Required]
-		public string TimezoneId { get; set; }
 
+		[MaxLength(20)]
+		public string Phone { get; set; }
 	}
 }

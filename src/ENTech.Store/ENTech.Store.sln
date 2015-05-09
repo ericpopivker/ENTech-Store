@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Services.Exter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Api", "ENTech.Store.Api\ENTech.Store.Api.csproj", "{8E06B374-3381-4648-AF3C-934743798CE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Api.ForStoreAdmin", "ENTech.Store.Api.ForStoreAdmin\ENTech.Store.Api.ForStoreAdmin.csproj", "{79C917D2-AD5F-4837-8501-067899065C68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Api.IntegrationTests", "ENTech.Store.Api.IntegrationTests\ENTech.Store.Api.IntegrationTests.csproj", "{E59D22D0-E09C-4C27-8B2E-674CD25EA8CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,10 +83,10 @@ Global
 		{8E06B374-3381-4648-AF3C-934743798CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E06B374-3381-4648-AF3C-934743798CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E06B374-3381-4648-AF3C-934743798CE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79C917D2-AD5F-4837-8501-067899065C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79C917D2-AD5F-4837-8501-067899065C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79C917D2-AD5F-4837-8501-067899065C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79C917D2-AD5F-4837-8501-067899065C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E59D22D0-E09C-4C27-8B2E-674CD25EA8CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E59D22D0-E09C-4C27-8B2E-674CD25EA8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E59D22D0-E09C-4C27-8B2E-674CD25EA8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E59D22D0-E09C-4C27-8B2E-674CD25EA8CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

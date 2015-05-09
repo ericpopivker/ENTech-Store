@@ -12,28 +12,21 @@ namespace ENTech.Store.Entities.GeoModule
 		[MaxLength(100)]
 		[Required]
 		public string Street { get; set; }
-
+		
+		[MaxLength(100)]
+		public string Street2 { get; set; }
+		
 		[MaxLength(100)]
 		[Required]
 		public string City { get; set; }
 
-		[MaxLength(20)]
-		public string Zip { get; set; }
-		
-		[MaxLength(100)]
-		public string Street2 { get; set; }
-
 		public int? StateId { get; set; }
-
-		[Required]
-		public int? CountryId { get; set; }
 
 		[ForeignKey("StateId")]
 		public virtual State State { get; set; }
 
-		public string StateOther { get; set; }
 
-		[ForeignKey("CountryId")]
-		public virtual Country Country { get; set; }
+		[MaxLength(20)]
+		public string Zip { get; set; }
 	}
 }
