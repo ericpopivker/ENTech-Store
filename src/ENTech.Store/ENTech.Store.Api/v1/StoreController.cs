@@ -5,19 +5,18 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace ENTech.Store.Api.Controllers
+namespace ENTech.Store.Api
 {
-	[RoutePrefix("1.0/store-admin-api/stores")]
+    [Authorize]
+    [RoutePrefix(ApiVersions.V1 + "/store-admin-api/stores")]
 	public class StoreController : ApiController
 	{
-
 		[HttpPost]
 		public void Create([FromBody]string value)
 		{
 		}
 
-
-
+        [Authorize]
 		[HttpGet]
 		[Route("{Id:int}")]
 		public string GetById(int id)
