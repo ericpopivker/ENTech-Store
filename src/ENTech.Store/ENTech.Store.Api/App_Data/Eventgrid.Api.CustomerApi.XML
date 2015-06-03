@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Eventgrid.Api.CustomerApi</name>
+    </assembly>
+    <members>
+        <member name="T:Eventgrid.Api.CustomerApi.Controllers.AuthenticationController">
+            <summary>
+            API v2.0 Contact Authentication
+            </summary>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.AuthenticationController.Authenticate(Eventgrid.Services.External.ForCustomer.ContactModule.Requests.ContactAuthenticateRequest)">
+            <summary>
+            Authenticate
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.CartController.Create(Eventgrid.Services.External.ForCustomer.CartModule.Requests.CartCreateRequest)">
+            <summary>
+            Cart create
+            </summary>
+            <param name="request">Cart Create Request</param>
+            <returns>Returns cart data</returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.CartController.Get(Eventgrid.Services.External.ForCustomer.CartModule.Requests.CartGetByGuidAndEventIdRequest)">
+            <summary>
+            Get Cart
+            </summary>
+            <param name="request">Get Cart  Request</param>
+            <returns>Returns cart data</returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.CartController.Add(Eventgrid.Services.External.ForCustomer.CartModule.Requests.CartAddItemRequest,System.Guid)">
+            <summary>
+            Add Item to Cart
+            </summary>
+            <param name="request">Cart Add Request</param>
+            <param name="cartGuid">Reservation Token</param>
+            <returns>Returns cart data</returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.CartController.Remove(Eventgrid.Services.External.ForCustomer.CartModule.Requests.CartRemoveItemRequest)">
+            <summary>
+            Remove Item from Cart
+            </summary>
+            <param name="request">Cart Remove Request</param>
+            <returns>Returns cart data</returns>
+        </member>
+        <member name="T:Eventgrid.Api.CustomerApi.Controllers.EventController">
+            <summary>
+            API v2.0 Customer Events
+            </summary>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.Find(System.Nullable{System.Int32},System.Nullable{System.Int32},Eventgrid.Services.External.ForCustomer.EventModule.Requests.EventLoadOptionDto[],System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{Eventgrid.Services.External.ForCustomer.EventModule.Requests.EventSortFieldDto},System.Nullable{Eventgrid.Services.External.SharedModule.Dtos.SortingDirectionDto})">
+            <summary>
+            Search published events. Result can be filtered by Venue Id, Business Id, StartAt Date , sorted by Id and Name and limited by page size and index.
+            </summary>
+            <param name="pageIndex">Page index, default 1.</param>
+            <param name="pageSize">Page size, default 10.</param>
+            <param name="loadOptions">List of load options separated by comma</param>
+            <param name="startsAtFrom">Event start date from</param>
+            <param name="startsAtTo">Event start date to</param>
+            <param name="venueId"></param>
+            <param name="businessId"></param>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventFindResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetById(System.Int32,Eventgrid.Services.External.ForCustomer.EventModule.Requests.EventLoadOptionDto[])">
+            <summary>
+             Get single event by Id
+            </summary>
+            <param name="id">Event Id</param>
+            <param name="loadOptions">List of load options separated by comma</param>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetByIdResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetOrganizer(System.Int32)">
+            <summary>
+             Get event organizer
+            </summary>
+            <param name="id">Event Id</param>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetOrganizerResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetPolicy(System.Int32)">
+            <summary>
+             Get event cancellation policy
+            </summary>
+            <param name="id">Event Id</param>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetCancellationPolicyResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetInstances(System.Int32)">
+            <summary>
+             Get event instances
+            </summary>
+            <param name="id">Event Id</param>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetInstancesResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetTicketTypes(System.Int32)">
+            <summary>
+             Get event ticket types
+            </summary>
+            <param name="id">Event Id</param>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetTicketTypesResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetSeatIds(Eventgrid.Services.External.ForCustomer.EventModule.Requests.EventGetTicketTypeSeatIdsByIdRequest)">
+            <summary>
+             Get event ticket type seat ids
+            </summary>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetTicketTypeSeatIdsByIdResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetSchedule(Eventgrid.Services.External.ForCustomer.EventModule.Requests.EventGetScheduleRequest)">
+            <summary>
+             Get event schedule
+            </summary>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetScheduleResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetSpeakers(Eventgrid.Services.External.ForCustomer.EventModule.Requests.EventGetSpeakersRequest)">
+            <summary>
+             Get event speakers
+            </summary>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetSpeakersResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetSeatingChart(Eventgrid.Services.External.ForCustomer.EventModule.Requests.EventGetSeatingChartRequest)">
+            <summary>
+             Get Event Seating Chart
+            </summary>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetSeatingChartResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetEventInstanceAvailableTicketTypes(Eventgrid.Services.External.ForCustomer.EventModule.Requests.EventGetEventInstanceAvailableTicketTypesRequest)">
+            <summary>
+             Get Event Available Ticket Types
+            </summary>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetEventInstanceAvailableTicketTypesResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetAttendees(System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{Eventgrid.Services.External.ForCustomer.EventModule.Requests.AttendeeSortFieldDto},System.Nullable{Eventgrid.Services.External.SharedModule.Dtos.SortingDirectionDto})">
+            <summary>
+             Get event attendees
+            </summary>
+            <param name="id">Event Id</param>
+            <param name="eventInstanceId">Event Instance Id</param>
+            <param name="pageIndex">Page index, default 1.</param>
+            <param name="pageSize">Page size, default 10.</param>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetEventInstanceAttendeesResponse"/></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.EventController.GetAvailableSessionItems(System.Int32,System.Int32)">
+            <summary>
+             Get Available Event Session Items
+            </summary>
+            <returns>Object of type <see cref="T:Eventgrid.Services.External.ForCustomer.EventModule.Responses.EventGetEventInstanceAvailableSessionItemsResponse"/></returns>
+        </member>
+        <member name="T:Eventgrid.Api.CustomerApi.Controllers.OrderController">
+            <summary>
+            Order API v2.0
+            </summary>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.OrderController.CreateAndPay(Eventgrid.Services.External.ForCustomer.OrderModule.Requests.OrderCreateAndPayRequest)">
+            <summary>
+            Create Order
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.OrderController.GetById(Eventgrid.Services.External.ForCustomer.OrderModule.Requests.OrderGetByIdRequest)">
+            <summary>
+            Get Order
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.OrderController.CalculateTotal(Eventgrid.Services.External.ForCustomer.OrderModule.Requests.OrderCalculateTotalRequest)">
+            <summary>
+            Calculate Totals
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.GeoController.GetCities(System.Nullable{System.Boolean})">
+            <summary>
+            Get Cities
+            </summary>
+            <param name="hasPublishedEvent">Does city have published events</param>
+            <returns></returns>
+        </member>
+        <member name="M:Eventgrid.Api.CustomerApi.Controllers.GeoController.GetCountries">
+            <summary>
+            Get Countries
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
