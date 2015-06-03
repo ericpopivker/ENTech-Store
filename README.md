@@ -2,18 +2,27 @@
 TDD DDD SOA Architecture for Simple Storefront
 
 
+### Features
+- SOA
+- DDD
+- Everything is unit testable
+- Bounded Modules
+
 
 ## Roadmap 
 
 ### Architecture
 - Generic Request Validation
 - Security: OAUTH autnentication for API Partner
-- Security: OAUTH authentication for Store Admin and Customer
 - Caching
 - Versioning
+- Logging
+- Web Hooks
+- Image/File Upload
 
 
 ### Functionality
-- StoreAdmin - \Stores\Register command
-- StoreAdmin - \Product\Create command
+- StoreAdmin - \Stores POST command
+- StoreAdmin - \Stores\<Id> command
+- StoreAdmin - \Product POST command
 
