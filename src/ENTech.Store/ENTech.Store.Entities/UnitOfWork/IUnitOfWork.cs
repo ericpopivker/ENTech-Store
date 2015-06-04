@@ -1,4 +1,4 @@
-﻿namespace ENTech.Store.Entities
+﻿namespace ENTech.Store.Entities.UnitOfWork
 {
 	public interface IUnitOfWork 
 	{

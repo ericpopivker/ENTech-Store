@@ -1,7 +1,7 @@
 ﻿using System;
 using ENTech.Store.Infrastructure.Utils;
 
-namespace ENTech.Store.Entities
+namespace ENTech.Store.Entities.UnitOfWork
 {
 	public class UnitOfWork : IUnitOfWork
 	{
