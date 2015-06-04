@@ -3,10 +3,10 @@ using ENTech.Store.Infrastructure.Services.Responses;
 
 namespace ENTech.Store.Infrastructure.Services.Validators
 {
-	public abstract class RequestCustomValidatorBase<TErrorCode> : IRequestValidator where TErrorCode:ErrorCodeBase
+	public abstract class RequestCustomValidatorBase<TErrorCode> : IRequestValidator where TErrorCode : ErrorCodeBase
 	{
 		public bool TryValidate<TEntity, TMember>(RequestValidatorAction<TEntity, TMember> action, TEntity entity,
-												ArgumentErrorsCollection existingErrors)
+			ArgumentErrorsCollection existingErrors)
 		{
 			var memberName = PropertyHelper.GetName(action.ForMember);
 
@@ -22,12 +22,6 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 				return result;
 			}
 			return false;
-		}
-
-		protected RequestCustomValidatorBase()
-		{
-			RequestValidatorErrorMessagesDictionary.Register<RequestValidatorErrorCode>();
-			RequestValidatorErrorMessagesDictionary.Register<TErrorCode>();
 		}
 	}
 }

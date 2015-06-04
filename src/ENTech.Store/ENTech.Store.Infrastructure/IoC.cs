@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.Remoting.Messaging;
-using ENTech.Store.Infrastructure.Services.Responses;
 using Microsoft.Practices.Unity;
 
 namespace ENTech.Store.Infrastructure

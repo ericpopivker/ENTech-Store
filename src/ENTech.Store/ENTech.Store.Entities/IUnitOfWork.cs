@@ -1,7 +1,4 @@
-﻿using ENTech.Store.Infrastructure.Services;
-using ENTech.Store.Infrastructure.Services.UnitOfWork;
-
-namespace ENTech.Store.Entities
+﻿namespace ENTech.Store.Entities
 {
 	public interface IUnitOfWork 
 	{

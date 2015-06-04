@@ -1,6 +1,6 @@
 ﻿namespace ENTech.Store.Infrastructure.Services.Responses
 {
-	public class InternalResponse : IResponse
+	public abstract class InternalResponse : IResponse
 	{
 		public bool IsSuccess { get; set; }
 
@@ -8,7 +8,8 @@
 
 		public virtual ArgumentErrorsCollection ArgumentErrors { get; set; }
 
-		public InternalResponse()
+		
+		protected InternalResponse()
 		{
 			ArgumentErrors = new ArgumentErrorsCollection();
 		}

@@ -41,6 +41,42 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 			get { return _errorMessages.Count; }
 		}
 
+		public static void RegisterAll()
+		{
+			var callingAssembly = Assembly.GetCallingAssembly();
+
+			var registerInfo = typeof(RequestValidatorErrorMessagesDictionary).GetMethod("Register");
+
+			var assemblyNames = callingAssembly.GetReferencedAssemblies();
+
+			foreach (var assemblyName in assemblyNames)
+			{
+				var needToLoad = AppDomain.CurrentDomain
+									 .GetAssemblies()
+									 .Any(assembly => AssemblyName.ReferenceMatchesDefinition(
+										 assemblyName, assembly.GetName())) == false;
+
+				if (needToLoad)
+					Assembly.Load(assemblyName);
+			}
+
+			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+			foreach (var assembly in assemblies)
+			{
+				try
+				{
+					var errorTypes = assembly.DefinedTypes.Where(t => t.BaseType == typeof (ErrorCodeBase));
+					foreach (var errorType in errorTypes)
+					{
+						var register = registerInfo.MakeGenericMethod(new[] {errorType});
+						register.Invoke(null, null);
+					}
+				}
+				catch { }
+			}
+		}
+
 		public static void Register<T>() where T : ErrorCodeBase
 		{
 			var type = typeof (T);

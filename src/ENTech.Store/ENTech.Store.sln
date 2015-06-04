@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure", "ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj", "{7D581130-B9A8-4E44-9562-67E41697A123}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Api", "ENTech.Store.Api\ENTech.Store.Api.csproj", "{8E06B374-3381-4648-AF3C-934743798CE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Api.ForStoreAdmin", "ENTech.Store.Api.ForStoreAdmin\ENTech.Store.Api.ForStoreAdmin.csproj", "{79C917D2-AD5F-4837-8501-067899065C68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Services", "ENTech.Store.Services\ENTech.Store.Services.csproj", "{9E5FE2B8-A8F3-4AB7-AF38-127D1894A978}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{79C917D2-AD5F-4837-8501-067899065C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79C917D2-AD5F-4837-8501-067899065C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79C917D2-AD5F-4837-8501-067899065C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E5FE2B8-A8F3-4AB7-AF38-127D1894A978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E5FE2B8-A8F3-4AB7-AF38-127D1894A978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E5FE2B8-A8F3-4AB7-AF38-127D1894A978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E5FE2B8-A8F3-4AB7-AF38-127D1894A978}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

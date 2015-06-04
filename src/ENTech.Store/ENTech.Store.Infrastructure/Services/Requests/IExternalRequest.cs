@@ -2,6 +2,8 @@
 {
 	public interface IExternalRequest
 	{
+		string UserToken { get; set; }
+
 		string PartnerToken { get; set; }
 	}
 }

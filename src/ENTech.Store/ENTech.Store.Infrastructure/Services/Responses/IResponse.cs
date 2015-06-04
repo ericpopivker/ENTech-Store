@@ -5,7 +5,6 @@
 		bool IsSuccess { get; set; }
 
 		Error Error { get; set; }
-
 		ArgumentErrorsCollection ArgumentErrors { get; set; }
 	}
 }

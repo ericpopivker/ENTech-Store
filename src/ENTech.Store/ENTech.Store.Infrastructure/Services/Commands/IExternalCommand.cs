@@ -1,12 +1,15 @@
-﻿using ENTech.Store.Infrastructure.Services.Requests;
+﻿using System;
+using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 
 namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public interface IExternalCommand
 	{
-		
+
 	}
+
+	[Obsolete]
 	public interface IExternalCommand<in TExternalRequest, out TExternalResponse, TInternalRequest, TInternalResponse> : IExternalCommand
 		where TExternalRequest:IExternalRequest
 		where TExternalResponse:ExternalResponse

@@ -7,8 +7,8 @@
 		public Error Error { get; set; }
 
 		public virtual ArgumentErrorsCollection ArgumentErrors { get; set; }
-
-		public ExternalResponse()
+		
+		protected ExternalResponse()
 		{
 			ArgumentErrors = new ArgumentErrorsCollection();
 		}

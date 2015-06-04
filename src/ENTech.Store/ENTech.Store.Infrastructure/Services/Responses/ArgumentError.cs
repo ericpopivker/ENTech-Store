@@ -14,7 +14,13 @@ namespace ENTech.Store.Infrastructure.Services.Responses
 			ArgumentName = argumentName;
 		}
 
-		public static ArgumentError For<TObj>(Expression<Func<TObj, object>> expression, string errorMessage, int errorCode)
+		//SashaT: for support exisiting code. can be removed in futures
+		public ArgumentError()
+		{
+			
+		}
+
+		public static ArgumentError For<TObj>(Expression<Func<TObj, object>> expression, string errorMessage, int errorCode = 0)
 		{
 			return new ArgumentError(PropertyHelper.GetName(expression), errorCode, errorMessage);
 		}

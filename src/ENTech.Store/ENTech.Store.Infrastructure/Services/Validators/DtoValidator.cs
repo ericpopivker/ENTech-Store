@@ -31,8 +31,11 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 				foreach (var propertyInfo in dto.GetType().GetProperties())
 				{
 					if (!(propertyInfo.PropertyType.IsPrimitive ||
+						propertyInfo.PropertyType == typeof(String) ||
 						propertyInfo.PropertyType == typeof(Decimal) ||
-						propertyInfo.PropertyType == typeof(String)))
+						propertyInfo.PropertyType == typeof(Decimal?) ||
+						propertyInfo.PropertyType == typeof(DateTime) ||
+						propertyInfo.PropertyType == typeof(DateTime?)))
 					{
 						var val = propertyInfo.GetValue(dto);
 						if (val != null)
