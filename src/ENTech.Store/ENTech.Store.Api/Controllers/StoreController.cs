@@ -33,8 +33,6 @@ namespace ENTech.Store.Api.Controllers
 			return Request.CreateResponse(response);
 		}
 
-
-
 		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("{Id:int}")]
 		[ResponseType(typeof(StoreGetByIdResponse))]
