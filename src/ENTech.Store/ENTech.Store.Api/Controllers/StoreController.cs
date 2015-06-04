@@ -26,6 +26,7 @@ namespace ENTech.Store.Api.Controllers
 
 		[System.Web.Http.HttpPost]
 		[ResponseType(typeof(StoreCreateResponse))]
+		[System.Web.Http.Route("create")]
 		public HttpResponseMessage Create([FromBody]StoreCreateRequest request)
 		{
 			var response = _anonymousExternalCommandService.Execute<StoreCreateRequest, StoreCreateResponse, StoreCreateCommand>(request);
@@ -43,11 +44,13 @@ namespace ENTech.Store.Api.Controllers
 			return Request.CreateResponse(response);
 		}
 
-	[System.Web.Http.HttpGet]
+		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("")]
-		public IEnumerable<string> Find()
+		[ResponseType(typeof(StoreFindResponse))]
+		public HttpResponseMessage Find(StoreFindRequest request)
 		{
-			return new string[] { "value1", "value2" };
+			var response = _businessAdminExternalCommandService.Execute<StoreFindRequest, StoreFindResponse, StoreFindCommand>(request);
+			return Request.CreateResponse(response);
 		}
 
 	}

@@ -84,8 +84,14 @@
     <Compile Include="SharedModule\Requests\FindRequestBase.cs" />
     <Compile Include="SharedModule\Requests\GetByIdRequestBase.cs" />
     <Compile Include="SharedModule\Responses\FindResponseBase.cs" />
+    <Compile Include="StoreModule\Requests\StoreFindRequest.cs" />
+    <Compile Include="StoreModule\Commands\StoreFindCommand.cs" />
+    <Compile Include="StoreModule\Dtos\StoreFindCriteriaDto.cs" />
+    <Compile Include="StoreModule\Responses\StoreFindResponse.cs" />
     <Compile Include="StoreModule\Commands\StoreGetByIdCommand.cs" />
     <Compile Include="StoreModule\Commands\StoreCreateCommand.cs" />
+    <Compile Include="StoreModule\Dtos\StoreLoadOption.cs" />
+    <Compile Include="StoreModule\Dtos\StoreSortField.cs" />
     <Compile Include="StoreModule\Dtos\StoreCreateDto.cs" />
     <Compile Include="StoreModule\Requests\StoreGetByIdRequest.cs" />
     <Compile Include="StoreModule\Dtos\StoreDto.cs" />
