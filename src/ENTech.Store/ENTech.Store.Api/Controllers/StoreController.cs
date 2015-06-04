@@ -22,7 +22,7 @@ namespace ENTech.Store.Api.Controllers
 		}
 
 		[System.Web.Http.HttpPost]
-		[ResponseType(typeof(StoreCreateRequest))]
+		[ResponseType(typeof(StoreCreateResponse))]
 		public HttpResponseMessage Create([FromBody]StoreCreateRequest request)
 		{
 			var response = _anonymousExternalCommandService.Execute<StoreCreateRequest, StoreCreateResponse, StoreCreateCommand>(request);
