@@ -115,6 +115,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AuthenticationModule\MapProfiles\" />
+    <Folder Include="ProductModule\Commands\" />
+    <Folder Include="ProductModule\Dtos\" />
+    <Folder Include="ProductModule\Requests\" />
+    <Folder Include="ProductModule\Responses\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
