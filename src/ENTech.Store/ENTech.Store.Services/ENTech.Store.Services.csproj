@@ -84,6 +84,9 @@
     <Compile Include="SharedModule\Requests\FindRequestBase.cs" />
     <Compile Include="SharedModule\Requests\GetByIdRequestBase.cs" />
     <Compile Include="SharedModule\Responses\FindResponseBase.cs" />
+    <Compile Include="StoreModule\Commands\StoreCreateCommand.cs" />
+    <Compile Include="StoreModule\Requests\StoreCreateRequest.cs" />
+    <Compile Include="StoreModule\Responses\StoreCreateResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">

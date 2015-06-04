@@ -3,4 +3,8 @@
 	public class AnonymousSecurityInformation : ISecurityInformation
 	{
 	}
+
+	public class BusinessAdminSecurityInformation : ISecurityInformation
+	{
+	}
 }
