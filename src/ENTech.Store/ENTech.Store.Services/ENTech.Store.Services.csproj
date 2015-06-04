@@ -43,6 +43,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -57,6 +61,15 @@
     <Compile Include="AuthenticationModule\Dtos\PartnerDto.cs" />
     <Compile Include="AuthenticationModule\ModuleLogic\AuthenticationErrorCode.cs" />
     <Compile Include="AuthenticationModule\Responses\AuthenticateApiKeyResponse.cs" />
+    <Compile Include="CommandService\CommandFactory.cs" />
+    <Compile Include="CommandService\CommandServiceBase.cs" />
+    <Compile Include="CommandService\Concrete\PublicExternalCommandService.cs" />
+    <Compile Include="CommandService\Definition\IExternalCommandService.cs" />
+    <Compile Include="CommandService\Definition\IInternalCommandService.cs" />
+    <Compile Include="CommandService\ExternalCommandService.cs" />
+    <Compile Include="CommandService\ICommandFactory.cs" />
+    <Compile Include="CommandService\InternalCommandService.cs" />
+    <Compile Include="Misc\AnonymousSecurityInformation.cs" />
     <Compile Include="Misc\AuthenticateResult.cs" />
     <Compile Include="Misc\CommandServiceBase.cs" />
     <Compile Include="Misc\SecureRequestBase.cs" />
