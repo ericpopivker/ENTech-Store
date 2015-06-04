@@ -15,10 +15,13 @@ namespace ENTech.Store.Api.Controllers
 	public class StoreController : ApiController
 	{
 		private readonly IExternalCommandService<AnonymousSecurityInformation> _anonymousExternalCommandService;
+		private readonly IExternalCommandService<BusinessAdminSecurityInformation> _businessAdminExternalCommandService;
 
-		public StoreController(IExternalCommandService<AnonymousSecurityInformation> anonymousExternalCommandService)
+		public StoreController(IExternalCommandService<AnonymousSecurityInformation> anonymousExternalCommandService, 
+			IExternalCommandService<BusinessAdminSecurityInformation> businessAdminExternalCommandService)
 		{
 			_anonymousExternalCommandService = anonymousExternalCommandService;
+			_businessAdminExternalCommandService = businessAdminExternalCommandService;
 		}
 
 		[System.Web.Http.HttpPost]
@@ -33,14 +36,14 @@ namespace ENTech.Store.Api.Controllers
 
 		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("{Id:int}")]
-		public string GetById(int id)
+		[ResponseType(typeof(StoreGetByIdResponse))]
+		public HttpResponseMessage GetById(StoreGetByIdRequest request)
 		{
-			return "value";
+			var response = _businessAdminExternalCommandService.Execute<StoreGetByIdRequest, StoreGetByIdResponse, StoreGetByIdCommand>(request);
+			return Request.CreateResponse(response);
 		}
 
-
-
-		[System.Web.Http.HttpGet]
+	[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("")]
 		public IEnumerable<string> Find()
 		{

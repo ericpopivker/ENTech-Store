@@ -85,7 +85,6 @@
     <Compile Include="Services\BuilderBase.cs" />
     <Compile Include="Services\Commands\CommandBase.cs" />
     <Compile Include="Services\Commands\ICommand.cs" />
-    <Compile Include="Services\Commands\IExternalCommand.cs" />
     <Compile Include="Services\Commands\IInternalCommand.cs" />
     <Compile Include="Services\Commands\InternalCommandBase.cs" />
     <Compile Include="Services\CommonErrorCode.cs" />
@@ -106,16 +105,13 @@
     <Compile Include="Services\Requests\RunAndExportReportRequest.cs" />
     <Compile Include="Services\Responses\ArgumentError.cs" />
     <Compile Include="Services\Responses\ArgumentErrorsCollection.cs" />
-    <Compile Include="Services\Responses\CsvExportResponse.cs" />
     <Compile Include="Services\Responses\Error.cs" />
-    <Compile Include="Services\Responses\ExternalResponse.cs" />
     <Compile Include="Services\Responses\FindPartialResponse.cs" />
     <Compile Include="Services\Responses\FindResponse.cs" />
     <Compile Include="Services\Responses\GetByIdResponse.cs" />
     <Compile Include="Services\Responses\InternalResponse.cs" />
     <Compile Include="Services\Responses\IResponse.cs" />
     <Compile Include="Services\Responses\ReportResponse.cs" />
-    <Compile Include="Services\Responses\Response.cs" />
     <Compile Include="Services\Validators\DtoValidator.cs" />
     <Compile Include="Services\Validators\IRequestValidator.cs" />
     <Compile Include="Services\Validators\RequestCustomValidatorBase.cs" />
