@@ -1,11 +1,10 @@
-﻿
-namespace ENTech.Store.Entities
+﻿namespace ENTech.Store.Entities
 {
-	class DbContextFactory : IDbContextFactory
+	public class DbContextFactory : IDbContextFactory
 	{
 		public IDbContext Create()
 		{
-			return new DbContext();
+			return new FakeDbContext();
 		}
 	}
 }

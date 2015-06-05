@@ -25,8 +25,5 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 
 		[StringValue("Id is not default")]
 		public const int NotNewId = 10052;
-
-		[StringValue("Token is not correct")]
-		public const int InvalidToken = 10002;
 	}
 }
