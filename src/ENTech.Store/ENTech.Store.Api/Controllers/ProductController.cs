@@ -32,9 +32,9 @@ namespace ENTech.Store.Api.Controllers
 			return Request.CreateResponse(response);
 		}
 
-		[HttpPost]
+		[HttpPut]
 		[ResponseType(typeof(ProductUpdateResponse))]
-		[Route("{Id:int}/update")]
+		[Route("{Id:int}")]
 		public HttpResponseMessage Update(int id, [FromBody]ProductUpdateRequest request)
 		{
 			var response = _businessAdminExternalCommandService.Execute<ProductUpdateRequest, ProductUpdateResponse, ProductUpdateCommand>(request);
