@@ -8,6 +8,8 @@ using ENTech.Store.Services.ProductModule.Commands;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
 using ENTech.Store.Services.SharedModule.Commands;
+using ENTech.Store.Services.SharedModule.Dtos;
+using ENTech.Store.Services.SharedModule.Requests;
 
 namespace ENTech.Store.Api.Controllers
 {
@@ -54,6 +56,15 @@ namespace ENTech.Store.Api.Controllers
 		public HttpResponseMessage GetById([FromBody]ProductGetByIdRequest request)
 		{
 			var response = _businessAdminExternalCommandService.Execute<ProductGetByIdRequest, ProductGetByIdResponse, ProductGetByIdCommand>(request);
+			return Request.CreateResponse(response);
+		}
+
+		[HttpGet]
+		[ResponseType(typeof(ProductFindResponse))]
+		[Route("")]
+		public HttpResponseMessage GetById([FromBody]ProductFindRequest request)
+		{
+			var response = _businessAdminExternalCommandService.Execute<ProductFindRequest, ProductFindResponse, ProductFindCommand>(request);
 			return Request.CreateResponse(response);
 		}
 	}

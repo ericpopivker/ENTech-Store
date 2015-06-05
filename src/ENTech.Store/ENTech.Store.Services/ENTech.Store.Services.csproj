@@ -74,8 +74,14 @@
     <Compile Include="Misc\CommandServiceBase.cs" />
     <Compile Include="Misc\SecureRequestBase.cs" />
     <Compile Include="Misc\SecurityInformation.cs" />
+    <Compile Include="ProductModule\Commands\ProductFindCommand.cs" />
+    <Compile Include="ProductModule\Dtos\ProductFindCriteriaDto.cs" />
+    <Compile Include="ProductModule\Requests\ProductFindRequest.cs" />
+    <Compile Include="ProductModule\Responses\ProductFindResponse.cs" />
     <Compile Include="ProductModule\Commands\ProductGetByIdCommand.cs" />
     <Compile Include="ProductModule\Commands\ProductDeleteCommand.cs" />
+    <Compile Include="ProductModule\Dtos\ProductLoadOption.cs" />
+    <Compile Include="ProductModule\Dtos\ProductSortField.cs" />
     <Compile Include="ProductModule\Dtos\ProductDto.cs" />
     <Compile Include="ProductModule\Requests\ProductGetByIdRequest.cs" />
     <Compile Include="ProductModule\Responses\ProductGetByIdResponse.cs" />
