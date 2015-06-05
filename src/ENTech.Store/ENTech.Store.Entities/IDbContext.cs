@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Entities.PartnerModule;
 using ENTech.Store.Entities.CustomerModule;
+using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Entities
 {
@@ -40,7 +41,9 @@ namespace ENTech.Store.Entities
 		IFilerableDbSet<Country> Countries { get; }
 		
 		IFilerableDbSet<State> States { get; }
-		
+
+		IDbSet<T> GetDbSet<T>() where T : class, IEntity;
+
 		IDbContext LimitByStore(int storeId);
 	}
 
@@ -83,6 +86,11 @@ namespace ENTech.Store.Entities
 		public IFilerableDbSet<Address> Addresses { get; private set; }
 		public IFilerableDbSet<Country> Countries { get; private set; }
 		public IFilerableDbSet<State> States { get; private set; }
+		public IDbSet<T> GetDbSet<T>() where T : class, IEntity
+		{
+			return new FakeDbSet<T>();
+		}
+
 		public IDbContext LimitByStore(int storeId)
 		{
 			return this;

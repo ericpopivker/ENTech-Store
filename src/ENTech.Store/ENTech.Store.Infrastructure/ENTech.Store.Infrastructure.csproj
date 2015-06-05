@@ -67,6 +67,8 @@
     <Compile Include="Cache\ICache.cs" />
     <Compile Include="Cache\LockRetryPolicy.cs" />
     <Compile Include="Cache\MsCache.cs" />
+    <Compile Include="Context\CallContextStorage.cs" />
+    <Compile Include="Context\IContextStorage.cs" />
     <Compile Include="Crypt\CryptEngine.cs" />
     <Compile Include="Entities\IAuditable.cs">
       <SubType>Code</SubType>

@@ -7,6 +7,7 @@ using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Entities.PartnerModule;
 using ENTech.Store.Entities.CustomerModule;
 using ENTech.Store.Infrastructure.Cache;
+using ENTech.Store.Infrastructure.Entities;
 using ENTech.Store.Infrastructure.Utils;
 
 namespace ENTech.Store.Entities
@@ -27,6 +28,12 @@ namespace ENTech.Store.Entities
 		public DbContext() : base(EnvironmentUtils.GetConnectionStringName())
 		{
 			InitDbSets();
+		}
+
+		public IDbSet<TEntity> GetDbSet<TEntity>()
+			where TEntity : class, IEntity
+		{
+			return Set<TEntity>();
 		}
 
 		private void InitDbSets()
