@@ -47,5 +47,14 @@ namespace ENTech.Store.Api.Controllers
 			var response = _businessAdminExternalCommandService.Execute<ProductDeleteRequest, ProductDeleteResponse, ProductDeleteCommand>(request);
 			return Request.CreateResponse(response);
 		}
+
+		[HttpGet]
+		[ResponseType(typeof(ProductGetByIdResponse))]
+		[Route("{Id:int}")]
+		public HttpResponseMessage GetById([FromBody]ProductGetByIdRequest request)
+		{
+			var response = _businessAdminExternalCommandService.Execute<ProductGetByIdRequest, ProductGetByIdResponse, ProductGetByIdCommand>(request);
+			return Request.CreateResponse(response);
+		}
 	}
 }
