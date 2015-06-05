@@ -1,15 +1,13 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
-using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 
-namespace ENTech.Store.Api.Controllers
+namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 {
 	[RoutePrefix("1.0/store-admin-api/stores")]
 	public class StoreController : ApiController

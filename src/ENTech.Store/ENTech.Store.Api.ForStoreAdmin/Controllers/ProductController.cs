@@ -7,7 +7,7 @@ using ENTech.Store.Services.ProductModule.Commands;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
 
-namespace ENTech.Store.Api.Controllers
+namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 {
 	[RoutePrefix("1.0/store-admin-api/products")]
 	public class ProductController : ApiController
