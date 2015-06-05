@@ -1,15 +1,11 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
 using ENTech.Store.Services.ProductModule.Commands;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
-using ENTech.Store.Services.SharedModule.Dtos;
-using ENTech.Store.Services.SharedModule.Requests;
 
 namespace ENTech.Store.Api.Controllers
 {
