@@ -49,7 +49,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[HttpGet]
 		[ResponseType(typeof(ProductGetByIdResponse))]
 		[Route("{Id:int}")]
-		public HttpResponseMessage GetById([FromBody]ProductGetByIdRequest request)
+		public HttpResponseMessage GetById([FromUri]ProductGetByIdRequest request)
 		{
 			var response = _businessAdminExternalCommandService.Execute<ProductGetByIdRequest, ProductGetByIdResponse, ProductGetByIdCommand>(request);
 			return Request.CreateResponse(response);
@@ -58,7 +58,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[HttpGet]
 		[ResponseType(typeof(ProductFindResponse))]
 		[Route("")]
-		public HttpResponseMessage Find([FromBody]ProductFindRequest request)
+		public HttpResponseMessage Find([FromUri]ProductFindRequest request)
 		{
 			var response = _businessAdminExternalCommandService.Execute<ProductFindRequest, ProductFindResponse, ProductFindCommand>(request);
 			return Request.CreateResponse(response);

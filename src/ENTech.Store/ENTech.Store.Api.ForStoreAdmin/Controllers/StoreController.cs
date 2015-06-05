@@ -43,7 +43,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[HttpPut]
 		[Route("{Id:int}")]
 		[ResponseType(typeof(StoreUpdateResponse))]
-		public HttpResponseMessage GetById(int id, StoreUpdateRequest request)
+		public HttpResponseMessage GetById(StoreUpdateRequest request)
 		{
 			var response = _businessAdminExternalCommandService.Execute<StoreUpdateRequest, StoreUpdateResponse, StoreUpdateCommand>(request);
 			return Request.CreateResponse(response);
@@ -52,7 +52,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[HttpGet]
 		[Route("")]
 		[ResponseType(typeof(StoreFindResponse))]
-		public HttpResponseMessage Find(StoreFindRequest request)
+		public HttpResponseMessage Find([FromUri]StoreFindRequest request)
 		{
 			var response = _businessAdminExternalCommandService.Execute<StoreFindRequest, StoreFindResponse, StoreFindCommand>(request);
 			return Request.CreateResponse(response);
