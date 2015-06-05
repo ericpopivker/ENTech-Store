@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Entities.PartnerModule;
 using ENTech.Store.Entities.CustomerModule;
+using ENTech.Store.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Entities
@@ -33,6 +34,8 @@ namespace ENTech.Store.Entities
 		IFilerableDbSet<Partner> Partners { get; }
 
 		IFilerableDbSet<StoreModule.Store> Stores { get; }
+
+		IFilerableDbSet<StoreModule.Product> Products { get; }
 
 		IFilerableDbSet<Customer> Customers { get; }
 
@@ -82,6 +85,7 @@ namespace ENTech.Store.Entities
 		public bool IsDisposed { get; private set; }
 		public IFilerableDbSet<Partner> Partners { get; private set; }
 		public IFilerableDbSet<StoreModule.Store> Stores { get; private set; }
+		public IFilerableDbSet<Product> Products { get; private set; }
 		public IFilerableDbSet<Customer> Customers { get; private set; }
 		public IFilerableDbSet<Address> Addresses { get; private set; }
 		public IFilerableDbSet<Country> Countries { get; private set; }

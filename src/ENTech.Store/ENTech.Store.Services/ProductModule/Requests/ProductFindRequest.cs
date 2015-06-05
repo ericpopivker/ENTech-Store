@@ -7,6 +7,7 @@ namespace ENTech.Store.Services.ProductModule.Requests
 	public class ProductFindRequest :
 		FindRequestBase<ProductLoadOption, ProductSortField, ProductFindCriteriaDto, BusinessAdminSecurityInformation>
 	{
-		
+		public string Name { get; set; }
+		public int StoreId { get; set; }
 	}
 }
