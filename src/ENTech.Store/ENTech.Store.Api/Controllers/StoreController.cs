@@ -1,8 +1,10 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
+using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
@@ -34,10 +36,18 @@ namespace ENTech.Store.Api.Controllers
 		[HttpGet]
 		[Route("{Id:int}")]
 		[ResponseType(typeof(StoreGetByIdResponse))]
-		public HttpResponseMessage GetById(int id, StoreGetByIdRequest request)
+		public HttpResponseMessage GetById([FromBody] StoreGetByIdRequest request)
 		{
-			request.Id = id;
 			var response = _businessAdminExternalCommandService.Execute<StoreGetByIdRequest, StoreGetByIdResponse, StoreGetByIdCommand>(request);
+			return Request.CreateResponse(response);
+		}
+
+		[HttpPut]
+		[Route("{Id:int}")]
+		[ResponseType(typeof(StoreUpdateResponse))]
+		public HttpResponseMessage GetById(int id, StoreUpdateRequest request)
+		{
+			var response = _businessAdminExternalCommandService.Execute<StoreUpdateRequest, StoreUpdateResponse, StoreUpdateCommand>(request);
 			return Request.CreateResponse(response);
 		}
 

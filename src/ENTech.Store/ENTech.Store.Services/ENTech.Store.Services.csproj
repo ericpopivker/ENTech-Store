@@ -105,6 +105,10 @@
     <Compile Include="SharedModule\Requests\FindRequestBase.cs" />
     <Compile Include="SharedModule\Requests\GetByIdRequestBase.cs" />
     <Compile Include="SharedModule\Responses\FindResponseBase.cs" />
+    <Compile Include="StoreModule\Commands\StoreUpdateCommand.cs" />
+    <Compile Include="StoreModule\Dtos\StoreUpdateDto.cs" />
+    <Compile Include="StoreModule\Requests\StoreUpdateRequest.cs" />
+    <Compile Include="StoreModule\Responses\StoreUpdateResponse.cs" />
     <Compile Include="StoreModule\Requests\StoreFindRequest.cs" />
     <Compile Include="StoreModule\Commands\StoreFindCommand.cs" />
     <Compile Include="StoreModule\Dtos\StoreFindCriteriaDto.cs" />
