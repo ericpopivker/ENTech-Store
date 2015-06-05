@@ -63,6 +63,7 @@
     <Compile Include="AuthenticationModule\Responses\AuthenticateApiKeyResponse.cs" />
     <Compile Include="CommandService\CommandFactory.cs" />
     <Compile Include="CommandService\CommandServiceBase.cs" />
+    <Compile Include="CommandService\Concrete\BusinessAdminExternalCommandService.cs" />
     <Compile Include="CommandService\Concrete\PublicExternalCommandService.cs" />
     <Compile Include="CommandService\Definition\IExternalCommandService.cs" />
     <Compile Include="CommandService\Definition\IInternalCommandService.cs" />

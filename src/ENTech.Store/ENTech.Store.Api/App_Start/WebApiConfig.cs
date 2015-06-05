@@ -1,6 +1,4 @@
 ﻿using System.Web.Http;
-using ENTech.Store.Api.App_Data;
-using ENTech.Store.Infrastructure;
 
 namespace ENTech.Store.Api
 {
@@ -8,8 +6,6 @@ namespace ENTech.Store.Api
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-			config.DependencyResolver = new UnityResolver(IoC.Container);
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -20,11 +16,4 @@ namespace ENTech.Store.Api
             );
         }
     }
-
-
-}
-
-
-namespace EventGrid.Infrastructure
-{
 }

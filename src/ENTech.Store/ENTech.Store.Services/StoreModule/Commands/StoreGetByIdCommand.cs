@@ -1,4 +1,5 @@
 ﻿using ENTech.Store.Entities;
+using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
@@ -8,7 +9,8 @@ namespace ENTech.Store.Services.StoreModule.Commands
 {
 	public class StoreGetByIdCommand : DbContextCommandBase<StoreGetByIdRequest, StoreGetByIdResponse>
 	{
-		public StoreGetByIdCommand(IDbContext dbContext, bool requiresTransaction) : base(dbContext, requiresTransaction)
+		public StoreGetByIdCommand(IUnitOfWork unitOfWork)
+			: base(unitOfWork.DbContext, false)
 		{
 		}
 

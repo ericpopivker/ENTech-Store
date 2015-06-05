@@ -122,6 +122,9 @@
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Unity.WebApi">
+      <HintPath>..\packages\Unity.WebAPI.5.1\lib\net45\Unity.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -134,7 +137,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Data\UnityResolver.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -203,6 +206,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ENTech.Store.Api.ForStoreAdmin\ENTech.Store.Api.ForStoreAdmin.csproj">
+      <Project>{79c917d2-ad5f-4837-8501-067899065c68}</Project>
+      <Name>ENTech.Store.Api.ForStoreAdmin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
+      <Project>{26B48B70-7CF1-4BE9-9D14-CE616B4CF7AA}</Project>
+      <Name>ENTech.Store.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj">
       <Project>{7D581130-B9A8-4E44-9562-67E41697A123}</Project>
       <Name>ENTech.Store.Infrastructure</Name>

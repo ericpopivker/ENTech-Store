@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ENTech.Store.Entities;
+using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Services.ProductModule.Dtos;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
@@ -9,7 +10,8 @@ namespace ENTech.Store.Services.ProductModule.Commands
 {
 	public class ProductFindCommand : DbContextCommandBase<ProductFindRequest, ProductFindResponse>
 	{
-		public ProductFindCommand(IDbContext dbContext, bool requiresTransaction) : base(dbContext, requiresTransaction)
+		public ProductFindCommand(IUnitOfWork unitOfWork)
+			: base(unitOfWork.DbContext, false)
 		{
 		}
 

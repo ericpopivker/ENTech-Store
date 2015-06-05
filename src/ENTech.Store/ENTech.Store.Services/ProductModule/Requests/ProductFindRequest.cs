@@ -4,6 +4,9 @@ using ENTech.Store.Services.SharedModule.Requests;
 
 namespace ENTech.Store.Services.ProductModule.Requests
 {
-	public class ProductFindRequest : FindRequestBase<ProductLoadOption, ProductSortField, ProductFindCriteriaDto, BusinessAdminSecurityInformation>
-	{ }
+	public class ProductFindRequest :
+		FindRequestBase<ProductLoadOption, ProductSortField, ProductFindCriteriaDto, BusinessAdminSecurityInformation>
+	{
+		
+	}
 }

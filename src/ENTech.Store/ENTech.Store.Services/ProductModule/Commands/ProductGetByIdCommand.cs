@@ -1,4 +1,5 @@
 ﻿using ENTech.Store.Entities;
+using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Services.ProductModule.Dtos;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
@@ -8,8 +9,8 @@ namespace ENTech.Store.Services.ProductModule.Commands
 {
 	public class ProductGetByIdCommand : DbContextCommandBase<ProductGetByIdRequest, ProductGetByIdResponse>
 	{
-		public ProductGetByIdCommand(IDbContext dbContext, bool requiresTransaction)
-			: base(dbContext, requiresTransaction)
+		public ProductGetByIdCommand(IUnitOfWork unitOfWork)
+			: base(unitOfWork.DbContext, false)
 		{
 		}
 

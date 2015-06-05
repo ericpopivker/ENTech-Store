@@ -58,7 +58,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[HttpGet]
 		[ResponseType(typeof(ProductFindResponse))]
 		[Route("")]
-		public HttpResponseMessage GetById([FromBody]ProductFindRequest request)
+		public HttpResponseMessage Find([FromBody]ProductFindRequest request)
 		{
 			var response = _businessAdminExternalCommandService.Execute<ProductFindRequest, ProductFindResponse, ProductFindCommand>(request);
 			return Request.CreateResponse(response);
