@@ -74,7 +74,11 @@
     <Compile Include="Misc\CommandServiceBase.cs" />
     <Compile Include="Misc\SecureRequestBase.cs" />
     <Compile Include="Misc\SecurityInformation.cs" />
+    <Compile Include="ProductModule\Commands\ProductUpdateCommand.cs" />
     <Compile Include="ProductModule\Commands\ProductCreateCommand.cs" />
+    <Compile Include="ProductModule\Dtos\ProductUpdateDto.cs" />
+    <Compile Include="ProductModule\Requests\ProductUpdateRequest.cs" />
+    <Compile Include="ProductModule\Responses\ProductUpdateResponse.cs" />
     <Compile Include="ProductModule\Dtos\ProductCreateDto.cs" />
     <Compile Include="ProductModule\Requests\ProductCreateRequest.cs" />
     <Compile Include="ProductModule\Responses\ProductCreateResponse.cs" />

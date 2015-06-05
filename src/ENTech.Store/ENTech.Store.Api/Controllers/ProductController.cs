@@ -27,5 +27,14 @@ namespace ENTech.Store.Api.Controllers
 			var response = _businessAdminExternalCommandService.Execute<ProductCreateRequest, ProductCreateResponse, ProductCreateCommand>(request);
 			return Request.CreateResponse(response);
 		}
+
+		[HttpPost]
+		[ResponseType(typeof(ProductUpdateResponse))]
+		[Route("{Id:int}/update")]
+		public HttpResponseMessage Create(int id, [FromBody]ProductUpdateRequest request)
+		{
+			var response = _businessAdminExternalCommandService.Execute<ProductUpdateRequest, ProductUpdateResponse, ProductUpdateCommand>(request);
+			return Request.CreateResponse(response);
+		}
 	}
 }

@@ -36,8 +36,9 @@ namespace ENTech.Store.Api.Controllers
 		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("{Id:int}")]
 		[ResponseType(typeof(StoreGetByIdResponse))]
-		public HttpResponseMessage GetById(StoreGetByIdRequest request)
+		public HttpResponseMessage GetById(int id, StoreGetByIdRequest request)
 		{
+			request.Id = id;
 			var response = _businessAdminExternalCommandService.Execute<StoreGetByIdRequest, StoreGetByIdResponse, StoreGetByIdCommand>(request);
 			return Request.CreateResponse(response);
 		}
