@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.Web.Mvc;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
 using ENTech.Store.Services.StoreModule.Commands;
@@ -11,7 +9,7 @@ using ENTech.Store.Services.StoreModule.Responses;
 
 namespace ENTech.Store.Api.Controllers
 {
-	[System.Web.Http.RoutePrefix("1.0/store-admin-api/stores")]
+	[RoutePrefix("1.0/store-admin-api/stores")]
 	public class StoreController : ApiController
 	{
 		private readonly IExternalCommandService<AnonymousSecurityInformation> _anonymousExternalCommandService;
@@ -24,17 +22,17 @@ namespace ENTech.Store.Api.Controllers
 			_businessAdminExternalCommandService = businessAdminExternalCommandService;
 		}
 
-		[System.Web.Http.HttpPost]
+		[HttpPost]
 		[ResponseType(typeof(StoreCreateResponse))]
-		[System.Web.Http.Route("create")]
+		[Route("create")]
 		public HttpResponseMessage Create([FromBody]StoreCreateRequest request)
 		{
 			var response = _anonymousExternalCommandService.Execute<StoreCreateRequest, StoreCreateResponse, StoreCreateCommand>(request);
 			return Request.CreateResponse(response);
 		}
 
-		[System.Web.Http.HttpGet]
-		[System.Web.Http.Route("{Id:int}")]
+		[HttpGet]
+		[Route("{Id:int}")]
 		[ResponseType(typeof(StoreGetByIdResponse))]
 		public HttpResponseMessage GetById(int id, StoreGetByIdRequest request)
 		{
@@ -43,8 +41,8 @@ namespace ENTech.Store.Api.Controllers
 			return Request.CreateResponse(response);
 		}
 
-		[System.Web.Http.HttpGet]
-		[System.Web.Http.Route("")]
+		[HttpGet]
+		[Route("")]
 		[ResponseType(typeof(StoreFindResponse))]
 		public HttpResponseMessage Find(StoreFindRequest request)
 		{
