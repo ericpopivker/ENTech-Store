@@ -1,11 +1,13 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
 using ENTech.Store.Services.ProductModule.Commands;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
+using ENTech.Store.Services.SharedModule.Commands;
 
 namespace ENTech.Store.Api.Controllers
 {
@@ -33,8 +35,16 @@ namespace ENTech.Store.Api.Controllers
 		[Route("{Id:int}/update")]
 		public HttpResponseMessage Update(int id, [FromBody]ProductUpdateRequest request)
 		{
-			request.Id = id;
 			var response = _businessAdminExternalCommandService.Execute<ProductUpdateRequest, ProductUpdateResponse, ProductUpdateCommand>(request);
+			return Request.CreateResponse(response);
+		}
+
+		[HttpPost]
+		[ResponseType(typeof(ProductDeleteResponse))]
+		[Route("{Id:int}/delete")]
+		public HttpResponseMessage Delete([FromBody]ProductDeleteRequest request)
+		{
+			var response = _businessAdminExternalCommandService.Execute<ProductDeleteRequest, ProductDeleteResponse, ProductDeleteCommand>(request);
 			return Request.CreateResponse(response);
 		}
 	}
