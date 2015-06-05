@@ -6,7 +6,9 @@ using System.Text;
 using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Entities.PartnerModule;
 using ENTech.Store.Entities.CustomerModule;
+using ENTech.Store.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Cache;
+using ENTech.Store.Infrastructure.Entities;
 using ENTech.Store.Infrastructure.Utils;
 
 namespace ENTech.Store.Entities
@@ -23,10 +25,17 @@ namespace ENTech.Store.Entities
 
 		private DbContextTransaction _transaction;
 		private IFilerableDbSet<Partner> _partners;
+		private IFilerableDbSet<Product> _products;
 
 		public DbContext() : base(EnvironmentUtils.GetConnectionStringName())
 		{
 			InitDbSets();
+		}
+
+		public IDbSet<TEntity> GetDbSet<TEntity>()
+			where TEntity : class, IEntity
+		{
+			return Set<TEntity>();
 		}
 
 		private void InitDbSets()
@@ -34,13 +43,15 @@ namespace ENTech.Store.Entities
 			_partners = new Lazy<IFilerableDbSet<Partner>>(() => new FilterableDbSet<Partner>(this)).Value;
 
 			_stores = new Lazy<IFilerableDbSet<StoreModule.Store>>(() => new FilterableDbSet<StoreModule.Store>(this)).Value;
-	
+
 			_customers = new Lazy<IFilerableDbSet<Customer>>(() => new FilterableDbSet<Customer>(this)).Value;
-			
+
 			_countries = new Lazy<IFilerableDbSet<Country>>(() => new FilterableDbSet<Country>(this)).Value;
 			_states = new Lazy<IFilerableDbSet<State>>(() => new FilterableDbSet<State>(this)).Value;
 			_addresses = new Lazy<IFilerableDbSet<Address>>(() => new FilterableDbSet<Address>(this)).Value;
-			
+
+			_products = new Lazy<IFilerableDbSet<Product>>(() => new FilterableDbSet<Product>(this)).Value;
+
 		}
 
 
@@ -57,7 +68,7 @@ namespace ENTech.Store.Entities
 			if (!res.IsValid)
 			{
 				var e = new DbEntityValidationException
-					("Entity validation failed", new List<DbEntityValidationResult> { res });
+					("Entity validation failed", new List<DbEntityValidationResult> {res});
 				throw e;
 			}
 			return true;
@@ -88,23 +99,23 @@ namespace ENTech.Store.Entities
 
 		public void BeginTransaction()
 		{
-			if (_transaction != null) 
+			if (_transaction != null)
 				throw new InvalidOperationException("TransactionScope already initialized");
-			
+
 			_transaction = Database.BeginTransaction();
 		}
 
 		public void CompleteTransaction()
 		{
-			if (_transaction == null) 
+			if (_transaction == null)
 				throw new InvalidOperationException("TransactionScope was not initialized");
-			
+
 			_transaction.Commit();
 		}
 
 		public void RollbackTransaction()
 		{
-			if (_transaction == null) 
+			if (_transaction == null)
 				throw new InvalidOperationException("TransactionScope was not initialized");
 
 			_transaction.Rollback();
@@ -130,6 +141,11 @@ namespace ENTech.Store.Entities
 		public IFilerableDbSet<StoreModule.Store> Stores
 		{
 			get { return _stores; }
+		}
+
+		public IFilerableDbSet<Product> Products
+		{
+			get { return _products; }
 		}
 
 		public IFilerableDbSet<Customer> Customers

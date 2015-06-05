@@ -1,17 +1,11 @@
-﻿namespace ENTech.Store.Entities.UnitOfWork
+﻿using System;
+using ENTech.Store.Infrastructure.Entities;
+
+namespace ENTech.Store.Entities.UnitOfWork
 {
-	public interface IUnitOfWork 
+	public interface IUnitOfWork : IDisposable
 	{
 		IDbContext DbContext { get; }
-
-		void Add<TEntity>(TEntity entity) where TEntity : class;
-
-		void Update<TEntity>(TEntity entity) where TEntity : class;
-
-		void Remove<TEntity>(TEntity entity) where TEntity : class;
-		
-		TResult Query<TResult, TCriteria>(IQuery<TCriteria, TResult> query, TCriteria criteria)
-			where TCriteria : IQueryCriteria;
 
 		void BeginTransaction();
 
@@ -19,11 +13,16 @@
 
 		void RollbackTransaction();
 
-
-		void Dispose();
-
 		bool IsDisposed { get; }
-
 		void SaveChanges();
+
+		T Add<T>(T entity) where T : class, IEntity;
+
+		void Delete<T>(T entity) where T : class, IEntity;
+
+		void LogicallyDelete<T>(T entity) where T : class, ILogicallyDeletable;
+
+		TResult Query<TResult, TCriteria>(IQuery<TCriteria, TResult> query, TCriteria criteria)
+			where TCriteria : IQueryCriteria;
 	}
 }

@@ -10,6 +10,8 @@ using System.Linq.Expressions;
 using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Entities.PartnerModule;
 using ENTech.Store.Entities.CustomerModule;
+using ENTech.Store.Entities.StoreModule;
+using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Entities
 {
@@ -33,6 +35,8 @@ namespace ENTech.Store.Entities
 
 		IFilerableDbSet<StoreModule.Store> Stores { get; }
 
+		IFilerableDbSet<StoreModule.Product> Products { get; }
+
 		IFilerableDbSet<Customer> Customers { get; }
 
 		IFilerableDbSet<Address> Addresses { get; }
@@ -40,7 +44,9 @@ namespace ENTech.Store.Entities
 		IFilerableDbSet<Country> Countries { get; }
 		
 		IFilerableDbSet<State> States { get; }
-		
+
+		IDbSet<T> GetDbSet<T>() where T : class, IEntity;
+
 		IDbContext LimitByStore(int storeId);
 	}
 
@@ -79,10 +85,16 @@ namespace ENTech.Store.Entities
 		public bool IsDisposed { get; private set; }
 		public IFilerableDbSet<Partner> Partners { get; private set; }
 		public IFilerableDbSet<StoreModule.Store> Stores { get; private set; }
+		public IFilerableDbSet<Product> Products { get; private set; }
 		public IFilerableDbSet<Customer> Customers { get; private set; }
 		public IFilerableDbSet<Address> Addresses { get; private set; }
 		public IFilerableDbSet<Country> Countries { get; private set; }
 		public IFilerableDbSet<State> States { get; private set; }
+		public IDbSet<T> GetDbSet<T>() where T : class, IEntity
+		{
+			return new FakeDbSet<T>();
+		}
+
 		public IDbContext LimitByStore(int storeId)
 		{
 			return this;
