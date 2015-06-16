@@ -29,7 +29,11 @@ namespace ENTech.Store.Api.v1
 
     public class UploadFinishedEvent
     {
-        public UploadEntity Info;
+        //public UploadEntity Info;
+        
+        public string Id;
+        public string URL;
+
     }
 
 
