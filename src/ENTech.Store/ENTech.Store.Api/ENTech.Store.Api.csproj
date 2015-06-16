@@ -180,6 +180,7 @@
     <Compile Include="Auth\AuthUtils.cs" />
     <Compile Include="Filters\ApiExceptionFilterAttribute.cs" />
     <Compile Include="Auth\OAuth.cs" />
+    <Compile Include="v1\FileController.cs" />
     <Compile Include="v1\StoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
