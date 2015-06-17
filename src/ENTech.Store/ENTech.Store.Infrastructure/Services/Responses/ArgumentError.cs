@@ -4,7 +4,7 @@ using ENTech.Store.Infrastructure.Helpers;
 
 namespace ENTech.Store.Infrastructure.Services.Responses
 {
-	public class ArgumentError : Error
+	public class ArgumentError : ResponseError
 	{
 		public string ArgumentName { get; set; }
 

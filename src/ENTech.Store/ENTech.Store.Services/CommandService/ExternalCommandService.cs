@@ -10,6 +10,7 @@ using ENTech.Store.Infrastructure.Extensions;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.AuthenticationModule.Commands;
 using ENTech.Store.Services.AuthenticationModule.Dtos;
 using ENTech.Store.Services.AuthenticationModule.Responses;
@@ -36,18 +37,16 @@ namespace ENTech.Store.Services.CommandService
 
 		public TResponse Execute<TRequest, TResponse, TCommand>(TRequest request)
 			where TRequest : SecureRequestBase<TSecurity> 
-			where TResponse : InternalResponse, new()
+			where TResponse : ResponseBase, new()
 			where TCommand : ICommand<TRequest, TResponse>
 		{
 			var unitOfWork = IoC.Resolve<IUnitOfWork>();
 
 			var stopwatch = new Stopwatch();
 
-			TResponse response = null;
+			TResponse response = new TResponse();
 
 			AuthenticateResult authenticateResult = new AuthenticateResult();
-
-			TResponse errResponse = null;
 
 			try
 			{
@@ -64,9 +63,9 @@ namespace ENTech.Store.Services.CommandService
 
 				if (authenticateResult.IsSuccess == false)
 				{
-					errResponse = ErrorResponse<TResponse>(new Error(CommonErrorCode.UserNotAuthenticated, authenticateResult.ErrorMessage));
-					
-					return errResponse;
+					response.IsSuccess = false;
+					response.Error = new ResponseError(CommonErrorCode.UserNotAuthorized, ErrorCodeUtils.GetErrorMessage<CommonErrorCode>(CommonErrorCode.UserNotAuthorized));
+					return response;
 				}
 
 				LimitDbContext(request, unitOfWork.DbContext);
@@ -92,7 +91,11 @@ namespace ENTech.Store.Services.CommandService
 
 					//ErrorLogUtils.AddError(e);
 
-					response = ErrorResponse<TResponse>(new Error(CommonErrorCode.InternalServerError), extraMessage: e.Message);
+					response.IsSuccess = false;
+
+					string errorMessage = ErrorCodeUtils.GetErrorMessage<CommonErrorCode>(CommonErrorCode.InternalServerError);
+					errorMessage += e.Message;
+					response.Error = new ResponseError(CommonErrorCode.InternalServerError, errorMessage);
 				}
 
 				unitOfWork.Dispose();
@@ -102,10 +105,13 @@ namespace ENTech.Store.Services.CommandService
 			catch (Exception e)
 			{
 				//ErrorLogUtils.AddError(e);
-				errResponse = ErrorResponse<TResponse>(new Error(CommonErrorCode.InternalServerError),
-					extraMessage: e.Message + Environment.NewLine + e.StackTrace);
 
-				return errResponse;
+				response.IsSuccess = false;
+
+				string errorMessage = ErrorCodeUtils.GetErrorMessage<CommonErrorCode>(CommonErrorCode.InternalServerError);
+				errorMessage += e.Message;
+				response.Error = new ResponseError(CommonErrorCode.InternalServerError, errorMessage);
+				return response;
 			}
 			finally
 			{
@@ -114,7 +120,7 @@ namespace ENTech.Store.Services.CommandService
 
 				stopwatch.Stop();
 
-				SaveApiLogEntry(stopwatch.ElapsedMilliseconds, response ?? errResponse, request, authenticateResult.Partner);
+				SaveApiLogEntry(stopwatch.ElapsedMilliseconds, response, request, authenticateResult.Partner);
 			}
 		}
 
@@ -156,7 +162,7 @@ namespace ENTech.Store.Services.CommandService
 		protected abstract void LimitDbContext(SecureRequestBase<TSecurity> request, IDbContext dbContext);
 
 		private void SaveApiLogEntry<TRequest, TResponse>(decimal duration, TResponse response, TRequest request, PartnerDto partner)
-			where TResponse : InternalResponse, new()
+			where TResponse : ResponseBase, new()
 			where TRequest : SecureRequestBase<TSecurity> 
 		{
 			//try

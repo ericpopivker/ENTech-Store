@@ -4,6 +4,6 @@ namespace ENTech.Store.Services.CommandService
 {
 	public interface ICommandFactory
 	{
-		TCommand Create<TCommand>() where TCommand : IInternalCommand;
+		TCommand Create<TCommand>() where TCommand : ICommand;
 	}
 }

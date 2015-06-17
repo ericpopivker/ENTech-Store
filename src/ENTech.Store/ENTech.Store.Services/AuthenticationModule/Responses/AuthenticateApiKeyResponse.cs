@@ -3,7 +3,7 @@ using ENTech.Store.Services.AuthenticationModule.Dtos;
 
 namespace ENTech.Store.Services.AuthenticationModule.Responses
 {
-	public class AuthenticateApiKeyResponse : InternalResponse
+	public class AuthenticateApiKeyResponse : ResponseBase
 	{
 		public PartnerDto Partner { get; set; }
 	}

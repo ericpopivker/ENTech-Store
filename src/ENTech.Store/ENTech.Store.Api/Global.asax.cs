@@ -10,7 +10,7 @@ namespace ENTech.Store.Api
     {
         protected void Application_Start()
         {
-			RequestValidatorErrorMessagesDictionary.RegisterAll();
+			//RequestValidatorErrorMessagesDictionary.RegisterAll();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configure(UnityConfig.RegisterComponents);

@@ -6,7 +6,7 @@ namespace ENTech.Store.Services.CommandService
 	public class CommandFactory : ICommandFactory
 	{
 		public TCommand Create<TCommand>()
-			where TCommand : IInternalCommand
+			where TCommand : ICommand
 		{
 			return IoC.Resolve<TCommand>();
 		}

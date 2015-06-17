@@ -33,7 +33,7 @@ namespace ENTech.Store.Infrastructure.Attributes
 	//http://stackoverflow.com/questions/79126/create-generic-method-constraining-t-to-an-enum
 	public static class StringValueUtils
 	{
-		public static string GetStringValue<T>(this T value) where T : struct,IConvertible
+		public static string GetStringValue<T>(this T value) where T : IConvertible
 		{
 			//if (!typeof(T).IsEnum) throw new ArgumentException("T must be an enumerated type"); ;
 			// Get the type

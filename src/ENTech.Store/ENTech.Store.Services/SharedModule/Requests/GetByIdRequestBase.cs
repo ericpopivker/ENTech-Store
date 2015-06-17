@@ -20,7 +20,6 @@ namespace ENTech.Store.Services.SharedModule.Requests
 	public abstract class GetByIdRequestBase<TSecurity> : SecureRequestBase<TSecurity> 
 		where TSecurity : ISecurityInformation
 	{
-		[Required(ErrorMessage = RequestValidatorErrorMessage.Required)]
 		public int? Id { get; set; }
 	}
 }

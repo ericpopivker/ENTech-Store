@@ -31,19 +31,11 @@ namespace ENTech.Store.Entities.StoreModule
 		[Required]
 		public decimal Price { get; set; }
 
-		public decimal TaxAmount { get; set; }
 
 		public string Photo { get; set; }
 
 		public bool IsActive { get; set; }
-
-		[Required]
-		public int? StoreId { get; set; }
 		
-		[ForeignKey("StoreId")]
-		public virtual Store Store { get; set; }
-		
-	
-
+		public Store Store { get; set; }
 	}
 }

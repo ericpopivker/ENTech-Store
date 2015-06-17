@@ -72,7 +72,7 @@ namespace ENTech.Store.Infrastructure.Helpers
 						if (memberArgument != null && memberArgument.Member is FieldInfo)
 						{
 							var field = memberArgument.Member as FieldInfo;
-							if (field.FieldType == typeof(System.Int32))
+							if (field.FieldType == typeof (System.Int32))
 							{
 								//acessing Dtos possible only via properties. If was field accessed then it must be index [i]
 								yield break;
@@ -97,7 +97,31 @@ namespace ENTech.Store.Infrastructure.Helpers
 		private static bool IsConversion(Expression expression)
 		{
 			return (expression.NodeType == ExpressionType.Convert
-					|| expression.NodeType == ExpressionType.ConvertChecked);
+			        || expression.NodeType == ExpressionType.ConvertChecked);
 		}
+
+
+		public static object GetValue<T, TProperty>(Expression<Func<T, TProperty>> expression, T entity)
+		{
+			var value = expression.Compile().Invoke(entity);
+			return value;
+		}
+		
+
+		//From http://stackoverflow.com/questions/2616638/access-the-value-of-a-member-expression
+		//Not sure if makes sense
+
+		//public static object GetValue<T, TProperty>(Expression<Func<T, TProperty>> expression)
+		//{
+		//	var memberExpression = GetMemberExpression(expression.Body);
+
+		//	var objectMember = Expression.Convert(memberExpression, typeof(object));
+
+		//	var getterLambda = Expression.Lambda<Func<object>>(objectMember);
+
+		//	var getter = getterLambda.Compile();
+
+		//	return getter();
+		//}
 	}
 }

@@ -11,7 +11,7 @@ using ENTech.Store.Services.SharedModule.Commands;
 namespace ENTech.Store.Services.AuthenticationModule.Commands
 {
 	public class AuthenticateApiKeyCommand<TRequest> : DbContextCommandBase<TRequest, AuthenticateApiKeyResponse> 
-		where TRequest : IInternalRequest
+		where TRequest : IRequest
 	{
 		public AuthenticateApiKeyCommand(IUnitOfWork unitOfWork)
 			: base(unitOfWork.DbContext, false)
@@ -26,7 +26,7 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 					return new AuthenticateApiKeyResponse
 					{
 						IsSuccess = false,
-						Error = new Error(AuthenticationErrorCode.InvalidApiKey, "Api Key not provided")
+						Error = new ResponseError(AuthenticationErrorCode.InvalidApiKey, "Api Key not provided")
 					};
 			}
 
@@ -35,7 +35,7 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 				return new AuthenticateApiKeyResponse
 				{
 					IsSuccess = false,
-					Error = new Error(AuthenticationErrorCode.InvalidApiKey, "Not authorized")
+					Error = new ResponseError(AuthenticationErrorCode.InvalidApiKey, "Not authorized")
 				};
 
 			return new AuthenticateApiKeyResponse

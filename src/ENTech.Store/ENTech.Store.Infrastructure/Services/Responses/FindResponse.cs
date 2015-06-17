@@ -2,7 +2,7 @@
 
 namespace ENTech.Store.Infrastructure.Services.Responses
 {
-	public class FindResponse<TEntity> : InternalResponse
+	public class FindResponse<TEntity> : ResponseBase
 	{
 		public IEnumerable<TEntity> Items { get; set; }
 	}

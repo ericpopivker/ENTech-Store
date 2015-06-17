@@ -3,7 +3,7 @@ using ENTech.Store.Infrastructure.Services.Requests;
 
 namespace ENTech.Store.Services.Misc
 {
-	public abstract class SecureRequestBase<TSecurityInformation> : IInternalRequest
+	public abstract class SecureRequestBase<TSecurityInformation> : IRequest
 		where TSecurityInformation : ISecurityInformation
 	{
 		public TSecurityInformation SecurityInformation { get; set; }

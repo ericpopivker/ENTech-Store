@@ -3,8 +3,9 @@
 	public interface IResponse
 	{
 		bool IsSuccess { get; set; }
+		
+		ResponseError Error { get; set; }
 
-		Error Error { get; set; }
 		ArgumentErrorsCollection ArgumentErrors { get; set; }
 	}
 }
