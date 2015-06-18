@@ -48,8 +48,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			};
 
 			_storeRepository.Add(entity);
-
-
+			
 			return new StoreCreateResponse
 			{
 				IsSuccess = true

@@ -16,8 +16,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		readonly Mock<IRepository<Country>> _countryRepositoryMock = new Mock<IRepository<Country>>();
 		readonly Mock<IRepository<State>> _stateRepositoryMock = new Mock<IRepository<State>>();
 
-		[SetUp]
-		public void SetUp()
+		public StoreCreateCommandTests()
 		{
 			_countryRepositoryMock.Setup(x => x.GetById(It.IsAny<int>())).Returns((int id) => new Country
 			{
@@ -34,6 +33,14 @@ namespace ENTech.Store.Services.Tests.StoreModule
 			});
 		}
 
+		[SetUp]
+		public void SetUp()
+		{
+			_storeRepositoryMock.ResetCalls();
+			_countryRepositoryMock.ResetCalls();
+			_stateRepositoryMock.ResetCalls();
+		}
+
 		[Test]
 		public void Execute_When_called_Then_calls_repository_create()
 		{
@@ -42,9 +49,27 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				_countryRepositoryMock.Object,
 				_stateRepositoryMock.Object);
 
+			var storeCreateDto = new StoreCreateDto
+			{
+				Name = "test store name",
+				Email = "test@email.gg",
+				Logo = "logo.jpg",
+				Address = new AddressCreateDto
+				{
+					CountryId = 1,
+					StateId = 1,
+					Street = "Street 1",
+					Street2 = "Street 2",
+					Zip = "12345",
+					City = "City 17"
+				},
+				Phone = "1231231234",
+				Timezone = "Eastern"
+			};
+
 			var request = new StoreCreateRequest
 			{
-				Store = new StoreCreateDto()
+				Store = storeCreateDto
 			};
 
 			command.Execute(request);
@@ -101,6 +126,116 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				y.Address.StateOther == null &&
 				y.Address.Country != null &&
 				y.Address.Country.Id == storeCreateDto.Address.CountryId)), Times.Once);
+		}
+
+		[Test]
+		public void Execute_When_called_with_filled_country_id_Then_calls_country_repository_with_that_country_id()
+		{
+			var command = new StoreCreateCommand(_unitOfWorkMock.Object,
+				_storeRepositoryMock.Object,
+				_countryRepositoryMock.Object,
+				_stateRepositoryMock.Object);
+
+			var storeCreateDto = new StoreCreateDto
+			{
+				Name = "test store name",
+				Email = "test@email.gg",
+				Logo = "logo.jpg",
+				Address = new AddressCreateDto
+				{
+					CountryId = 2,
+					StateId = 9,
+					Street = "Street 1",
+					Street2 = "Street 2",
+					Zip = "12345",
+					City = "City 17"
+				},
+				Phone = "1231231234",
+				Timezone = "Eastern"
+			};
+
+			var request = new StoreCreateRequest
+			{
+				Store = storeCreateDto
+			};
+
+			command.Execute(request);
+
+			_countryRepositoryMock.Verify(x=>x.GetById(storeCreateDto.Address.CountryId), Times.Once);
+			_countryRepositoryMock.Verify(x => x.GetById(It.Is<int>(y => y != storeCreateDto.Address.CountryId)), Times.Never);
+		}
+
+		[Test]
+		public void Execute_When_called_with_filled_state_id_Then_calls_state_repository_with_that_state_id()
+		{
+			var command = new StoreCreateCommand(_unitOfWorkMock.Object,
+				_storeRepositoryMock.Object,
+				_countryRepositoryMock.Object,
+				_stateRepositoryMock.Object);
+
+			var storeCreateDto = new StoreCreateDto
+			{
+				Name = "test store name",
+				Email = "test@email.gg",
+				Logo = "logo.jpg",
+				Address = new AddressCreateDto
+				{
+					CountryId = 2,
+					StateId = 9,
+					Street = "Street 1",
+					Street2 = "Street 2",
+					Zip = "12345",
+					City = "City 17"
+				},
+				Phone = "1231231234",
+				Timezone = "Eastern"
+			};
+
+			var request = new StoreCreateRequest
+			{
+				Store = storeCreateDto
+			};
+
+			command.Execute(request);
+
+			_stateRepositoryMock.Verify(x => x.GetById(storeCreateDto.Address.StateId.Value), Times.Once);
+			_stateRepositoryMock.Verify(x => x.GetById(It.Is<int>(y => y != storeCreateDto.Address.StateId.Value)), Times.Never);
+		}
+
+		[Test]
+		public void Execute_When_called_with_filled_state_other_Then_does_not_call_state_repository()
+		{
+			var command = new StoreCreateCommand(_unitOfWorkMock.Object,
+				_storeRepositoryMock.Object,
+				_countryRepositoryMock.Object,
+				_stateRepositoryMock.Object);
+
+			var storeCreateDto = new StoreCreateDto
+			{
+				Name = "test store name",
+				Email = "test@email.gg",
+				Logo = "logo.jpg",
+				Address = new AddressCreateDto
+				{
+					CountryId = 2,
+					StateOther = "hello",
+					Street = "Street 1",
+					Street2 = "Street 2",
+					Zip = "12345",
+					City = "City 17"
+				},
+				Phone = "1231231234",
+				Timezone = "Eastern"
+			};
+
+			var request = new StoreCreateRequest
+			{
+				Store = storeCreateDto
+			};
+
+			command.Execute(request);
+
+			_stateRepositoryMock.Verify(x => x.GetById(It.IsAny<int>()), Times.Never);
 		}
 	}
 }
