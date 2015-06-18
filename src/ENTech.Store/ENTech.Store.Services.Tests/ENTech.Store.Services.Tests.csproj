@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -50,6 +53,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj">
+      <Project>{7D581130-B9A8-4E44-9562-67E41697A123}</Project>
+      <Name>ENTech.Store.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Services\ENTech.Store.Services.csproj">
       <Project>{9e5fe2b8-a8f3-4ab7-af38-127d1894a978}</Project>
       <Name>ENTech.Store.Services</Name>
