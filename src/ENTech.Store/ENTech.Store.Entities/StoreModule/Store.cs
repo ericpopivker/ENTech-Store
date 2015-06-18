@@ -24,9 +24,6 @@ namespace ENTech.Store.Entities.StoreModule
 
 		public string Logo { get; set; }
 		
-		[ForeignKey("AddressId")]
-		public virtual Address Address { get; set; }
-		
 		[MaxLength(20)]
 		public string Phone { get; set; }
 
@@ -36,5 +33,6 @@ namespace ENTech.Store.Entities.StoreModule
 		[Required]
 		public string TimezoneId { get; set; }
 
+		public int? AddressId { get; set; }
 	}
 }

@@ -1,7 +1,13 @@
-﻿using ENTech.Store.Entities.GeoModule;
-using ENTech.Store.Entities.UnitOfWork;
+﻿using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure.Database;
+using ENTech.Store.Infrastructure.Mapping;
+using ENTech.Store.Services.CommandService.Definition;
+using ENTech.Store.Services.GeoModule.Commands;
+using ENTech.Store.Services.GeoModule.Dtos;
+using ENTech.Store.Services.GeoModule.Requests;
+using ENTech.Store.Services.GeoModule.Responses;
 using ENTech.Store.Services.SharedModule.Commands;
+using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 
@@ -10,23 +16,26 @@ namespace ENTech.Store.Services.StoreModule.Commands
 	public class StoreCreateCommand : DbContextCommandBase<StoreCreateRequest, StoreCreateResponse>
 	{
 		private readonly IRepository<Entities.StoreModule.Store> _storeRepository;
-		private readonly IRepository<Country> _countryRepository;
-		private readonly IRepository<State> _stateRepository;
-
-		public StoreCreateCommand(IUnitOfWork unitOfWork, 
-			IRepository<Entities.StoreModule.Store> storeRepository, 
-			IRepository<Country> countryRepository, 
-			IRepository<State> stateRepository)
+		private readonly IMapper _mapper;
+		private readonly IInternalCommandService _internalCommandService;
+		
+		public StoreCreateCommand(IUnitOfWork unitOfWork, IRepository<Entities.StoreModule.Store> storeRepository, 
+			IInternalCommandService internalCommandService, IMapper mapper)
 			: base(unitOfWork.DbContext, false)
 		{
 			_storeRepository = storeRepository;
-			_countryRepository = countryRepository;
-			_stateRepository = stateRepository;
+			_internalCommandService = internalCommandService;
+			_mapper = mapper;
 		}
 
 		public override StoreCreateResponse Execute(StoreCreateRequest request)
 		{
 			var storeDto = request.Store;
+
+			var addressCreateResponse = _internalCommandService.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(new AddressCreateRequest
+			{
+				Address = _mapper.Map<AddressDto, AddressCreateDto>(storeDto.Address)
+			});
 
 			var entity = new Entities.StoreModule.Store
 			{
@@ -34,16 +43,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 				Logo = storeDto.Logo,
 				Phone = storeDto.Phone,
 				Email = storeDto.Email,
-				Address = new Address
-				{
-					City = storeDto.Address.City,
-					Country = _countryRepository.GetById(storeDto.Address.CountryId),
-					State = storeDto.Address.StateId.HasValue ? _stateRepository.GetById(storeDto.Address.StateId.Value) : null,
-					StateOther = storeDto.Address.StateOther,
-					Street = storeDto.Address.Street,
-					Street2 = storeDto.Address.Street2,
-					Zip = storeDto.Address.Zip
-				},
+				AddressId = addressCreateResponse.AddressId,
 				TimezoneId = storeDto.Timezone
 			};
 
