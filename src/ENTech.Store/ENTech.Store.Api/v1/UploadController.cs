@@ -6,51 +6,22 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using ENTech.Store.Api.DAL;
 
 namespace ENTech.Store.Api.v1
 {
-    public class UploadEntity
-    {
-        public string Id;
-        public string OwnerId;
-        public int Size;
-        public int Uploaded;
-        public DateTime CreationDate;
-        public DateTime LastUpdateDate;
-        public string EntityType;
-        public string EntityId;
-        public string URL;
 
-        public bool IsProcessed;
-        public bool IsAttached;
-        public bool IsUploaded;
-    }
-
+    //https://www.eventbrite.com/
 
     public class UploadFinishedEvent
-    {
-        //public UploadEntity Info;
-        
+    {   
         public string Id;
-        public string URL;
-
+        public string FileName;
+        public string AttachedEntityType;
+        public string AttachedEntityId;
     }
 
 
-    public class UploadRepository
-    {
-        public void Create(UploadEntity info)
-        {
-        }
-
-        public void Update(UploadEntity info)
-        {
-        }
-
-        public UploadEntity GetById(string id)
-        {
-        }
-    }
 
     public interface IUploadEventPublisher
     {
@@ -68,17 +39,23 @@ namespace ENTech.Store.Api.v1
             this._eventPublisher = eventPublisher;
         }
 
-        public UploadEntity CreateUpload()
+
+        public FileUpload GetById(string id)
         {
-            var info = new UploadEntity
+            return _repository.GetById(id);
+        }
+
+        public FileUpload CreateUpload()
+        {
+            var info = new FileUpload
             {
                 Id = Guid.NewGuid().ToString(),
                 OwnerId = this.UserId,
-                CreationDate = DateTime.UtcNow,
-                LastUpdateDate = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
 
-            _repository.Create(info);
+            _repository.Create(info.Id, info);
 
             return info;
         }
@@ -86,30 +63,36 @@ namespace ENTech.Store.Api.v1
         public async void Attach(string id, string entityType, string entityId)
         {
             var u = _repository.GetById(id);
-            if (u.OwnerId != this.UserId) throw new Exception("Access denied");
-            u.EntityId = entityId;
-            u.EntityType = entityType;
-
+            if (u.OwnerId != this.UserId) 
+                   throw new Exception("Access denied");
+            
+            u.AttachedEntityType = entityType;
+            u.AttachedEntityId = entityId;
             u.IsAttached = true;
-            _repository.Update(u);
+            _repository.Update(u.Id, u);
 
             if (u.IsUploaded)
             {
                 _eventPublisher.Publish(new UploadFinishedEvent
                 {
-                    Info = u
+                    Id=u.Id,
+                    AttachedEntityId = u.AttachedEntityId,
+                    AttachedEntityType = u.AttachedEntityType,
+                    FileName = u.FileName
                 });
             }
         }
 
-        public async void Save(string id, int fileSize, Stream s)
+        public async void Save(string id, string fileName, int fileSize, Stream s)
         {
             var u = _repository.GetById(id);
             if (u.OwnerId != this.UserId) throw new Exception("Access denied");
-            u.Size = fileSize;
-            u.LastUpdateDate = DateTime.UtcNow;
 
-            _repository.Update(u);
+            u.FileName = fileName;
+            u.Size = fileSize;
+            u.UpdatedAt = DateTime.UtcNow;
+
+            _repository.Update(u.Id, u);
 
 
             var b = new byte[1024 * 256];//256kb
@@ -122,20 +105,36 @@ namespace ENTech.Store.Api.v1
             }
 
             u.IsUploaded = true;
-            _repository.Update(u);
+            _repository.Update(u.Id, u);
 
 
             if (u.IsAttached)
             {
                 _eventPublisher.Publish(new UploadFinishedEvent
                 {
-                    Info = u
+                    Id = u.Id,
+                    AttachedEntityId = u.AttachedEntityId,
+                    AttachedEntityType = u.AttachedEntityType,
+                    FileName = u.FileName
                 });
             }
         }
     }
 
 
+
+    public class UploadEventDispatcher : IUploadEventPublisher
+    {
+        public ProductService ProductService;
+
+        public void Publish(UploadFinishedEvent e)
+        {
+            if (e.AttachedEntityType.StartsWith("Product"))
+            {
+                ProductService.LogoUploaded(e.AttachedEntityId, e.FileName);
+            }
+        }
+    }
 
 
     public class UploadDto
@@ -144,19 +143,20 @@ namespace ENTech.Store.Api.v1
         public string OwnerId;//? need?
         public int Size;
         public int Uploaded;
-        public DateTime CreationDate;
-        public DateTime LastUpdateDate;
+        public DateTime CreatedAt;
+        public DateTime UpdatedAt;
         public bool IsAttached;
+
     }
 
 
     [RoutePrefix(ApiVersions.V1 + "/uploads")]
-    public class FileController : ApiController
+    public class UploadController : ApiController
     {
         private IUploadEventPublisher _publisher;
         private UploadService _service;
 
-        public FileController()
+        public UploadController()
         {
             _service = new UploadService(_publisher);
         }
@@ -171,15 +171,15 @@ namespace ENTech.Store.Api.v1
             return new UploadDto
                {
                    Id = u.Id,
-                   CreationDate = u.CreationDate,
-                   LastUpdateDate = u.LastUpdateDate
+                   CreatedAt = u.CreatedAt,
+                   UpdatedAt = u.UpdatedAt
                };
 
         }
 
         [HttpPost]
         [Route("/{id}")]
-        public async void UploadFile(string id)
+        public async void Upload(string id)
         {
             var s = await this.Request.Content.ReadAsStreamAsync();
             var w = await Request.Content.ReadAsMultipartAsync();
@@ -187,14 +187,14 @@ namespace ENTech.Store.Api.v1
 
         [HttpHead]
         [Route("{id}")]
-        public object GetTokenInfo(string id)
+        public object GetUpload(string id)
         {
-            var u = _service.Get(id);
+            var u = _service.GetById(id);
             return new UploadDto
             {
                 Id = u.Id,
-                CreationDate = u.CreationDate,
-                LastUpdateDate = u.LastUpdateDate
+                CreatedAt = u.CreatedAt,
+                UpdatedAt = u.UpdatedAt
             };
         }
     }
