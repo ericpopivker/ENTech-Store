@@ -1,5 +1,6 @@
 ﻿using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure.Database;
+using ENTech.Store.Infrastructure.Database.QueryExecuter;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Responses;
@@ -71,8 +72,8 @@ namespace ENTech.Store.Services.Tests.StoreModule
 			RequestValidatorErrorMessagesDictionary.RegisterAll();
 		}
 
-		[SetUp]
-		public void SetUp()
+		[TearDown]
+		public void TearDown()
 		{
 			_storeRepositoryMock.ResetCalls();
 			_internalCommandServiceMock.ResetCalls();

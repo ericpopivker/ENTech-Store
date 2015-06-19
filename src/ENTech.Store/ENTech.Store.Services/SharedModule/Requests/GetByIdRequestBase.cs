@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.Misc;
@@ -21,6 +22,7 @@ namespace ENTech.Store.Services.SharedModule.Requests
 		where TSecurity : ISecurityInformation
 	{
 		[Required(ErrorMessage = RequestValidatorErrorMessage.Required)]
-		public int? Id { get; set; }
+		[Range(0, Int32.MaxValue)]
+		public int Id { get; set; }
 	}
 }

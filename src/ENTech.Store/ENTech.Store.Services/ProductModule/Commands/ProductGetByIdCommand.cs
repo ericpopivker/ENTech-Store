@@ -18,8 +18,9 @@ namespace ENTech.Store.Services.ProductModule.Commands
 			var query = new ProductGetByIdQuery();
 			var result = query.Execute(DbContext, new ProductGetByIdQuery.Criteria
 			{
-				Id = request.Id.Value
+				Id = request.Id
 			});
+
 			return new ProductGetByIdResponse
 			{
 				IsSuccess = true,

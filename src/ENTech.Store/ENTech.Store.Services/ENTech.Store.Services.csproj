@@ -112,9 +112,11 @@
     <Compile Include="GeoModule\Commands\AddressCreateCommand.cs" />
     <Compile Include="GeoModule\Requests\AddressCreateRequest.cs" />
     <Compile Include="GeoModule\Responses\AddressCreateResponse.cs" />
+    <Compile Include="StoreModule\Commands\FindByIdCriteria.cs" />
     <Compile Include="StoreModule\Commands\StoreUpdateCommand.cs" />
     <Compile Include="StoreModule\Dtos\AddressDto.cs" />
     <Compile Include="StoreModule\Dtos\StoreUpdateDto.cs" />
+    <Compile Include="StoreModule\Projections\StoreProjection.cs" />
     <Compile Include="StoreModule\Queries\StoreFindQuery.cs" />
     <Compile Include="StoreModule\Queries\ProductGetByIdQuery.cs" />
     <Compile Include="StoreModule\Requests\StoreUpdateRequest.cs" />

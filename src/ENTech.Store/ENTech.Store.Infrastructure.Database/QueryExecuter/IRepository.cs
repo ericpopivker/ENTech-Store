@@ -1,6 +1,6 @@
 ﻿using ENTech.Store.Infrastructure.Entities;
 
-namespace ENTech.Store.Infrastructure.Database
+namespace ENTech.Store.Infrastructure.Database.QueryExecuter
 {
 	public interface IRepository<T> where T : IEntity 
 	{
