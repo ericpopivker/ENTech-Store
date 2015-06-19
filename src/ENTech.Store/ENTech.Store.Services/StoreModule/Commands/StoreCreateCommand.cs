@@ -32,10 +32,21 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		{
 			var storeDto = request.Store;
 
-			var addressCreateResponse = _internalCommandService.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(new AddressCreateRequest
+			var addressCreateRequest = new AddressCreateRequest
 			{
 				Address = _mapper.Map<AddressDto, AddressCreateDto>(storeDto.Address)
-			});
+			};
+
+			var addressCreateResponse = _internalCommandService.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(addressCreateRequest);
+
+			if (addressCreateResponse.IsSuccess == false)
+				return new StoreCreateResponse
+				{
+					IsSuccess = false,
+					ArgumentErrors = addressCreateResponse.ArgumentErrors,
+					Error = addressCreateResponse.Error
+				};
+
 
 			var entity = new Entities.StoreModule.Store
 			{
