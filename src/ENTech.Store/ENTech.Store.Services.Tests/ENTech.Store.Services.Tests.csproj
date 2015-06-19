@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\CommandTestsBase.cs" />
     <Compile Include="StoreModule\StoreCreateCommandTests.cs" />
     <Compile Include="StoreModule\StoreGetByIdCommandTests.cs" />
   </ItemGroup>

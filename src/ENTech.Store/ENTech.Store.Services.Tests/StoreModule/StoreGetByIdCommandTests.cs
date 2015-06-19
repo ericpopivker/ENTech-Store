@@ -1,27 +1,22 @@
-﻿using ENTech.Store.Entities.UnitOfWork;
-using ENTech.Store.Infrastructure.Database;
-using ENTech.Store.Infrastructure.Database.Repository;
-using ENTech.Store.Infrastructure.Mapping;
+﻿using ENTech.Store.Infrastructure.Database.Repository;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Projections;
 using ENTech.Store.Services.StoreModule.Requests;
+using ENTech.Store.Services.StoreModule.Responses;
+using ENTech.Store.Services.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
 namespace ENTech.Store.Services.Tests.StoreModule
 {
-	public class StoreGetByIdCommandTests
+	public class StoreGetByIdCommandTests : CommandTestsBase<StoreGetByIdRequest, StoreGetByIdResponse>
 	{
-		private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
 		private readonly Mock<IQueryExecuter> _queryExecuterMock = new Mock<IQueryExecuter>();
-		readonly Mock<IMapper> _mapperMock = new Mock<IMapper>();
 
-		[TearDown]
-		public void TearDown()
+		protected override void TearDownInternal()
 		{
-			_mapperMock.ResetCalls();
-			_unitOfWorkMock.ResetCalls();
 			_queryExecuterMock.ResetCalls();
 		}
 
@@ -79,15 +74,12 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Id = id
 			});
 
-			_mapperMock.Verify(mock => mock.Map<StoreProjection, StoreDto>(It.Is<StoreProjection>(proj => proj.Id == id)), Times.Once);
+			MapperMock.Verify(mock => mock.Map<StoreProjection, StoreDto>(It.Is<StoreProjection>(proj => proj.Id == id)), Times.Once);
 		}
 
-		private StoreGetByIdCommand Command
+		protected override ICommand<StoreGetByIdRequest, StoreGetByIdResponse> CreateCommand()
 		{
-			get
-			{
-				return new StoreGetByIdCommand(_unitOfWorkMock.Object, _queryExecuterMock.Object, _mapperMock.Object);
-			}
-		}  
+			return new StoreGetByIdCommand(UnitOfWorkMock.Object, _queryExecuterMock.Object, MapperMock.Object);
+		}
 	}
 }

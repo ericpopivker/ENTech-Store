@@ -3,6 +3,7 @@ using ENTech.Store.Infrastructure.Database;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
@@ -13,12 +14,14 @@ using ENTech.Store.Services.GeoModule.Responses;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
+using ENTech.Store.Services.StoreModule.Responses;
+using ENTech.Store.Services.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
 namespace ENTech.Store.Services.Tests.StoreModule
 {
-	public class StoreCreateCommandTests
+	public class StoreCreateCommandTests : CommandTestsBase<StoreCreateRequest, StoreCreateResponse>
 	{
 		readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
 		readonly Mock<IRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<IRepository<Entities.StoreModule.Store>>();
@@ -204,13 +207,10 @@ namespace ENTech.Store.Services.Tests.StoreModule
 			};
 		}
 
-		private StoreCreateCommand Command
+		protected override ICommand<StoreCreateRequest, StoreCreateResponse> CreateCommand()
 		{
-			get
-			{
-				return new StoreCreateCommand(_unitOfWorkMock.Object,
-					_storeRepositoryMock.Object, _internalCommandServiceMock.Object, _mapperMock.Object);
-			}
+			return new StoreCreateCommand(_unitOfWorkMock.Object,
+				_storeRepositoryMock.Object, _internalCommandServiceMock.Object, _mapperMock.Object);
 		}
 	}
 }
