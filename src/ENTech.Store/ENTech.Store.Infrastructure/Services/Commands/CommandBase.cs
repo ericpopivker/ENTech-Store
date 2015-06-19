@@ -7,7 +7,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public abstract class CommandBase<TRequest, TResponse> : ICommand<TRequest, TResponse>
 		where TRequest : IInternalRequest
-		where TResponse : InternalResponse
+		where TResponse : InternalResponse, new()
 	{
 		private readonly bool _requiresTransaction;
 
@@ -43,5 +43,14 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 		{
 			//
 		}
+
+		protected TResponse InternalServerError()
+		{
+			return new TResponse
+			{
+				IsSuccess = false,
+				Error = new Error(CommonErrorCode.InternalServerError)
+			};
+		} 
 	}
 }

@@ -6,9 +6,8 @@ using ENTech.Store.Infrastructure.Services.Responses;
 namespace ENTech.Store.Services.SharedModule.Commands
 {
 	public abstract class DbContextCommandBase<TRequest, TResponse> : CommandBase<TRequest, TResponse>
-	
 		where TRequest : IInternalRequest
-		where TResponse : InternalResponse
+		where TResponse : InternalResponse, new()
 	{
 		private readonly IDbContext _dbContext;
 

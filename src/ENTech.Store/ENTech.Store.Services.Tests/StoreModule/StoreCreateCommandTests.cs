@@ -1,7 +1,9 @@
 ﻿using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure.Database;
 using ENTech.Store.Infrastructure.Mapping;
+using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Dtos;
@@ -10,7 +12,6 @@ using ENTech.Store.Services.GeoModule.Responses;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
-using ENTech.Store.Services.StoreModule.Responses;
 using Moq;
 using NUnit.Framework;
 
@@ -44,7 +45,9 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				});
 
 			_internalCommandServiceMock.Setup(
-				x => x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(It.Is<AddressCreateRequest>(req => req.Address != null && req.Address.CountryId == _validCountryId)))
+				x =>
+					x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(
+						It.Is<AddressCreateRequest>(req => req.Address != null && req.Address.CountryId == _validCountryId)))
 				.Returns(new AddressCreateResponse
 				{
 					AddressId = _responseAddressId,
@@ -64,6 +67,8 @@ namespace ENTech.Store.Services.Tests.StoreModule
 							new ArgumentError {ArgumentName = "test error name", ErrorCode = 500, ErrorMessage = "Message"}
 						}
 				});
+
+			RequestValidatorErrorMessagesDictionary.RegisterAll();
 		}
 
 		[SetUp]
@@ -76,46 +81,21 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		[Test]
 		public void Execute_When_called_Then_calls_repository_create()
 		{
-			var storeCreateDto = new StoreCreateDto
-			{
-				Name = "test store name",
-				Email = "test@email.gg",
-				Logo = "logo.jpg",
-				Address = GetValidAddressDto(),
-				Phone = "1231231234",
-				Timezone = "Eastern"
-			};
+			var request = GetStoreCreateRequest(GetValidAddressDto());
 
-			var request = new StoreCreateRequest
-			{
-				Store = storeCreateDto
-			};
-
-			Execute(request);
+			Command.Execute(request);
 
 			_storeRepositoryMock.Verify(x => x.Add(It.IsAny<Entities.StoreModule.Store>()),
 				Times.Once);
 		}
-
 		[Test]
 		public void Execute_When_called_with_filled_fields_Then_calls_repository_create_with_these_fields_transferred()
 		{
-			var storeCreateDto = new StoreCreateDto
-			{
-				Name = "test store name",
-				Email = "test@email.gg",
-				Logo = "logo.jpg",
-				Address = GetValidAddressDto(),
-				Phone = "1231231234",
-				Timezone = "Eastern"
-			};
+			var request = GetStoreCreateRequest(GetValidAddressDto());
 
-			var request = new StoreCreateRequest
-			{
-				Store = storeCreateDto
-			};
+			var storeCreateDto = request.Store;
 
-			Execute(request);
+			Command.Execute(request);
 
 			_storeRepositoryMock.Verify(x => x.Add(It.Is<Entities.StoreModule.Store>(y =>
 				y.Name == storeCreateDto.Name &&
@@ -129,22 +109,9 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		[Test]
 		public void Execute_When_called_Then_calls_AddressCreateCommand_through_internal_command_service_to_create_address()
 		{
-			var storeCreateDto = new StoreCreateDto
-			{
-				Name = "test store name",
-				Email = "test@email.gg",
-				Logo = "logo.jpg",
-				Address = GetValidAddressDto(),
-				Phone = "1231231234",
-				Timezone = "Eastern"
-			};
+			var request = GetStoreCreateRequest(GetValidAddressDto());
 
-			var request = new StoreCreateRequest
-			{
-				Store = storeCreateDto
-			};
-
-			Execute(request);
+			Command.Execute(request);
 
 			_internalCommandServiceMock.Verify(x=>x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(It.IsAny<AddressCreateRequest>()), Times.Once);
 		}
@@ -152,22 +119,11 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		[Test]
 		public void Execute_When_called_with_valid_address_Then_saves_received_address_id_to_repository()
 		{
-			var storeCreateDto = new StoreCreateDto
-			{
-				Name = "test store name",
-				Email = "test@email.gg",
-				Logo = "logo.jpg",
-				Address = GetValidAddressDto(),
-				Phone = "1231231234",
-				Timezone = "Eastern"
-			};
+			var request = GetStoreCreateRequest(GetValidAddressDto());
 
-			var request = new StoreCreateRequest
-			{
-				Store = storeCreateDto
-			};
+			var storeCreateDto = request.Store;
 
-			Execute(request);
+			Command.Execute(request);
 
 			_storeRepositoryMock.Verify(x => x.Add(It.Is<Entities.StoreModule.Store>(y =>
 				y.Name == storeCreateDto.Name &&
@@ -181,24 +137,44 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		[Test]
 		public void Execute_When_called_with_invalid_address_Then_returns_failed_response()
 		{
-			var storeCreateDto = new StoreCreateDto
+			var request = GetStoreCreateRequest(GetInvalidAddressDto());
+
+			var response = Command.Execute(request);
+
+			Assert.IsFalse(response.IsSuccess);
+		}
+
+		[Test]
+		public void Execute_When_called_with_invalid_address_Then_returns_internal_error_response()
+		{
+			var request = GetStoreCreateRequest(GetInvalidAddressDto());
+
+			var response = Command.Execute(request);
+
+			Assert.AreEqual(CommonErrorCode.InternalServerError, response.Error.ErrorCode);
+		}
+
+
+
+		private static StoreCreateRequest GetStoreCreateRequest(AddressDto addressDto)
+		{
+			return new StoreCreateRequest
+			{
+				Store = GetStoreCreateDto(addressDto)
+			};
+		}
+
+		private static StoreCreateDto GetStoreCreateDto(AddressDto address)
+		{
+			return new StoreCreateDto
 			{
 				Name = "test store name",
 				Email = "test@email.gg",
 				Logo = "logo.jpg",
-				Address = GetInvalidAddressDto(),
+				Address = address,
 				Phone = "1231231234",
 				Timezone = "Eastern"
 			};
-
-			var request = new StoreCreateRequest
-			{
-				Store = storeCreateDto
-			};
-
-			var response = Execute(request);
-
-			Assert.IsFalse(response.IsSuccess);
 		}
 
 		private static AddressDto GetInvalidAddressDto()
@@ -227,12 +203,13 @@ namespace ENTech.Store.Services.Tests.StoreModule
 			};
 		}
 
-		private StoreCreateResponse Execute(StoreCreateRequest request)
+		private StoreCreateCommand Command
 		{
-			var command = new StoreCreateCommand(_unitOfWorkMock.Object,
-				_storeRepositoryMock.Object, _internalCommandServiceMock.Object, _mapperMock.Object);
-
-			return command.Execute(request);
+			get
+			{
+				return new StoreCreateCommand(_unitOfWorkMock.Object,
+					_storeRepositoryMock.Object, _internalCommandServiceMock.Object, _mapperMock.Object);
+			}
 		}
 	}
 }

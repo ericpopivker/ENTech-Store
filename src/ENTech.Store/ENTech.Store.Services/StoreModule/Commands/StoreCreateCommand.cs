@@ -40,13 +40,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			var addressCreateResponse = _internalCommandService.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(addressCreateRequest);
 
 			if (addressCreateResponse.IsSuccess == false)
-				return new StoreCreateResponse
-				{
-					IsSuccess = false,
-					ArgumentErrors = addressCreateResponse.ArgumentErrors,
-					Error = addressCreateResponse.Error
-				};
-
+				return InternalServerError();
 
 			var entity = new Entities.StoreModule.Store
 			{
