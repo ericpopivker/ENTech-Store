@@ -1,5 +1,4 @@
-﻿using ENTech.Store.Entities;
-using ENTech.Store.Entities.UnitOfWork;
+﻿using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
