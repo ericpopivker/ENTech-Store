@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+    <form id="fileForm" enctype="multipart/form-data">
+        <input id="file" name="file" type="file" />
+    </form>
+    <progress id="progress"
+              value="0.05"></progress>
+
+
+    <input id="title" type="text" value="test title" />
+    <input id="description" type="text" value="test description" />
+
+    <input type="button" id="btnSave" value="Create Product" />
+
+    <script>
+        var _uploaded = true;
+        var _uploadId = null;
+
+        $('#btnSave').click(createProduct);
+
+        $('#file').change(function () {
+
+            _uploaded = false;
+            $('#btnSave').attr('disabled', 'disabled');
+
+
+            $.ajax({
+                url: 'api/v1/uploads',
+                type: 'POST',
+                success: function (s) {
+                    var data = JSON.parse(s);
+                    _uploadId = data.Id;
+
+                    $('#btnSave').removeAttr('disabled');
+
+                    sendFile(_uploadId);
+                }
+
+            });
+
+
+            function sendFile(uploadId) {
+                var formData = new FormData($('form')[0]);
+
+                $.ajax({
+                    url: 'api/v1/uploads/' + uploadId,
+                    type: 'POST',
+                    xhr: function () { // Custom XMLHttpRequest
+                        var myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) { // Check if upload property exists
+                            myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload
+                        }
+                        return myXhr;
+                    },
+                    //Ajax events
+                    beforeSend: function () { },
+                    success: function () {
+                        _uploaded = true;
+                    },
+                    error: function () { },
+                    // Form data
+                    data: formData,
+                    //Options to tell jQuery not to process data or worry about content-type.
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+
+        });
+
+        function progressHandlingFunction(e) {
+            if (e.lengthComputable) {
+                $('#progress').attr({ value: e.loaded, max: e.total });
+            }
+        }
+
+
+        
+
+        function createProduct() {
+            var product = {
+                Description: $('#description').val(),
+                Title: $('#title').val(),
+                LogoUploadId: _uploadId
+            }
+
+
+
+            $.ajax({
+                url: 'api/v1/products',
+                type: 'POST',
+                //Ajax events
+                beforeSend: function () { },
+                success: function (s) {
+                    alert(s);
+                    var data = JSON.parse(s);
+                },
+
+                error: function () { },
+                data: JSON.stringify(product),
+                //Options to tell jQuery not to process data or worry about content-type.
+                contentType: "application/json"
+
+            });
+        }
+
+    </script>
+</body>
+</html>

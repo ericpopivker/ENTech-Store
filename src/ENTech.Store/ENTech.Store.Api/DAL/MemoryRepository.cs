@@ -5,23 +5,57 @@ using System.Web;
 
 namespace ENTech.Store.Api.DAL
 {
+    public static class MemoryRepository
+    {
+        public static Dictionary<string, Dictionary<string, object>> Storage = new Dictionary<string, Dictionary<string, object>>();
+        
+        public static void Clear()
+        {
+            Storage.Clear();
+        }
+    }
+
     public class MemoryRepository<T>
     {
-        private readonly Dictionary<string, T> _storage = new Dictionary<string, T>();
+       
+      // private Dictionary<string, object> _storage =  
+        public Dictionary<string, object> _table {
+            get
+            {
+                var s = MemoryRepository.Storage;
+                var key = typeof (T).ToString();
+                if (!s.ContainsKey(key)) 
+                    s.Add(key, new Dictionary<string, object>());
+                
+                return s[key];
+            }
+        }
 
         public void Create(string id, T data)
         {
-            _storage.Add(id, data);
+            _table.Add(id, data);
         }
+
+       
 
         public void Update(string id, T data)
         {
-            _storage[id] = data;
+            _table[id] = data;
+        }
+
+        public void Delete(string id)
+        {
+            _table.Remove(id);
+        }
+
+        public bool Exists(string id)
+        {
+            return _table.ContainsKey(id);
         }
 
         public T GetById(string id)
         {
-            return _storage[id];
+            return (T)_table[id];
         }
     }
 
@@ -53,11 +87,12 @@ namespace ENTech.Store.Api.DAL
         public int Size;
         public string FileName;
 
-        public int Uploaded;
+        public long Uploaded;
         public DateTime CreatedAt;
         public DateTime UpdatedAt;
         public string AttachedEntityType;
         public string AttachedEntityId;
+        public string AttachedEntityFieldName;
 
         public bool IsProcessed;
         public bool IsAttached;

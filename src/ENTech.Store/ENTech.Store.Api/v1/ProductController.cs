@@ -19,13 +19,15 @@ namespace ENTech.Store.Api.v1
         }
     }
 
-    public class UploadReferenceDto: FileBaseDto
+    public class UploadReferenceDto : FileBaseDto
     {
         public string Id;
         public int StatusPercentage;
 
-        public UploadReferenceDto():base("Upload")
+        public UploadReferenceDto(string id)
+            : base("Upload")
         {
+            this.Id = id;
         }
     }
 
@@ -33,9 +35,10 @@ namespace ENTech.Store.Api.v1
     {
         public string Url;
 
-        public UrlDto()
+        public UrlDto(string url)
             : base("Upload")
         {
+            this.Url = url;
         }
     }
 
@@ -48,8 +51,20 @@ namespace ENTech.Store.Api.v1
         public FileBaseDto Logo;
     }
 
+    public class ProductCreateRequest
+    {
+        public string Title;
+        public string Description;
+        public string LogoUploadId;
+    }
 
-    public class ProductService
+
+    public interface IUploadedEventHandler
+    {
+        void OnUploaded(string uploadId, string id, string fieldName, string url);
+    }
+
+    public class ProductService : IUploadedEventHandler
     {
         private readonly ProductRepository _repository = new ProductRepository();
 
@@ -68,28 +83,67 @@ namespace ENTech.Store.Api.v1
             _repository.Create(product.Id, product);
         }
 
-        internal void LogoUploaded(string id, string fileName)
+        public void OnUploaded(string uploadId, string entityId, string fieldName, string url)
         {
-            var p = GetById(id);
-            p.LogoUrl = fileName;
-            p.LogoUploadId = "";
-            Update(p);
+            if (fieldName.ToLower() == "logo")
+            {
+                var p = GetById(entityId);
+
+                if (p.LogoUploadId == uploadId)
+                {
+                    p.LogoUrl = url;
+                    p.LogoUploadId = "";
+                    Update(p);
+                }//else - the upload is not actual (was canceled before)
+            }
+
         }
     }
 
 
+
+    [RoutePrefix(ApiVersions.V1 + "/products")]
     public class ProductsController : ApiController
     {
-       
         // GET: api/Products/5
-        public string Get(int id)
+        [Route("{id}")]
+        [HttpGet]
+        public ProductDto Get(string id)
         {
-            return "value";
+            var productService = new ProductService();
+            var p = productService.GetById(id);
+
+            return new ProductDto
+            {
+                Id = p.Description,
+                Title = p.Title,
+                Logo = (string.IsNullOrEmpty(p.LogoUploadId) ? ((FileBaseDto)new UrlDto(p.LogoUrl)) : ((FileBaseDto)new UploadReferenceDto(p.LogoUploadId)))
+
+            };
         }
 
         // POST: api/Products
-        public void Post([FromBody]ProductDto product)
+
+        [Route("")]
+        [HttpPost]
+        public ProductDto Post(ProductCreateRequest product)
         {
+            var publisher = new UploadEventDispatcher();
+            var uploadService = new UploadService(publisher);
+
+            var productService = new ProductService();
+            var p = new DAL.Product()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Title = product.Title,
+                LogoUploadId = product.LogoUploadId,
+                Description = product.Description
+            };
+
+            productService.Create(p);
+            uploadService.Attach(product.LogoUploadId, "Product", "Logo", p.Id);
+
+            return this.Get(p.Id);
         }
 
         // PUT: api/Products/5
