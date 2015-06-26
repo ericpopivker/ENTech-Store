@@ -7,9 +7,9 @@ namespace ENTech.Store.Services.CommandService.Definition
 	public interface IExternalCommandService<TSecurity>
 			where TSecurity : ISecurityInformation
 	{
-		TResponse Execute<TRequest, TResponse, TCommand>(TRequest request)
+		IResponseStatus<TResponse> Execute<TRequest, TResponse, TCommand>(TRequest request)
 			where TCommand : ICommand<TRequest, TResponse>
 			where TRequest : SecureRequestBase<TSecurity>
-			where TResponse : InternalResponse, new();
+			where TResponse : ResponseBase, new();
 	}
 }

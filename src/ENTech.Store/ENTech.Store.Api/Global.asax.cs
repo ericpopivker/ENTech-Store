@@ -2,6 +2,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Validators;
 
 namespace ENTech.Store.Api
@@ -10,7 +11,7 @@ namespace ENTech.Store.Api
     {
         protected void Application_Start()
         {
-			RequestValidatorErrorMessagesDictionary.RegisterAll();
+			ErrorMessageDictionary.RegisterAll();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configure(UnityConfig.RegisterComponents);

@@ -2,7 +2,7 @@ using ENTech.Store.Infrastructure.Services.Responses;
 
 namespace ENTech.Store.Services.ProductModule.Responses
 {
-	public class ProductDeleteResponse : InternalResponse
+	public class ProductDeleteResponse : ResponseBase
 	{
 	}
 }

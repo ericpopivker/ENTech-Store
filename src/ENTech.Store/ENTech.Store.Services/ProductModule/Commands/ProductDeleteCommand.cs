@@ -15,10 +15,7 @@ namespace ENTech.Store.Services.ProductModule.Commands
 
 		public override ProductDeleteResponse Execute(ProductDeleteRequest request)
 		{
-			return new ProductDeleteResponse
-			{
-				IsSuccess = true
-			};
+			return new ProductDeleteResponse();
 		}
 	}
 }

@@ -16,10 +16,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 		public override StoreCreateResponse Execute(StoreCreateRequest request)
 		{
-			return new StoreCreateResponse
-			{
-				IsSuccess = true
-			};
+			return new StoreCreateResponse();
 		}
 	}
 }

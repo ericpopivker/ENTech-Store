@@ -40,5 +40,13 @@ namespace ENTech.Store.Entities.StoreModule
 		[Required]
 		public string TimezoneId { get; set; }
 
+
+		public int? SettingsId { get; set; }
+
+
+		[ForeignKey("SettingsId")]
+		public virtual StoreSettings Settings { get; set; }
+
+
 	}
 }

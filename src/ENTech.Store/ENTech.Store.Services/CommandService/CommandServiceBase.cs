@@ -1,9 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
+using ENTech.Store.Infrastructure.Services.Errors;
+using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Responses.Statuses;
+using ENTech.Store.Infrastructure.Services.Validators;
 
 namespace ENTech.Store.Services.CommandService
 {
@@ -24,68 +29,45 @@ namespace ENTech.Store.Services.CommandService
 		}
 
 		protected void AfterExecute<TRequest, TResponse, TCommand>(TRequest request, TResponse response, TCommand command)
-			where TRequest : IInternalRequest
-			where TResponse : InternalResponse, new()
+			where TRequest : IRequest
+			where TResponse : ResponseBase, new()
 			where TCommand : ICommand<TRequest, TResponse>
 		{
 			command.NotifyExecuted(request, response);
 		}
 
-		protected TResponse TryExecute<TRequest, TResponse, TCommand>(TRequest request, TCommand command)
-			where TRequest : IInternalRequest
-			where TResponse : InternalResponse, new()
+		protected IResponseStatus<TResponse> TryExecute<TRequest, TResponse, TCommand>(TRequest request, TCommand command)
+			where TRequest : IRequest
+			where TResponse : ResponseBase, new()
 			where TCommand : ICommand<TRequest, TResponse>
 		{
 			var response = new TResponse();
+			
+			var validatorResult = command.Validate(request);
 
-				response.ArgumentErrors = new ArgumentErrorsCollection();
-
-				var requestValidationResult = command.Validate(request);
-
-				if (requestValidationResult.Any() == false)
-				{
-					try
-					{
-						response = command.Execute(request);
-					}
-					catch (Exception e)
-					{
-						//ErrorLogUtils.AddError(e);
-						return ErrorResponse<TResponse>(new Error(CommonErrorCode.InternalServerError, e.Message));
-					}
-				}
-				else
-				{
-					return ErrorResponse<TResponse>(new Error(CommonErrorCode.ArgumentErrors), requestValidationResult);
-				}
-
-				if (!response.IsSuccess)
-				{
-					return response;
-				}
-
-			return response;
-		}
-
-		protected TResponse ErrorResponse<TResponse>(Error error, ArgumentErrorsCollection argumentErrors = null,
-			string extraMessage = null)
-			where TResponse : InternalResponse, new()
-		{
-			var response = new TResponse { IsSuccess = false, Error = error };
-
-
-			if (argumentErrors != null)
+			if (validatorResult.IsValid)
 			{
-				foreach (var argumentError in argumentErrors)
+				try
 				{
-					response.ArgumentErrors[argumentError.ArgumentName] = argumentError;
+					response = command.Execute(request);
+				}
+				catch (Exception e)
+				{
+					//ErrorLogUtils.AddError(e);
+
+					var error = new InternalResponseError();
+					return new ErrorResponseStatus<TResponse>(error);
 				}
 			}
+			else
+			{
+				return new ErrorResponseStatus<TResponse>(validatorResult.Error);
+			}
+			
 
-			if (extraMessage != null)
-				response.Error.ErrorMessage += Environment.NewLine + extraMessage;
-
-			return response;
+			return new OkResponseStatus<TResponse>(response);
 		}
+
+		
 	}
 }

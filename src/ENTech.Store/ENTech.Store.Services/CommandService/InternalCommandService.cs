@@ -1,6 +1,8 @@
+using System;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Responses.Statuses;
 using ENTech.Store.Services.CommandService.Definition;
 
 namespace ENTech.Store.Services.CommandService
@@ -16,15 +18,17 @@ namespace ENTech.Store.Services.CommandService
 		}
 		
 		public TResponse Execute<TRequest, TResponse, TCommand>(TRequest request) 
-			where TRequest : IInternalRequest 
-			where TResponse : InternalResponse, new() 
+			where TRequest : IRequest 
+			where TResponse : ResponseBase, new() 
 			where TCommand : ICommand<TRequest, TResponse>
 		{
 			var command = CommandFactory.Create<TCommand>();
 
-			var response = TryExecute<TRequest, TResponse, TCommand>(request, command);
+			var responseStatus = TryExecute<TRequest, TResponse, TCommand>(request, command);
+			if (responseStatus is ErrorResponseStatus<TResponse>)
+				throw new InvalidOperationException(); //serialize Errors to Json
 
-			return response;
+			return ((OkResponseStatus<TResponse>)responseStatus).Response;
 		}
 	}
 }

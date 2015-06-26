@@ -1,4 +1,5 @@
-﻿using ENTech.Store.Infrastructure.Services.Responses;
+﻿using ENTech.Store.Infrastructure.Services.Errors;
+using ENTech.Store.Infrastructure.Services.Responses;
 
 namespace ENTech.Store.Infrastructure.Services.Validators
 {
@@ -6,6 +7,6 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 	{
 		bool TryValidate<TEntity, TMember>(RequestValidatorAction<TEntity, TMember> action,
 										TEntity entity,
-										ArgumentErrorsCollection existingErrors);
+										Errors.InvalidArgumentsError existingErrors);
 	}
 }

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Infrastructure.Services.Validators;
@@ -6,8 +8,8 @@ using ENTech.Store.Infrastructure.Services.Validators;
 namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public abstract class CommandBase<TRequest, TResponse> : ICommand<TRequest, TResponse>
-		where TRequest : IInternalRequest
-		where TResponse : InternalResponse
+		where TRequest : IRequest
+		where TResponse : ResponseBase
 	{
 		private readonly bool _requiresTransaction;
 
@@ -23,20 +25,20 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 			get { return _requiresTransaction; }
 		}
 
-		public ArgumentErrorsCollection Validate(TRequest request)
+		public ValidatorResult Validate(TRequest request)
 		{
-			ArgumentErrorsCollection result = new ArgumentErrorsCollection();
+			var argErrors = new List<ArgumentError>();
 
-			DtoValidator.VisitAndValidateProperties(request, result);
-			if (result.Any())
-				return result;
+			DtoValidator.VisitAndValidateProperties(request, argErrors);
+			if (argErrors.Any())
+				return ValidatorResult.Invalid(argErrors);
 			
 			return ValidateInternal(request);
 		}
 
-		protected virtual ArgumentErrorsCollection ValidateInternal(TRequest request)
+		protected virtual ValidatorResult ValidateInternal(TRequest request)
 		{
-			return new ArgumentErrorsCollection();
+			return ValidatorResult.Valid();
 		}
 
 		public virtual void NotifyExecuted(TRequest request, TResponse response)

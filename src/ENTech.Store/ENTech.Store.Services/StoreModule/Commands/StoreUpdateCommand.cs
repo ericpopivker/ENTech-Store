@@ -15,10 +15,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 		public override StoreUpdateResponse Execute(StoreUpdateRequest request)
 		{
-			return new StoreUpdateResponse
-			{
-				IsSuccess = true
-			};
+			return new StoreUpdateResponse();
 		}
 	}
 }

@@ -2,13 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+using ENTech.Store.Infrastructure.Services.Errors;
+using ENTech.Store.Infrastructure.Services.Errors.ArgumentErrors;
 using ENTech.Store.Infrastructure.Services.Responses;
 
 namespace ENTech.Store.Infrastructure.Services.Validators
 {
 	public class DtoValidator
 	{
-		public static bool VisitAndValidateProperties(object dto, ArgumentErrorsCollection errors, string rootName = null)
+		public static bool VisitAndValidateProperties(object dto, List<ArgumentError> argumentErrors, string rootName = null)
 		{
 			var valid = true;
 
@@ -23,7 +26,7 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 				var enumerator = ((IEnumerable)dto).GetEnumerator();
 				while (enumerator.MoveNext())
 				{
-					valid = VisitAndValidateProperties(enumerator.Current, errors, rootName) && valid;
+					valid = VisitAndValidateProperties(enumerator.Current, argumentErrors, rootName) && valid;
 				}
 			}
 			else
@@ -40,7 +43,7 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 						var val = propertyInfo.GetValue(dto);
 						if (val != null)
 						{
-							valid = VisitAndValidateProperties(val, errors, (rootName != null ? rootName + "." : "") + propertyInfo.Name) && valid;
+							valid = VisitAndValidateProperties(val, argumentErrors, (rootName != null ? rootName + "." : "") + propertyInfo.Name) && valid;
 						}
 					}
 				}
@@ -50,12 +53,30 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 			{
 				foreach (var memberName in validationResult.MemberNames)
 				{
-					errors[(rootName != null ? rootName + "." : "") + memberName] =
-						new Error(RequestValidatorErrorCode.DtoValidationFailed, validationResult.ErrorMessage);
+					string argumentPath = (rootName != null ? rootName + "." : "") + memberName;
+					ArgumentError argumentError = CreateArgumentError(argumentPath, validationResult.ErrorMessage);
+					argumentErrors.Add(argumentError);
 				}
 			}
 
 			return valid;
+		}
+
+
+		// Full list is here
+		// http://stackoverflow.com/questions/6121650/where-is-the-whole-list-of-default-error-messages-for-dataannotations-at-mvc-3
+		private const string DAErrorMessage_Required = "The .* field is required.";
+		
+		private static ArgumentError CreateArgumentError(string argumentName, string daErrorMessage)
+		{
+			ArgumentError argumentError;
+			if (Regex.IsMatch(daErrorMessage, DAErrorMessage_Required))
+				argumentError =new RequiredArgumentError(argumentName);
+			else
+				throw new ArgumentOutOfRangeException("daErrorMessage", "Data Annotations Error Match not found: " + daErrorMessage);
+
+			return argumentError;
+
 		}
 	}
 }

@@ -1,21 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
 using ENTech.Store.Entities;
 using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure;
-using ENTech.Store.Infrastructure.Enums;
 using ENTech.Store.Infrastructure.Extensions;
-using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
+using ENTech.Store.Infrastructure.Services.Errors;
+using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Responses.Statuses;
 using ENTech.Store.Services.AuthenticationModule.Commands;
 using ENTech.Store.Services.AuthenticationModule.Dtos;
 using ENTech.Store.Services.AuthenticationModule.Responses;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
-using Newtonsoft.Json;
 
 namespace ENTech.Store.Services.CommandService
 {
@@ -34,20 +33,18 @@ namespace ENTech.Store.Services.CommandService
 			_internalCommandService = new InternalCommandService(commandFactory);
 		}
 
-		public TResponse Execute<TRequest, TResponse, TCommand>(TRequest request)
+		public IResponseStatus<TResponse>  Execute<TRequest, TResponse, TCommand>(TRequest request)
 			where TRequest : SecureRequestBase<TSecurity> 
-			where TResponse : InternalResponse, new()
+			where TResponse : ResponseBase, new()
 			where TCommand : ICommand<TRequest, TResponse>
 		{
 			var unitOfWork = IoC.Resolve<IUnitOfWork>();
 
 			var stopwatch = new Stopwatch();
 
-			TResponse response = null;
+			IResponseStatus<TResponse> responseStatus;
 
 			AuthenticateResult authenticateResult = new AuthenticateResult();
-
-			TResponse errResponse = null;
 
 			try
 			{
@@ -64,24 +61,27 @@ namespace ENTech.Store.Services.CommandService
 
 				if (authenticateResult.IsSuccess == false)
 				{
-					errResponse = ErrorResponse<TResponse>(new Error(CommonErrorCode.UserNotAuthenticated, authenticateResult.ErrorMessage));
+					var error = new UserNotAuthenticatedResponseError();
 					
-					return errResponse;
+					return new ErrorResponseStatus<TResponse>(error);
 				}
 
 				LimitDbContext(request, unitOfWork.DbContext);
 				try
 				{
-					response = TryExecute<TRequest, TResponse, TCommand>(request, command);
+					responseStatus = TryExecute<TRequest, TResponse, TCommand>(request, command);
 
-					unitOfWork.SaveChanges();
+					if (responseStatus is OkResponseStatus<TResponse>)
+					{
+						unitOfWork.SaveChanges();
 
-					if (command.RequiresTransaction)
-					{					
-						unitOfWork.CompleteTransaction();
+						if (command.RequiresTransaction)
+						{
+							unitOfWork.CompleteTransaction();
+						}
+
+						AfterExecute(request, ((OkResponseStatus<TResponse>) responseStatus).Response, command);
 					}
-
-					AfterExecute(request, response, command);
 				}
 				catch (Exception e)
 				{
@@ -92,20 +92,20 @@ namespace ENTech.Store.Services.CommandService
 
 					//ErrorLogUtils.AddError(e);
 
-					response = ErrorResponse<TResponse>(new Error(CommonErrorCode.InternalServerError), extraMessage: e.Message);
+					var error = new InternalResponseError();
+					responseStatus = new ErrorResponseStatus<TResponse>(error);
 				}
 
 				unitOfWork.Dispose();
 				
-				return response;
+				return responseStatus;
 			}
 			catch (Exception e)
 			{
 				//ErrorLogUtils.AddError(e);
-				errResponse = ErrorResponse<TResponse>(new Error(CommonErrorCode.InternalServerError),
-					extraMessage: e.Message + Environment.NewLine + e.StackTrace);
-
-				return errResponse;
+				var error = new InternalResponseError(e.Message);
+				responseStatus = new ErrorResponseStatus<TResponse>(error);
+				return responseStatus;
 			}
 			finally
 			{
@@ -114,7 +114,7 @@ namespace ENTech.Store.Services.CommandService
 
 				stopwatch.Stop();
 
-				SaveApiLogEntry(stopwatch.ElapsedMilliseconds, response ?? errResponse, request, authenticateResult.Partner);
+				//SaveApiLogEntry(stopwatch.ElapsedMilliseconds, response ?? errResponse, request, authenticateResult.Partner);
 			}
 		}
 
@@ -125,7 +125,7 @@ namespace ENTech.Store.Services.CommandService
 				<SecureRequestBase<TSecurity>, AuthenticateApiKeyResponse,
 					AuthenticateApiKeyCommand<SecureRequestBase<TSecurity>>>(request);
 
-			if (result.IsSuccess)
+			if (result.IsAuthenticated)
 			{
 				var partner = result.Partner;
 				var internalAuthenticateResult = AuthenticateInternal(unitOfWork, request);
@@ -156,7 +156,7 @@ namespace ENTech.Store.Services.CommandService
 		protected abstract void LimitDbContext(SecureRequestBase<TSecurity> request, IDbContext dbContext);
 
 		private void SaveApiLogEntry<TRequest, TResponse>(decimal duration, TResponse response, TRequest request, PartnerDto partner)
-			where TResponse : InternalResponse, new()
+			where TResponse : ResponseBase, new()
 			where TRequest : SecureRequestBase<TSecurity> 
 		{
 			//try

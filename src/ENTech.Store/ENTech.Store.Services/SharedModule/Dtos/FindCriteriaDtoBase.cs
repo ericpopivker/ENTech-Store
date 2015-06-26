@@ -8,7 +8,7 @@ namespace ENTech.Store.Services.SharedModule.Dtos
 	{
 		public PagingOptionsDto PagingOptions { get; set; }
 
-		[Required(ErrorMessage = RequestValidatorErrorMessage.Required)]
+		[Required]
 		public SortingOptionsDto<TSortField> SortingOptions { get; set; }
 	}
 }

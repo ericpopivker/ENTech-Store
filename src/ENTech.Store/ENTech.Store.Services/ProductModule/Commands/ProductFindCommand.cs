@@ -23,7 +23,7 @@ namespace ENTech.Store.Services.ProductModule.Commands
 				StoreId = request.StoreId
 			}).ToList();
 
-			return new ProductFindResponse {IsSuccess = true, Items = result};
+			return new ProductFindResponse {Items = result};
 		}
 	}
 }

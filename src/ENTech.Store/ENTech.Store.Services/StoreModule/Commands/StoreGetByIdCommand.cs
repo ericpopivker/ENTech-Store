@@ -22,7 +22,6 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			});
 			return new StoreGetByIdResponse
 			{
-				IsSuccess = true,
 				Item = result
 			};
 		}

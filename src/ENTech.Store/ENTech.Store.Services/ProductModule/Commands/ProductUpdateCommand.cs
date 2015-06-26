@@ -15,10 +15,7 @@ namespace ENTech.Store.Services.ProductModule.Commands
 
 		public override ProductUpdateResponse Execute(ProductUpdateRequest request)
 		{
-			return new ProductUpdateResponse
-			{
-				IsSuccess = true
-			};
+			return new ProductUpdateResponse();
 		}
 	}
 }

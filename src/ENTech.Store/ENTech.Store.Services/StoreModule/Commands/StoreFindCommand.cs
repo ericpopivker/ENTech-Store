@@ -25,7 +25,6 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			return new StoreFindResponse
 			{
 				Items = result,
-				IsSuccess = true
 			};
 		}
 	}

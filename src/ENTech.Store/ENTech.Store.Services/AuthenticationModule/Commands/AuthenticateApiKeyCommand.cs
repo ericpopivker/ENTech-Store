@@ -1,17 +1,19 @@
 ﻿using System.Linq;
 using AutoMapper;
 using ENTech.Store.Entities.UnitOfWork;
+using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Services.AuthenticationModule.Dtos;
-using ENTech.Store.Services.AuthenticationModule.ModuleLogic;
+using ENTech.Store.Services.AuthenticationModule.Errors;
+using ENTech.Store.Services.AuthenticationModule.Errors.ResponseErrors;
 using ENTech.Store.Services.AuthenticationModule.Responses;
 using ENTech.Store.Services.SharedModule.Commands;
 
 namespace ENTech.Store.Services.AuthenticationModule.Commands
 {
 	public class AuthenticateApiKeyCommand<TRequest> : DbContextCommandBase<TRequest, AuthenticateApiKeyResponse> 
-		where TRequest : IInternalRequest
+		where TRequest : IRequest
 	{
 		public AuthenticateApiKeyCommand(IUnitOfWork unitOfWork)
 			: base(unitOfWork.DbContext, false)
@@ -23,24 +25,24 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 			var apiKey = request.ApiKey;
 			if (string.IsNullOrEmpty(apiKey))
 			{
-					return new AuthenticateApiKeyResponse
-					{
-						IsSuccess = false,
-						Error = new Error(AuthenticationErrorCode.InvalidApiKey, "Api Key not provided")
-					};
+				return new AuthenticateApiKeyResponse
+				{
+					IsAuthenticated = false,
+					Error = new ApiKeyRequiredResponseError()
+				};
 			}
 
 			var partner =  DbContext.Partners.FirstOrDefault(x => x.Key == apiKey);
 			if (partner == null)
 				return new AuthenticateApiKeyResponse
 				{
-					IsSuccess = false,
-					Error = new Error(AuthenticationErrorCode.InvalidApiKey, "Not authorized")
+					IsAuthenticated = false,
+					Error = new ApiKeyInvalidResponseError()
 				};
 
 			return new AuthenticateApiKeyResponse
 			{
-				IsSuccess = true,
+				IsAuthenticated = true,
 				Partner = Mapper.Map<PartnerDto>(partner)
 			};
 		}
