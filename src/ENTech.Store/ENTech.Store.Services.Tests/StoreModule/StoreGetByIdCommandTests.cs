@@ -13,7 +13,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 {
 	public class StoreGetByIdCommandTests : CommandTestsBase<StoreGetByIdRequest, StoreGetByIdResponse>
 	{
-		private readonly Mock<IQueryExecuter> _queryExecuterMock = new Mock<IQueryExecuter>();
+		private readonly Mock<IStoreQueryExecuter> _queryExecuterMock = new Mock<IStoreQueryExecuter>();
 
 		protected override void TearDownInternal()
 		{
@@ -22,10 +22,10 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		public StoreGetByIdCommandTests()
 		{
-			_queryExecuterMock.Setup(x => x.Execute(It.IsAny<QueryCriteria<StoreProjection>>()))
-				.Returns((GetByIdCriteria<StoreProjection> criteria) => new StoreProjection
+			_queryExecuterMock.Setup(x => x.GetById(It.IsAny<int>()))
+				.Returns((int id) => new StoreProjection
 				{
-					Id = criteria.Id
+					Id = id
 				});
 		}
 
@@ -37,7 +37,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Id = 1
 			});
 
-			_queryExecuterMock.Verify(mock => mock.Execute(It.IsAny<QueryCriteria<StoreProjection>>()), Times.Once);
+			_queryExecuterMock.Verify(mock => mock.GetById(It.IsAny<int>()), Times.Once);
 		}
 
 		[Test]
@@ -48,20 +48,20 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Id = 1
 			});
 
-			_queryExecuterMock.Verify(mock => mock.Execute(It.IsAny<GetByIdCriteria<StoreProjection>>()), Times.Once);
+			_queryExecuterMock.Verify(mock => mock.GetById(It.IsAny<int>()), Times.Once);
 		}
 
 		[Test]
 		public void Execute_When_called_with_concrete_id_Then_passes_that_id_into_criteria()
 		{
-			var id = 152125;
+			var storeId = 152125;
 
 			Command.Execute(new StoreGetByIdRequest
 			{
-				Id = id
+				Id = storeId
 			});
 
-			_queryExecuterMock.Verify(mock => mock.Execute(It.Is<GetByIdCriteria<StoreProjection>>(proj => proj.Id == id)), Times.Once);
+			_queryExecuterMock.Verify(mock => mock.GetById(It.Is<int>(id => id == storeId)), Times.Once);
 		}
 
 		[Test]

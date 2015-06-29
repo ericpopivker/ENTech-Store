@@ -1,7 +1,11 @@
-﻿namespace ENTech.Store.Infrastructure.Database.Repository
+﻿using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+
+namespace ENTech.Store.Infrastructure.Database.Repository
 {
-	public interface IQueryExecuter
+	public interface IQueryExecuter<out TProjection> where TProjection : IProjection
 	{
-		T Execute<T>(QueryCriteria<T> criteria) where T : IProjection;
+		TProjection GetById(int id);
+		IEnumerable<TProjection> Find();
 	}
 }
