@@ -5,6 +5,7 @@ using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Dtos;
 using ENTech.Store.Services.StoreModule;
 using ENTech.Store.Services.StoreModule.Commands;
+using ENTech.Store.Services.StoreModule.Criterias;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
@@ -29,6 +30,26 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		[Test]
 		public void Execute_When_called_with_valid_criteria_Then_returns_successful_response()
 		{
+			var request = GetStoreFindRequest();
+			
+			var response = Command.Execute(request);
+
+			Assert.IsTrue(response.IsSuccess);
+		}
+
+		[Test]
+		public void Execute_When_called_with_valid_criteria_Then_uses_storeQueryExecuter_to_get_data()
+		{
+			var request = GetStoreFindRequest();
+
+			Command.Execute(request);
+
+			_queryExecuterMock.Verify(x=>x.Find(It.IsAny<StoreFindCriteria>()));
+		}
+
+
+		private static StoreFindRequest GetStoreFindRequest()
+		{
 			var request = new StoreFindRequest
 			{
 				Criteria = new StoreFindCriteriaDto
@@ -40,11 +61,8 @@ namespace ENTech.Store.Services.Tests.StoreModule
 					}
 				}
 			};
-			
-			var response = Command.Execute(request);
-			Assert.IsTrue(response.IsSuccess);
+			return request;
 		}
-
 
 		protected override ICommand<StoreFindRequest, StoreFindResponse> CreateCommand()
 		{
