@@ -6,6 +6,5 @@ namespace ENTech.Store.Services.StoreModule.Requests
 {
 	public class StoreFindRequest : FindRequestBase<StoreLoadOption, StoreSortField, StoreFindCriteriaDto, BusinessAdminSecurityInformation>
 	{
-		public string Name { get; set; }
 	}
 }

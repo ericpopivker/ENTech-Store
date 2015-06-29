@@ -23,7 +23,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			var query = new StoreFindQuery();
 			var result = query.Execute(DbContext, new StoreFindQuery.Criteria
 			{
-				Name = request.Name
+				Name = request.Criteria.Name
 			}).ToList();
 
 			return new StoreFindResponse

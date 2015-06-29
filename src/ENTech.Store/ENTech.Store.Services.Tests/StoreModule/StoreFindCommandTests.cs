@@ -1,6 +1,8 @@
 ﻿using ENTech.Store.Infrastructure.Services.Commands;
+using ENTech.Store.Infrastructure.Services.Dtos;
 using ENTech.Store.Services.StoreModule;
 using ENTech.Store.Services.StoreModule.Commands;
+using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 using ENTech.Store.Services.Tests.Shared;
@@ -14,15 +16,22 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		private readonly Mock<IStoreQueryExecuter> _queryExecuterMock = new Mock<IStoreQueryExecuter>();
 
 		[Test]
-		public void Execute_When_called_Then_returns_successful_response()
+		public void Execute_When_called_with_valid_criteria_Then_returns_successful_response()
 		{
 			var request = new StoreFindRequest
 			{
-				Name = "Name"
+				Criteria = new StoreFindCriteriaDto
+				{
+					PagingOptions = new PagingOptionsDto
+					{
+						PageIndex = 0,
+						PageSize = 1
+					}
+				}
 			};
 			
 			var response = Command.Execute(request);
-			response.IsSuccess = true;
+			Assert.IsTrue(response.IsSuccess);
 		}
 
 
