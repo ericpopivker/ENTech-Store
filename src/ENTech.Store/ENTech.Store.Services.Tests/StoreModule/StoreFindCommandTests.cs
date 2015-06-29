@@ -1,4 +1,7 @@
-﻿using ENTech.Store.Infrastructure.Services.Commands;
+﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using ENTech.Store.Entities;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Dtos;
 using ENTech.Store.Services.StoreModule;
 using ENTech.Store.Services.StoreModule.Commands;
@@ -14,6 +17,14 @@ namespace ENTech.Store.Services.Tests.StoreModule
 	public class StoreFindCommandTests : CommandTestsBase<StoreFindRequest, StoreFindResponse>
 	{
 		private readonly Mock<IStoreQueryExecuter> _queryExecuterMock = new Mock<IStoreQueryExecuter>();
+
+		public StoreFindCommandTests()
+		{
+			Mock<IDbContext> dbContextMock = new Mock<IDbContext>();
+			dbContextMock.SetupGet(x => x.Stores).Returns(new FakeDbContext.FakeDbSet<Entities.StoreModule.Store>());
+
+			UnitOfWorkMock.Setup(x => x.DbContext).Returns(dbContextMock.Object);
+		}
 
 		[Test]
 		public void Execute_When_called_with_valid_criteria_Then_returns_successful_response()
