@@ -47,6 +47,16 @@ namespace ENTech.Store.Services.Tests.StoreModule
 			_queryExecuterMock.Verify(x=>x.Find(It.IsAny<StoreFindCriteria>()));
 		}
 
+		[Test]
+		public void Execute_When_called_with_valid_criteria_Then_uses_mapper_to_map_criteria()
+		{
+			var request = GetStoreFindRequest();
+
+			Command.Execute(request);
+
+			MapperMock.Verify(x => x.Map<StoreFindCriteriaDto, StoreFindCriteria>(request.Criteria), Times.Once);
+		}
+
 
 		private static StoreFindRequest GetStoreFindRequest()
 		{

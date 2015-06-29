@@ -91,7 +91,6 @@
     <Compile Include="Services\Commands\IInternalCommand.cs" />
     <Compile Include="Services\Commands\InternalCommandBase.cs" />
     <Compile Include="Services\CommonErrorCode.cs" />
-    <Compile Include="Services\Dtos\PagingOptionsDto.cs" />
     <Compile Include="Services\Dtos\ReportRowCellDto.cs" />
     <Compile Include="Services\Dtos\ReportRowDto.cs" />
     <Compile Include="Services\Dtos\SegmentDto.cs" />
@@ -105,6 +104,7 @@
     <Compile Include="Services\Requests\IInternalRequest.cs" />
     <Compile Include="Services\Requests\ListReportRequest.cs" />
     <Compile Include="Services\Requests\ListReportRequestBase.cs" />
+    <Compile Include="Services\Dtos\PagingOptionsDto.cs" />
     <Compile Include="Services\Requests\RunAndExportReportRequest.cs" />
     <Compile Include="Services\Responses\ArgumentError.cs" />
     <Compile Include="Services\Responses\ArgumentErrorsCollection.cs" />

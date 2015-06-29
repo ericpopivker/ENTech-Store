@@ -46,6 +46,7 @@
     <Compile Include="Repository\IQueryExecuter.cs" />
     <Compile Include="QueryExecuter\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\PagingOptions.cs" />
     <Compile Include="Repository\QueryCriteria.cs" />
   </ItemGroup>
   <ItemGroup>
