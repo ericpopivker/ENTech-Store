@@ -8,7 +8,9 @@ namespace ENTech.Store.Services.ProductModule.Errors.ResponseErrors
 		private const string _errorMessageTemplate = "Store limit for number of products {0} was already reached";
 
 		private int _maxProducts;
-
+		
+		public  int MaxProducts { get { return _maxProducts; } }
+		
 		public ProductOverMaxStoreLimitError(int maxProducts) 
 					: base(CommonArgumentErrorCode.Required)
 		{

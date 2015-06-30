@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ProductModule\Builders\ProductCreateRequestBuilder.cs" />
-    <Compile Include="ProductModule\Validators\ProductValidatorTest.cs" />
+    <Compile Include="ProductModule\Validators\DtoValidators\ProductCreateRequestValidatorTest.cs" />
+    <Compile Include="ProductModule\Validators\DtoValidators\ProductCreateDtoValidatorTest.cs" />
+    <Compile Include="ProductModule\Validators\EntityValidators\ProductValidatorTest.cs" />
     <Compile Include="StoreModule\Builders\StoreGetByIdResponseBuilder.cs" />
     <Compile Include="ProductModule\Commands\ProductCreateCommandTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

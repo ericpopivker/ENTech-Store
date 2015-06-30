@@ -2,16 +2,15 @@
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.ProductModule.Commands;
 using ENTech.Store.Services.ProductModule.Queries;
-using ENTech.Store.Services.ProductModule.Validators;
+using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
-using ENTech.Store.Services.UnitTests.ProductModule.Builders;
 using ENTech.Store.Services.UnitTests.StoreModule.Builders;
 using Moq;
 using NUnit.Framework;
 
-namespace ENTech.Store.Services.UnitTests.ProductModule.Validators
+namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidators
 {
 	[TestFixture]
 	public class ProductValidatorTest

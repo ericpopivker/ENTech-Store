@@ -17,9 +17,10 @@ namespace ENTech.Store.Infrastructure
 			return Container.Resolve<T>();
 		}
 
-		public static T Resolve<T>(string name)
+
+		public static object Resolve(Type type)
 		{
-			return Container.Resolve<T>(name);
+			return Container.Resolve(type);
 		}
 	}
 }

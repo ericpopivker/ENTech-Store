@@ -11,19 +11,19 @@ using Unity.WebApi;
 
 namespace ENTech.Store.Api
 {
-    public static class UnityConfig
-    {
+	public static class UnityConfig
+	{
 		public static void RegisterComponents(HttpConfiguration config)
-        {
+		{
 			var container = IoC.Container;
 
-	        container.RegisterType<ICommandFactory, CommandFactory>()
+			container.RegisterType<ICommandFactory, CommandFactory>()
 				.RegisterType<IUnitOfWork, UnitOfWork>()
 				.RegisterType<IDbContextFactory, DbContextFactory>()
-		        .RegisterType<IExternalCommandService<AnonymousSecurityInformation>, PublicExternalCommandService>()
+				.RegisterType<IExternalCommandService<AnonymousSecurityInformation>, PublicExternalCommandService>()
 				.RegisterType<IExternalCommandService<BusinessAdminSecurityInformation>, BusinessAdminExternalCommandService>();
 
 			config.DependencyResolver = new UnityDependencyResolver(container);
-        }
-    }
+		}
+	}
 }

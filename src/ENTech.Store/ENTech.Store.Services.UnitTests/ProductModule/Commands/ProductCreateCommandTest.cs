@@ -7,6 +7,7 @@ using ENTech.Store.Services.ProductModule.Dtos;
 using ENTech.Store.Services.ProductModule.Queries;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Validators;
+using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
@@ -38,34 +39,6 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Commands
 			_createCommand = new ProductCreateCommand(_unitOfWorkMock.Object, _internalCommandService.Object, _productQuery.Object, _productValidator.Object);
 		}
 
-		
-		[Test]
-		public void Validate_When_product_is_null_Then_product_is_required()
-		{
-			var validatorResult = _createCommand.Validate(new ProductCreateRequest());
-
-			Assert.IsFalse(validatorResult.IsValid);
-			Assert.IsTrue(validatorResult.Error.ErrorCode == CommonResponseErrorCode.InvalidArguments);
-			var argErrors = ((InvalidArgumentsResponseError)validatorResult.Error).ArgumentErrors;
-
-			Assert.IsTrue(argErrors.Any(e => e.ArgumentName == "Product" && e.ErrorCode == CommonArgumentErrorCode.Required && e.ErrorMessage == "Required"));
-
-		}
-
-
-		[Test]
-		public void Validate_When_empty_product_name_passed_Then_product_name_is_required()
-		{
-			var request = new ProductCreateRequest { Product = new ProductCreateDto() };
-			var validatorResult = _createCommand.Validate(request);
-
-			Assert.IsFalse(validatorResult.IsValid);
-			Assert.IsTrue(validatorResult.Error.ErrorCode == CommonResponseErrorCode.InvalidArguments);
-			var argErrors = ((InvalidArgumentsResponseError)validatorResult.Error).ArgumentErrors;
-
-			Assert.IsTrue(argErrors.Any(e => e.ArgumentName == "Product.Name" && e.ErrorCode == CommonArgumentErrorCode.Required && e.ErrorMessage == "Required"));
-		}
-		
 	}
 	
 }

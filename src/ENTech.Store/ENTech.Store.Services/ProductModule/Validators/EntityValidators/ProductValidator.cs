@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure;
-using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.ProductModule.Commands;
@@ -18,7 +12,7 @@ using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 
-namespace ENTech.Store.Services.ProductModule.Validators
+namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 {
 	public class ProductValidator : IProductValidator
 	{

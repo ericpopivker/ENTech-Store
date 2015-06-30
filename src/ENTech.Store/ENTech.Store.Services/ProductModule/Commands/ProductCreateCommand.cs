@@ -16,6 +16,7 @@ using ENTech.Store.Services.ProductModule.Queries;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
 using ENTech.Store.Services.ProductModule.Validators;
+using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;

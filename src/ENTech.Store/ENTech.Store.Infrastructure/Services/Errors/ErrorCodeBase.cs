@@ -7,7 +7,34 @@
 	/// 
 	public abstract class ErrorCodeBase
 	{
-		//1000 of codes for each module
-		//100 of codes for each service
+		//Common
+		//=================================
+
+
+		//Response ErrorCodes
+		//-------------------
+		//Seed: 10001
+
+
+		//Argument ErrorCodes
+		//-------------------
+		//Seed: 100001
+
+
+
+		//Product Module
+		//=================================
+
+
+		//Response ErrorCodes
+		//-------------------
+		//Seed: 11001
+
+
+		//Argument ErrorCodes
+		//-------------------
+		//Seed: 110001
+
+	
 	}
 }
