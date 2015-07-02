@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using ENTech.Store.Api.DAL;
+using Newtonsoft.Json;
 
 namespace ENTech.Store.Api.v1
 {
@@ -24,10 +26,11 @@ namespace ENTech.Store.Api.v1
         public string Id;
         public int StatusPercentage;
 
-        public UploadReferenceDto(string id)
+        public UploadReferenceDto(string id, int statusPercentage)
             : base("Upload")
         {
             this.Id = id;
+            this.StatusPercentage = statusPercentage;
         }
     }
 
@@ -36,124 +39,95 @@ namespace ENTech.Store.Api.v1
         public string Url;
 
         public UrlDto(string url)
-            : base("Upload")
+            : base("Url")
         {
             this.Url = url;
         }
     }
 
 
-    public class ProductDto
+    public class ProductResponse
     {
-        public string Id;
-        public string Title;
-        public string Description;
-        public FileBaseDto Logo;
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public FileBaseDto Logo { get; set; }
     }
 
     public class ProductCreateRequest
     {
-        public string Title;
-        public string Description;
-        public string LogoUploadId;
-    }
-
-
-    public interface IUploadedEventHandler
-    {
-        void OnUploaded(string uploadId, string id, string fieldName, string url);
-    }
-
-    public class ProductService : IUploadedEventHandler
-    {
-        private readonly ProductRepository _repository = new ProductRepository();
-
-        public void Create(Product product)
-        {
-            _repository.Create(product.Id, product);
-        }
-
-        public Product GetById(string id)
-        {
-            return _repository.GetById(id);
-        }
-
-        public void Update(Product product)
-        {
-            _repository.Create(product.Id, product);
-        }
-
-        public void OnUploaded(string uploadId, string entityId, string fieldName, string url)
-        {
-            if (fieldName.ToLower() == "logo")
-            {
-                var p = GetById(entityId);
-
-                if (p.LogoUploadId == uploadId)
-                {
-                    p.LogoUrl = url;
-                    p.LogoUploadId = "";
-                    Update(p);
-                }//else - the upload is not actual (was canceled before)
-            }
-
-        }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string LogoUploadId { get; set; }
     }
 
 
 
-    [RoutePrefix(ApiVersions.V1 + "/products")]
+
     public class ProductsController : ApiController
     {
-        // GET: api/Products/5
-        [Route("{id}")]
-        [HttpGet]
-        public ProductDto Get(string id)
+        private readonly BL.UploadFacade _uploader;
+        private readonly BL.FileStorageBase _storage;
+
+        public ProductsController()
         {
-            var productService = new ProductService();
-            var p = productService.GetById(id);
+            var dispatcher = new BL.UploadEventDispatcher();
+            BL.UploadSubscriber.SubscribeAllHandlers(dispatcher);
+            _storage = new BL.LocalFileStorage();
 
-            return new ProductDto
-            {
-                Id = p.Description,
-                Title = p.Title,
-                Logo = (string.IsNullOrEmpty(p.LogoUploadId) ? ((FileBaseDto)new UrlDto(p.LogoUrl)) : ((FileBaseDto)new UploadReferenceDto(p.LogoUploadId)))
-
-            };
+            var currentUserId = "1";
+            _uploader = new BL.UploadFacade(currentUserId, _storage, dispatcher);
         }
 
-        // POST: api/Products
-
-        [Route("")]
-        [HttpPost]
-        public ProductDto Post(ProductCreateRequest product)
+        // GET: api/Products/5
+        [Route(ApiVersions.V1 + "/products/{id}")]
+        [HttpGet]
+        public async Task<ProductResponse> Get(string id)
         {
-            var publisher = new UploadEventDispatcher();
-            var uploadService = new UploadService(publisher);
+            var productService = new BL.ProductFacade();
+            var p = productService.GetById(id);
 
-            var productService = new ProductService();
+            var response = new ProductResponse
+            {
+                Id = p.Description,
+                Title = p.Title
+            };
+
+            if (!string.IsNullOrEmpty(p.LogoUploadId))
+            {
+                var upload = _uploader.GetById(p.LogoUploadId);
+                var percentage = (int)upload.Uploaded * 100 / upload.Size;
+                response.Logo = new UploadReferenceDto(upload.Id, percentage);
+            }
+            else if (!string.IsNullOrEmpty(p.LogoUrl))
+                response.Logo = new UrlDto(p.LogoUrl);
+            else
+                response.Logo = null;
+
+            return response;
+        }
+
+        [Route(ApiVersions.V1 + "/products")]
+        [HttpPost]
+        public async Task<ProductResponse> Post(ProductCreateRequest product)
+        {
+            await Task.Delay(5000);
+
+            var productService = new BL.ProductFacade();
             var p = new DAL.Product()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = "1",//..Guid.NewGuid().ToString(),
                 Title = product.Title,
                 LogoUploadId = product.LogoUploadId,
                 Description = product.Description
             };
 
             productService.Create(p);
-            uploadService.Attach(product.LogoUploadId, "Product", "Logo", p.Id);
 
-            return this.Get(p.Id);
-        }
+            if (!string.IsNullOrEmpty(product.LogoUploadId))
+                _uploader.Attach(product.LogoUploadId, "Product", "Logo", p.Id);
 
-        // PUT: api/Products/5
-        public void Put(int id, [FromBody]ProductDto product)
-        {
-        }
-
-        // DELETE: api/Products/5
-        public void Delete(int id)
-        {
+            return await this.Get(p.Id);
         }
     }
 }

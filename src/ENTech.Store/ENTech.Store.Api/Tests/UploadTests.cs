@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ENTech.Store.Api.v1;
 using System.IO;
+using ENTech.Store.Api.BL;
 using ENTech.Store.Api.DAL;
 
 namespace ENTech.Store.Api.Tests
@@ -17,11 +18,16 @@ namespace ENTech.Store.Api.Tests
         {
             MemoryRepository.Clear();
 
-            var productService = new ProductService();
-            var publisher = new UploadEventDispatcher();
-            var uploadService= new UploadService(publisher);
+            var productService = new ProductFacade();
+            var dispatcher = new UploadEventDispatcher();
+            var storage = new LocalFileStorage();
+            UploadSubscriber.SubscribeAllHandlers(dispatcher);
+            
+            var userId = "1";
+            var uploadService = new UploadFacade(userId, storage, dispatcher);
 
-            var upload = uploadService.CreateUpload("1");
+            var uploadId = Guid.NewGuid().ToString();
+            var upload = uploadService.CreateUpload(uploadId);
 
             var product = new DAL.Product()
             {
@@ -30,7 +36,7 @@ namespace ENTech.Store.Api.Tests
                 LogoUploadId = upload.Id
             };
 
-            uploadService.Save(upload.Id, "test.txt", 0, new MemoryStream());
+            uploadService.Save(upload.Id, ".txt", FileLimits.M1 , new MemoryStream()).Wait();
             
             productService.Create(product);
             uploadService.Attach(upload.Id, "Product", "Logo", "1");
@@ -45,11 +51,16 @@ namespace ENTech.Store.Api.Tests
         {
             MemoryRepository.Clear();
 
-            var productService = new ProductService();
-            var publisher = new UploadEventDispatcher();
-            var uploadService = new UploadService(publisher);
+            var productService = new ProductFacade();
+            var dispatcher = new UploadEventDispatcher();
+            var storage = new LocalFileStorage();
+            UploadSubscriber.SubscribeAllHandlers(dispatcher);
 
-            var upload = uploadService.CreateUpload("1");
+            var userId = "1";
+            var uploadService = new UploadFacade(userId, storage, dispatcher);
+
+            var uploadId = Guid.NewGuid().ToString();
+            var upload = uploadService.CreateUpload(uploadId);
 
             var product = new DAL.Product()
             {
@@ -61,7 +72,7 @@ namespace ENTech.Store.Api.Tests
             productService.Create(product);
             
             uploadService.Attach(upload.Id, "Product", "Logo", "1");
-            uploadService.Save(upload.Id, "test.txt", 0, new MemoryStream());
+            uploadService.Save(upload.Id, ".txt", FileLimits.M1, new MemoryStream()).Wait();
 
 
             var p1 = productService.GetById("1");

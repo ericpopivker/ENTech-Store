@@ -16,9 +16,9 @@ namespace ENTech.Store.Api
             OAuthConfig.ConfigureOAuthTokenGeneration(app);
 
             AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 

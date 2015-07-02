@@ -85,7 +85,7 @@ namespace ENTech.Store.Api.DAL
         public string Id;
         public string OwnerId;
         public int Size;
-        public string FileName;
+        public string FileExtension;
 
         public long Uploaded;
         public DateTime CreatedAt;
@@ -97,6 +97,8 @@ namespace ENTech.Store.Api.DAL
         public bool IsProcessed;
         public bool IsAttached;
         public bool IsUploaded;
+        public string URL;
+
     }
 
     public class UploadRepository : MemoryRepository<FileUpload>

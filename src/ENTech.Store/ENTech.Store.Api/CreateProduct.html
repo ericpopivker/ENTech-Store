@@ -32,12 +32,9 @@
             $.ajax({
                 url: 'api/v1/uploads',
                 type: 'POST',
-                success: function (s) {
-                    var data = JSON.parse(s);
+                success: function (data) {
                     _uploadId = data.Id;
-
                     $('#btnSave').removeAttr('disabled');
-
                     sendFile(_uploadId);
                 }
 
@@ -74,13 +71,15 @@
 
         });
 
+
+
+
         function progressHandlingFunction(e) {
             if (e.lengthComputable) {
-                $('#progress').attr({ value: e.loaded, max: e.total });
+                console.info(e);
+                $('#progress').attr({ value: e.loaded / e.total, max: e.total });
             }
         }
-
-
         
 
         function createProduct() {
@@ -91,15 +90,13 @@
             }
 
 
-
             $.ajax({
                 url: 'api/v1/products',
                 type: 'POST',
                 //Ajax events
                 beforeSend: function () { },
-                success: function (s) {
-                    alert(s);
-                    var data = JSON.parse(s);
+                success: function (data) {
+                    console.info(data);
                 },
 
                 error: function () { },

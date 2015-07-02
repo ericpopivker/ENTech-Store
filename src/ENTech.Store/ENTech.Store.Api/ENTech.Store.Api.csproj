@@ -73,7 +73,8 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Cors">
-      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -179,6 +180,11 @@
     <Compile Include="ApiVersions.cs" />
     <Compile Include="ApiVersionController.cs" />
     <Compile Include="Auth\AuthUtils.cs" />
+    <Compile Include="BL\FileStorage.cs" />
+    <Compile Include="BL\ProductFacade.cs" />
+    <Compile Include="BL\UploadSubscriber.cs" />
+    <Compile Include="BL\UploadEventDispatcher.cs" />
+    <Compile Include="BL\UploadFacade.cs" />
     <Compile Include="DAL\MemoryRepository.cs" />
     <Compile Include="Filters\ApiExceptionFilterAttribute.cs" />
     <Compile Include="Auth\OAuth.cs" />
@@ -195,6 +201,7 @@
   <ItemGroup>
     <Content Include="App_Data\Eventgrid.Api.CustomerApi.XML" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="ReadProduct.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -217,7 +224,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="TestUpload.html" />
+    <Content Include="CreateProduct.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

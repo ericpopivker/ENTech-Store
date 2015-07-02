@@ -18,7 +18,7 @@ namespace ENTech.Store.Api
 
         [Authorize]
 		[HttpGet]
-		[Route("{Id:int}")]
+		[Route("{UploadId:int}")]
 		public string GetById(int id)
 		{
 			return "value";
