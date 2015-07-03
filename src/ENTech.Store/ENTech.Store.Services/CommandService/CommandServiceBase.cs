@@ -30,7 +30,7 @@ namespace ENTech.Store.Services.CommandService
 
 		protected void AfterExecute<TRequest, TResponse, TCommand>(TRequest request, TResponse response, TCommand command)
 			where TRequest : IRequest
-			where TResponse : ResponseBase, new()
+			where TResponse : IResponse, new()
 			where TCommand : ICommand<TRequest, TResponse>
 		{
 			command.NotifyExecuted(request, response);
@@ -38,20 +38,20 @@ namespace ENTech.Store.Services.CommandService
 
 		protected IResponseStatus<TResponse> TryExecute<TRequest, TResponse, TCommand>(TRequest request, TCommand command)
 			where TRequest : IRequest
-			where TResponse : ResponseBase, new()
+			where TResponse : IResponse, new()
 			where TCommand : ICommand<TRequest, TResponse>
 		{
 			var response = new TResponse();
 			
-			var validatorResult = command.Validate(request);
+			var validateResult = command.Validate(request);
 
-			if (validatorResult.IsValid)
+			if (validateResult.IsValid)
 			{
 				try
 				{
 					response = command.Execute(request);
 				}
-				catch (Exception e)
+				catch //(Exception e)
 				{
 					//ErrorLogUtils.AddError(e);
 
@@ -61,7 +61,7 @@ namespace ENTech.Store.Services.CommandService
 			}
 			else
 			{
-				return new ErrorResponseStatus<TResponse>(validatorResult.Error);
+				return new ErrorResponseStatus<TResponse>(validateResult.ResponseError);
 			}
 			
 

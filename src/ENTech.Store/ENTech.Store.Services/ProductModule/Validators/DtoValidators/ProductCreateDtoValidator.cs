@@ -15,5 +15,19 @@ namespace ENTech.Store.Services.ProductModule.Validators.DtoValidators
 		{
 			RuleFor(dto => dto.Name).NotEmpty();
 		}
+
+
+		//public ovveride ValidateInternal()
+		//{
+		//	_storeValidator.Exists(dto => dto.StoreId, dto.StoreId);
+		
+		//	_storeValidator.NotDeleted();
+		
+		//	if(!DtoValidatorResult.HasArgumentError(dto => dto.Name)) &&
+		//		!DtoValidatorResult.HasArgumentError(dto => dto.StoreId))
+
+		//		_productValidator.NameIsUnique(dto => dto.PropertyName,  dto.Name, dto.StoreId);
+		
+		//}
 	}
 }

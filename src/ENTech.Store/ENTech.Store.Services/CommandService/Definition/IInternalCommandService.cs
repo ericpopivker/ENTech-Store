@@ -9,6 +9,6 @@ namespace ENTech.Store.Services.CommandService.Definition
 		TResponse Execute<TRequest, TResponse, TCommand>(TRequest request)
 			where TCommand : ICommand<TRequest, TResponse>
 			where TRequest : IRequest
-			where TResponse : ResponseBase, new();
+			where TResponse : IResponse, new();
 	}
 }

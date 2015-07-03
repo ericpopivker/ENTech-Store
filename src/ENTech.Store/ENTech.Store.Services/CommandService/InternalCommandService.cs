@@ -18,8 +18,8 @@ namespace ENTech.Store.Services.CommandService
 		}
 		
 		public TResponse Execute<TRequest, TResponse, TCommand>(TRequest request) 
-			where TRequest : IRequest 
-			where TResponse : ResponseBase, new() 
+			where TRequest : IRequest
+			where TResponse : IResponse, new() 
 			where TCommand : ICommand<TRequest, TResponse>
 		{
 			var command = CommandFactory.Create<TCommand>();

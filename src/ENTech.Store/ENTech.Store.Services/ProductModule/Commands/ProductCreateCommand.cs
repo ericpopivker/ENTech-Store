@@ -1,27 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Xml.Linq;
-using ENTech.Store.Entities;
 using ENTech.Store.Entities.UnitOfWork;
-using ENTech.Store.Infrastructure;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
-using ENTech.Store.Services.ProductModule.Errors;
-using ENTech.Store.Services.ProductModule.Errors.ArgumentErrors;
-using ENTech.Store.Services.ProductModule.Errors.ResponseErrors;
-using ENTech.Store.Services.ProductModule.Queries;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
-using ENTech.Store.Services.ProductModule.Validators;
 using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.SharedModule.Commands;
-using ENTech.Store.Services.StoreModule.Commands;
-using ENTech.Store.Services.StoreModule.Dtos;
-using ENTech.Store.Services.StoreModule.Requests;
-using ENTech.Store.Services.StoreModule.Responses;
 
 namespace ENTech.Store.Services.ProductModule.Commands
 {
@@ -32,8 +18,8 @@ namespace ENTech.Store.Services.ProductModule.Commands
 		private IProductQuery _productQuery;
 		private IProductValidator _productValidator;
 
-		public ProductCreateCommand(IUnitOfWork unitOfWork, IInternalCommandService internalCommandService, IProductQuery productQuery, IProductValidator productValidator)
-			: base(unitOfWork.DbContext, false)
+		public ProductCreateCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory, IInternalCommandService internalCommandService, IProductQuery productQuery, IProductValidator productValidator)
+			: base(unitOfWork.DbContext, dtoValidatorFactory, false)
 		{
 			_unitOfWork = unitOfWork;
 			_internalCommandService = internalCommandService;
@@ -41,19 +27,25 @@ namespace ENTech.Store.Services.ProductModule.Commands
 			_productValidator = productValidator;
 		}
 
-		protected override ValidatorResult ValidateInternal(ProductCreateRequest request)
+		protected override void ValidateRequestInternal(ProductCreateRequest request, ValidateRequestResult validateArgsResult)
 		{
-			var argValidatorResult = _productValidator.NameMustBeUnique("Product.Name", request.Product.Name);
-			if (!argValidatorResult.IsValid)
-				return ValidatorResult.Invalid(argValidatorResult.Error);
-
-
-			var validatorResult = _productValidator.IsOverMaxProductsLimit(request.Product.StoreId);
-			if (!validatorResult.IsValid)
-				return validatorResult;
-				
-			return  ValidatorResult.Valid();
+			var result = _productValidator.NameMustBeUnique("Product.Name", request.Product.Name);
+			if (!result.IsValid)
+				validateArgsResult.ArgumentErrors.Add(result.ArgumentError);
 		}
+
+
+		protected override ValidateOperationResult ValidateOperationInternal(ProductCreateRequest request)
+		{
+			var result = _productValidator.IsOverMaxProductsLimit(request.Product.StoreId);
+			if (!result.IsValid)
+				return result;
+
+			return null;
+		}
+
+		
+
 
 		public override ProductCreateResponse Execute(ProductCreateRequest request)
 		{

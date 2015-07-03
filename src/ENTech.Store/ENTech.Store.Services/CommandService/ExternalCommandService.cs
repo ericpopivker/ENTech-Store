@@ -34,8 +34,8 @@ namespace ENTech.Store.Services.CommandService
 		}
 
 		public IResponseStatus<TResponse>  Execute<TRequest, TResponse, TCommand>(TRequest request)
-			where TRequest : SecureRequestBase<TSecurity> 
-			where TResponse : ResponseBase, new()
+			where TRequest : SecureRequestBase<TSecurity>
+			where TResponse : IResponse, new()
 			where TCommand : ICommand<TRequest, TResponse>
 		{
 			var unitOfWork = IoC.Resolve<IUnitOfWork>();
@@ -83,7 +83,7 @@ namespace ENTech.Store.Services.CommandService
 						AfterExecute(request, ((OkResponseStatus<TResponse>) responseStatus).Response, command);
 					}
 				}
-				catch (Exception e)
+				catch// (Exception e)
 				{
 					if (command.RequiresTransaction)
 					{
@@ -156,7 +156,7 @@ namespace ENTech.Store.Services.CommandService
 		protected abstract void LimitDbContext(SecureRequestBase<TSecurity> request, IDbContext dbContext);
 
 		private void SaveApiLogEntry<TRequest, TResponse>(decimal duration, TResponse response, TRequest request, PartnerDto partner)
-			where TResponse : ResponseBase, new()
+			where TResponse : IResponse, new()
 			where TRequest : SecureRequestBase<TSecurity> 
 		{
 			//try

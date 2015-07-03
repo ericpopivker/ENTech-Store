@@ -1,6 +1,6 @@
 ﻿namespace ENTech.Store.Infrastructure.Services.Responses.Statuses
 {
-	public class OkResponseStatus<TResponse> : IResponseStatus<TResponse> where TResponse : ResponseBase
+	public class OkResponseStatus<TResponse> : IResponseStatus<TResponse> where TResponse : IResponse
 	{
 		public TResponse Response { get; set; }
 

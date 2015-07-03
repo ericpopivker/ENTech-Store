@@ -4,7 +4,7 @@ using ENTech.Store.Infrastructure.Services.Dtos;
 
 namespace ENTech.Store.Infrastructure.Services.Responses
 {
-	public class ReportResponse<TColumnEnum> : ResponseBase
+	public class ReportResponse<TColumnEnum> : IResponse
 	{
 		public IEnumerable<TColumnEnum> Columns { get; set; }
 		public IEnumerable<AdditionalColumn> CustomFieldColumns { get; set; }

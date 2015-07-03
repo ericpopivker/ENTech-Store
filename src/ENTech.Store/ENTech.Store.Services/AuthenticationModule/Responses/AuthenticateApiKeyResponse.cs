@@ -4,7 +4,7 @@ using ENTech.Store.Services.AuthenticationModule.Dtos;
 
 namespace ENTech.Store.Services.AuthenticationModule.Responses
 {
-	public class AuthenticateApiKeyResponse : ResponseBase
+	public class AuthenticateApiKeyResponse : IResponse
 	{
 		public bool IsAuthenticated { get; set; }
 

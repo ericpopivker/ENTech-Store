@@ -9,7 +9,7 @@ using Microsoft.Practices.Unity;
 
 namespace ENTech.Store.Infrastructure.Services.Validators
 {
-	public class DtoValidatorFactory
+	public class DtoValidatorFactory : IDtoValidatorFactory
 	{
 		public DtoValidatorFactory()
 		{
@@ -29,8 +29,7 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 
 		private IDtoValidator TryResolve(Type genericType)
 		{
-			return IoC.Resolve(genericType) as IDtoValidator;
-
+			return IoC.TryResolve(genericType) as IDtoValidator;
 		}
 
 		public static void ScanAssemblyAndRegisterAllDtoValidators(Assembly assembly)

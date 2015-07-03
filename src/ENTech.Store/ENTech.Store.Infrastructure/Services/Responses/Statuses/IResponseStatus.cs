@@ -1,6 +1,6 @@
 namespace ENTech.Store.Infrastructure.Services.Responses
 {
-	public interface IResponseStatus<TResponse> where TResponse : ResponseBase
+	public interface IResponseStatus<TResponse> where TResponse : IResponse
 	{
 	}
 }

@@ -2,13 +2,14 @@
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Validators;
 
 namespace ENTech.Store.Services.SharedModule.Commands
 {
 	public abstract class DbContextCommandBase<TRequest, TResponse> : CommandBase<TRequest, TResponse>
 	
 		where TRequest : IRequest
-		where TResponse : ResponseBase
+		where TResponse : IResponse
 	{
 		private readonly IDbContext _dbContext;
 
@@ -17,7 +18,8 @@ namespace ENTech.Store.Services.SharedModule.Commands
 			get { return _dbContext; }
 		}
 
-		protected DbContextCommandBase(IDbContext dbContext, bool requiresTransaction) : base(requiresTransaction)
+		protected DbContextCommandBase(IDbContext dbContext, IDtoValidatorFactory dtoValidatorFactory, bool requiresTransaction)
+			: base(dtoValidatorFactory, requiresTransaction)
 		{
 			_dbContext = dbContext;
 		}

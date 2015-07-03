@@ -18,9 +18,12 @@ namespace ENTech.Store.Infrastructure
 		}
 
 
-		public static object Resolve(Type type)
+		public static object TryResolve(Type type)
 		{
-			return Container.Resolve(type);
+			if (Container.IsRegistered(type))
+				return Container.Resolve(type);
+
+			return null;
 		}
 	}
 }

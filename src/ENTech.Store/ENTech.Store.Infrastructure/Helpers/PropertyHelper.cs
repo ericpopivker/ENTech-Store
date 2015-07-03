@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 
 namespace ENTech.Store.Infrastructure.Helpers
 {
@@ -33,6 +34,72 @@ namespace ENTech.Store.Infrastructure.Helpers
 			return GetMemberExpression(expression.Body).Type;
 		}
 
+
+		//private static string GetName(Expression expression)
+		//{
+		//	return string.Join(".", GetNames(expression));
+		//}
+
+		public static string GetName(Expression expression)
+		{
+			var pathElements = new List<string>();
+
+			while (true)
+			{
+				var memberExpression = GetMemberExpression(expression);
+
+				if (memberExpression == null)
+				{
+					//fix for indexes
+					if (expression is MethodCallExpression)
+					{
+						var methodCallExpression = expression as MethodCallExpression;
+
+						if (methodCallExpression.Method.Name == "get_Item")
+						{
+							var indexerText = "[" + ((ConstantExpression) methodCallExpression.Arguments[0]).Value + "]";
+
+							TryAddMemberSeparator(pathElements);
+
+							pathElements.Add(indexerText);
+						}
+
+						//Go to parent
+						expression = methodCallExpression.Object;
+					}
+					else
+					{
+						break;
+					}
+				}
+				else
+				{
+					TryAddMemberSeparator(pathElements);
+
+					pathElements.Add(memberExpression.Member.Name);
+
+					//Go to parent
+					expression = memberExpression.Expression;
+				}
+			}
+
+
+			var sb = new StringBuilder();
+			
+
+			for (int index = pathElements.Count - 1; index >= 0; index--)
+				sb.Append(pathElements[index]);
+			
+			return sb.ToString();
+		}
+
+		private static void TryAddMemberSeparator(List<string> pathElements)
+		{
+			if (pathElements.Count > 0 && !pathElements.Last().StartsWith("["))
+				pathElements.Add(".");
+		}
+
+
 		private static MemberExpression GetMemberExpression(Expression expression)
 		{
 			var getMemberExpression = expression as MemberExpression;
@@ -51,48 +118,6 @@ namespace ENTech.Store.Infrastructure.Helpers
 			return null;
 		}
 
-		private static string GetName(Expression expression)
-		{
-			return string.Join(".", GetNames(expression));
-		}
-
-		private static IEnumerable<string> GetNames(Expression expression)
-		{
-			var memberExpression = GetMemberExpression(expression);
-
-			if (memberExpression == null)
-			{
-				//fix for indexes
-				if (expression is MethodCallExpression)
-				{
-					foreach (var argument in ((MethodCallExpression) expression).Arguments)
-					{
-						var memberArgument = argument as MemberExpression;
-
-						if (memberArgument != null && memberArgument.Member is FieldInfo)
-						{
-							var field = memberArgument.Member as FieldInfo;
-							if (field.FieldType == typeof(System.Int32))
-							{
-								//acessing Dtos possible only via properties. If was field accessed then it must be index [i]
-								yield break;
-							}
-						}
-						else
-							foreach (var argumentName in GetNames(argument))
-								yield return argumentName;
-					}
-				}
-				yield break;
-			}
-
-			var names = GetNames(memberExpression.Expression).ToList();
-
-			foreach (var memberName in names)
-				yield return memberName;
-
-			yield return memberExpression.Member.Name;
-		}
 
 		private static bool IsConversion(Expression expression)
 		{

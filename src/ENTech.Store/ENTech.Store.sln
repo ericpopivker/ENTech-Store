@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Services", "EN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Services.UnitTests", "ENTech.Store.Services.UnitTests\ENTech.Store.Services.UnitTests.csproj", "{53A2293D-6CCC-40CF-BFEF-81AEE95E4104}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.UnitTests", "ENTech.Store.Infrastructure.UnitTests\ENTech.Store.Infrastructure.UnitTests.csproj", "{F90491F4-7D50-471D-91AF-AF5FAA6C3CAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{53A2293D-6CCC-40CF-BFEF-81AEE95E4104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53A2293D-6CCC-40CF-BFEF-81AEE95E4104}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53A2293D-6CCC-40CF-BFEF-81AEE95E4104}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F90491F4-7D50-471D-91AF-AF5FAA6C3CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F90491F4-7D50-471D-91AF-AF5FAA6C3CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F90491F4-7D50-471D-91AF-AF5FAA6C3CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F90491F4-7D50-471D-91AF-AF5FAA6C3CAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

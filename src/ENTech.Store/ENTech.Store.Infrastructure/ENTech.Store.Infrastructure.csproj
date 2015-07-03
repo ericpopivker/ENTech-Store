@@ -91,6 +91,7 @@
     <Compile Include="Services\Commands\CommandBase.cs" />
     <Compile Include="Services\Commands\ICommand.cs" />
     <Compile Include="Services\Commands\IInternalCommand.cs" />
+    <Compile Include="Services\Errors\ArgumentErrorsCollection.cs" />
     <Compile Include="Services\Errors\ArgumentErrors\PositiveIntArgumentError.cs" />
     <Compile Include="Services\Errors\ArgumentErrors\RequiredArgumentError.cs" />
     <Compile Include="Services\Errors\CommonResponseErrorCode.cs" />
@@ -120,19 +121,30 @@
     <Compile Include="Services\Responses\FindPartialResponse.cs" />
     <Compile Include="Services\Responses\FindResponse.cs" />
     <Compile Include="Services\Responses\GetByIdResponse.cs" />
-    <Compile Include="Services\Responses\ResponseBase.cs" />
     <Compile Include="Services\Responses\IResponse.cs" />
     <Compile Include="Services\Responses\ReportResponse.cs" />
     <Compile Include="Services\Responses\Statuses\IResponseStatus.cs" />
+    <Compile Include="Services\Commands\ValidateCommandResult.cs" />
+    <Compile Include="Services\Commands\ValidateOperationResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\Commands\ValidateRequestResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\Validators\FluentDtoValidator.cs" />
+    <Compile Include="Services\Validators\ValidateArgumentResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Services\Validators\DtoValidator.cs" />
     <Compile Include="Services\Errors\CommonArgumentErrorCode.cs" />
     <Compile Include="Services\Errors\ErrorCodeBase.cs" />
-    <Compile Include="Services\Validators\ArgumentValidatorResult.cs" />
     <Compile Include="Services\Validators\DtoValidatorBase.cs" />
     <Compile Include="Services\Validators\DtoValidatorFactory.cs" />
+    <Compile Include="Services\Validators\DtoValidatorResult.cs" />
     <Compile Include="Services\Validators\FluentValidationResources.cs" />
     <Compile Include="Services\Validators\IDtoValidator.cs" />
-    <Compile Include="Services\Validators\ValidatorResult.cs" />
+    <Compile Include="Services\Validators\IDtoValidatorFactory.cs" />
+    <Compile Include="Services\Validators\IValidatorResult.cs" />
     <Compile Include="StartupConfig.cs" />
     <Compile Include="Utils\CallContextUtils.cs" />
     <Compile Include="Utils\CryptUtils.cs" />

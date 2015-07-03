@@ -7,13 +7,13 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public interface ICommand<in TRequest, TResponse> : IInternalCommand
 		where TRequest : IRequest
-		where TResponse : ResponseBase
+		where TResponse : IResponse
 	{
 		TResponse Execute(TRequest request);
 
 		bool RequiresTransaction { get; }
 
-		ValidatorResult Validate(TRequest request);
+		ValidateCommandResult Validate(TRequest request);
 
 		void NotifyExecuted(TRequest request, TResponse response);
 	}

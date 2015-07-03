@@ -3,11 +3,11 @@ using ENTech.Store.Infrastructure.Services.Errors;
 
 namespace ENTech.Store.Infrastructure.Services.Responses.Statuses
 {
-	public class ErrorResponseStatus<TResponse> : IResponseStatus<TResponse> where TResponse : ResponseBase
+	public class ErrorResponseStatus<TResponse> : IResponseStatus<TResponse> where TResponse : IResponse
 	{
-		public Error Error { get; set; }
+		public ResponseError Error { get; set; }
 
-		public ErrorResponseStatus(Error error)
+		public ErrorResponseStatus(ResponseError error)
 		{
 			Verify.Argument.IsNotNull(error, "error");
 

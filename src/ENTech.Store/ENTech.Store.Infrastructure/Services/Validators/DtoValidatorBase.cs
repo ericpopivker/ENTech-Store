@@ -10,19 +10,9 @@ using ValidationContext = FluentValidation.ValidationContext;
 
 namespace ENTech.Store.Infrastructure.Services.Validators
 {
-	public class DtoValidatoResult
-	{
-		public Boolean IsValid { get; internal set; }
-
-		public List<ArgumentError> ArgumentErrors { get; internal set; } 
-	}
-
-
 	public abstract class DtoValidatorBase<TDto> : IDtoValidator<TDto>
 	{
-		public class FluentDtoValidator<TDto> : AbstractValidator<TDto>
-		{
-		}
+		
 
 		private FluentDtoValidator<TDto> _fluentDtoValidator;
 		private DtoValidatorFactory _dtoValidatorFactory;
@@ -36,16 +26,16 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 		}
 
 		
-		DtoValidatoResult IDtoValidator.Validate(object dto, string propertyParentPath = null)
+		DtoValidatorResult IDtoValidator.Validate(object dto, string propertyParentPath)
 		{
 			return Validate((TDto)dto, propertyParentPath);
 		}
 
 
-		public virtual DtoValidatoResult Validate(TDto dto, string propertyParentPath=null)
+		public virtual DtoValidatorResult Validate(TDto dto, string propertyParentPath=null)
 		{
 			var fluentValidatorResult = _fluentDtoValidator.Validate(dto);
-			var result = new DtoValidatoResult();
+			var result = new DtoValidatorResult();
 
 			var argumentErrors = new List<ArgumentError>();
 			
@@ -57,16 +47,7 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 			}
 
 			VisitAndValidateDependents(dto, argumentErrors, propertyParentPath);
-
-			if (argumentErrors.Count > 0)
-			{
-				result.IsValid = false;
-				result.ArgumentErrors = argumentErrors;
-			}
-			else
-			{
-				result.IsValid = true;
-			}
+			result.ArgumentErrors = argumentErrors;
 
 			return result;
 		}

@@ -4,6 +4,7 @@ using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.AuthenticationModule.Dtos;
 using ENTech.Store.Services.AuthenticationModule.Errors;
 using ENTech.Store.Services.AuthenticationModule.Errors.ResponseErrors;
@@ -15,8 +16,8 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 	public class AuthenticateApiKeyCommand<TRequest> : DbContextCommandBase<TRequest, AuthenticateApiKeyResponse> 
 		where TRequest : IRequest
 	{
-		public AuthenticateApiKeyCommand(IUnitOfWork unitOfWork)
-			: base(unitOfWork.DbContext, false)
+		public AuthenticateApiKeyCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory)
+			: base(unitOfWork.DbContext, dtoValidatorFactory, false)
 		{
 		}
 

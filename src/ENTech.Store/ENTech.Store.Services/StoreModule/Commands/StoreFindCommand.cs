@@ -1,5 +1,6 @@
 using System.Linq;
 using ENTech.Store.Entities.UnitOfWork;
+using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Queries;
 using ENTech.Store.Services.StoreModule.Requests;
@@ -9,8 +10,8 @@ namespace ENTech.Store.Services.StoreModule.Commands
 {
 	public class StoreFindCommand : DbContextCommandBase<StoreFindRequest, StoreFindResponse>
 	{
-		public StoreFindCommand(IUnitOfWork unitOfWork)
-			: base(unitOfWork.DbContext, false)
+		public StoreFindCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory)
+			: base(unitOfWork.DbContext, dtoValidatorFactory, false)
 		{
 		}
 

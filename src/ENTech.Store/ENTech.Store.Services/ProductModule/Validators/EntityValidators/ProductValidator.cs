@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure;
+using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.ProductModule.Commands;
@@ -28,7 +29,24 @@ namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 		}
 
 
-		public ValidatorResult IsOverMaxProductsLimit(int storeId)
+		public ValidateArgumentResult NameMustBeUnique(string argumentName, string productName)
+		{
+			var query = new ProductExiststByNameQuery();
+			var critera = new ProductExiststByNameQuery.Criteria { Name = productName };
+			var exists = _unitOfWork.Query(query, critera);
+
+			if (exists)
+			{
+				var error = new ProductNameMustBeUniqueArgumentError(argumentName);
+				return ValidateArgumentResult.Invalid(error);
+			}
+
+			return ValidateArgumentResult.Valid();
+		}
+
+
+
+		public ValidateOperationResult IsOverMaxProductsLimit(int storeId)
 		{
 			StoreGetByIdRequest storeGetByIdRequest = new StoreGetByIdRequest();
 			storeGetByIdRequest.LoadOptions = new Collection<StoreLoadOption> { StoreLoadOption.Settings };
@@ -42,26 +60,10 @@ namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 			if (totalProducts == storeSettings.MaxProducts)
 			{
 				var error = new ProductOverMaxStoreLimitError(storeSettings.MaxProducts);
-				return ValidatorResult.Invalid(error);
+				return ValidateOperationResult.Invalid(error);
 			}
 
-			return ValidatorResult.Valid();
-		}
-		
-
-		public ArgumentValidatorResult NameMustBeUnique(string argumentName, string productName)
-		{
-			var query = new ProductExiststByNameQuery();
-			var critera = new ProductExiststByNameQuery.Criteria { Name = productName };
-			var exists = _unitOfWork.Query(query, critera);
-
-			if (exists)
-			{
-				var error = new ProductNameMustBeUniqueArgumentError(argumentName);
-				return ArgumentValidatorResult.Invalid(error);
-			}
-		
-			return ArgumentValidatorResult.Valid();
+			return ValidateOperationResult.Valid();
 		}
 	}
 }

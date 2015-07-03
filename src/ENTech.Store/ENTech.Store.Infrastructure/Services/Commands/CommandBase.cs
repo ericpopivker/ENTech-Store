@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using ENTech.Store.Infrastructure.Services.Errors;
+using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Infrastructure.Services.Validators;
@@ -9,13 +11,15 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public abstract class CommandBase<TRequest, TResponse> : ICommand<TRequest, TResponse>
 		where TRequest : IRequest
-		where TResponse : ResponseBase
+		where TResponse :IResponse
 	{
 		private readonly bool _requiresTransaction;
+		private readonly IDtoValidatorFactory _dtoValidatorFactory;
 
-		protected CommandBase(bool requiresTransaction)
+		protected CommandBase(IDtoValidatorFactory dtoValidatorFactory, bool requiresTransaction)
 		{
 			_requiresTransaction = requiresTransaction;
+			_dtoValidatorFactory = dtoValidatorFactory; 
 		}
 
 		public abstract TResponse Execute(TRequest request);
@@ -25,22 +29,52 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 			get { return _requiresTransaction; }
 		}
 
-		public ValidatorResult Validate(TRequest request)
+		public ValidateCommandResult Validate(TRequest request)
 		{
-			var argErrors = new List<ArgumentError>();
+			var validateRequestResult = new ValidateRequestResult();
 
-			DtoValidator.VisitAndValidateProperties(request, argErrors);
-			if (argErrors.Any())
-				return ValidatorResult.Invalid(argErrors);
+			ValidateRequest(request, validateRequestResult);
+
+			if (!validateRequestResult.IsValid)
+				return ValidateCommandResult.Invalid(new InvalidArgumentsResponseError(validateRequestResult.ArgumentErrors));
 			
-			return ValidateInternal(request);
+				
+			var validateOperationResult = ValidateOperation(request);
+			if (!validateOperationResult.IsValid)
+				return ValidateCommandResult.Invalid(validateOperationResult.ResponseError);
+			
+			return ValidateCommandResult.Valid();
 		}
 
-		protected virtual ValidatorResult ValidateInternal(TRequest request)
+		private void ValidateRequest(TRequest request, ValidateRequestResult validateRequestResult)
 		{
-			return ValidatorResult.Valid();
+			var dtoValidator = _dtoValidatorFactory.TryCreate<TRequest>();
+			if (dtoValidator != null)
+			{
+				var dtoValidatorResult = dtoValidator.Validate(request);
+				if (!dtoValidatorResult.IsValid)
+					validateRequestResult.ArgumentErrors.AddRange(dtoValidatorResult.ArgumentErrors);
+			}
+
+			ValidateRequestInternal(request, validateRequestResult);
 		}
 
+		protected virtual void ValidateRequestInternal(TRequest request, ValidateRequestResult validateRequestResult)
+		{
+		}
+
+		private ValidateOperationResult ValidateOperation(TRequest request)
+		{
+			return ValidateOperationInternal(request);
+		}
+
+		protected virtual ValidateOperationResult ValidateOperationInternal(TRequest request)
+		{
+			return ValidateOperationResult.Valid();
+		}		
+
+		
+		
 		public virtual void NotifyExecuted(TRequest request, TResponse response)
 		{
 			//
