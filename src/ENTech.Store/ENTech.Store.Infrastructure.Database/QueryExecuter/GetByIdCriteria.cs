@@ -1,4 +1,4 @@
-namespace ENTech.Store.Infrastructure.Database.Repository
+namespace ENTech.Store.Infrastructure.Database.QueryExecuter
 {
 	public class GetByIdCriteria<T> : QueryCriteria<T>
 		where T : IProjection

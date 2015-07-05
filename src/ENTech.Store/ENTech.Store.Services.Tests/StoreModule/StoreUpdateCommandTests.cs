@@ -1,4 +1,4 @@
-﻿using ENTech.Store.Infrastructure.Database.QueryExecuter;
+﻿using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;

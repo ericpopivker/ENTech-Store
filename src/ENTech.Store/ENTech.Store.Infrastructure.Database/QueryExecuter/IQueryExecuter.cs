@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ENTech.Store.Infrastructure.Database.Repository
+namespace ENTech.Store.Infrastructure.Database.QueryExecuter
 {
 	public interface IQueryExecuter<out TProjection> where TProjection : IProjection
 	{

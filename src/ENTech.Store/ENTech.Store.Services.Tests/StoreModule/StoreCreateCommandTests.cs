@@ -1,6 +1,6 @@
 ﻿using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure.Database;
-using ENTech.Store.Infrastructure.Database.QueryExecuter;
+using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;

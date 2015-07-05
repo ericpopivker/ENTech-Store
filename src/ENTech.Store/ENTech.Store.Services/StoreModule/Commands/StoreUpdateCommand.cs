@@ -1,5 +1,5 @@
 ﻿using ENTech.Store.Entities.UnitOfWork;
-using ENTech.Store.Infrastructure.Database.QueryExecuter;
+using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Services.CommandService.Definition;
