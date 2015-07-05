@@ -29,10 +29,10 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 			_dataSetResolver.Verify(x=>x.Resolve<StubEntity>());
 		}
-	}
 
-	public class StubEntity : IEntity
-	{
-		public int Id { get; set; }
+		public class StubEntity : IEntity
+		{
+			public int Id { get; set; }
+		}
 	}
 }
