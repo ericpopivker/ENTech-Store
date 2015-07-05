@@ -1,6 +1,6 @@
 ﻿namespace ENTech.Store.Services.GeoModule.Dtos
 {
-	public class AddressCreateDto
+	public class AddressCreateOrUpdateDto
 	{
 		public string City { get; set; }
 		public int CountryId { get; set; }

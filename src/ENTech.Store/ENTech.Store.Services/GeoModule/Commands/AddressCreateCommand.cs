@@ -1,4 +1,5 @@
 using ENTech.Store.Entities;
+using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
 using ENTech.Store.Services.SharedModule.Commands;

@@ -36,8 +36,8 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		public StoreCreateCommandTests()
 		{
-			_mapperMock.Setup(x => x.Map<AddressDto, AddressCreateDto>(It.IsAny<AddressDto>()))
-				.Returns((AddressDto originalDto) => new AddressCreateDto
+			_mapperMock.Setup(x => x.Map<AddressDto, AddressCreateOrUpdateDto>(It.IsAny<AddressDto>()))
+				.Returns((AddressDto originalDto) => new AddressCreateOrUpdateDto
 				{
 					StateId = originalDto.StateId,
 					Street2 = originalDto.Street2,

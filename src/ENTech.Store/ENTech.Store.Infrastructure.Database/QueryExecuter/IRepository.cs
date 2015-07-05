@@ -7,5 +7,6 @@ namespace ENTech.Store.Infrastructure.Database.QueryExecuter
 		void Add(T entity);
 		T GetById(int entityId);
 		void Delete(T entity);
+		void Update(T entity);
 	}
 }

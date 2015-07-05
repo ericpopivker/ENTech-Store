@@ -70,7 +70,13 @@
     <Compile Include="CommandService\ExternalCommandService.cs" />
     <Compile Include="CommandService\ICommandFactory.cs" />
     <Compile Include="CommandService\InternalCommandService.cs" />
-    <Compile Include="GeoModule\Dtos\AddressCreateDto.cs" />
+    <Compile Include="GeoModule\Commands\AddressDeleteCommand.cs" />
+    <Compile Include="GeoModule\Requests\AddressDeleteRequest.cs" />
+    <Compile Include="GeoModule\Responses\AddressDeleteResponse.cs" />
+    <Compile Include="GeoModule\Commands\AddressUpdateCommand.cs" />
+    <Compile Include="GeoModule\Requests\AddressUpdateRequest.cs" />
+    <Compile Include="GeoModule\Responses\AddressUpdateResponse.cs" />
+    <Compile Include="GeoModule\Dtos\AddressCreateOrUpdateDto.cs" />
     <Compile Include="Misc\AnonymousSecurityInformation.cs" />
     <Compile Include="Misc\AuthenticateResult.cs" />
     <Compile Include="Misc\CommandServiceBase.cs" />
