@@ -60,6 +60,7 @@
     <Compile Include="StoreModule\StoreDeleteCommandTests.cs" />
     <Compile Include="StoreModule\StoreFindCommandTests.cs" />
     <Compile Include="StoreModule\StoreGetByIdCommandTests.cs" />
+    <Compile Include="StoreModule\StoreUpdateCommandTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -6,5 +6,6 @@ namespace ENTech.Store.Services.StoreModule.Requests
 	public class StoreUpdateRequest : SecureRequestBase<BusinessAdminSecurityInformation>
 	{
 		public StoreUpdateDto Store { get; set; }
+		public int StoreId { get; set; }
 	}
 }

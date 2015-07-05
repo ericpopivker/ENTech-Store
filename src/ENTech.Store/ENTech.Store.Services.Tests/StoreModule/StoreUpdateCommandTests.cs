@@ -27,8 +27,9 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				});
 		}
 
+
 		[Test]
-		public void When_Validate_Then_calls_repository_get_by_id()
+		public void Validate_When_called_Then_calls_repository_get_by_id()
 		{
 			var request = new StoreUpdateRequest
 			{
@@ -42,7 +43,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		}
 
 		[Test]
-		public void When_Validate_and_store_does_not_exist_Then_returns_errors()
+		public void Validate_When_called_and_store_does_not_exist_Then_returns_errors()
 		{
 			var request = new StoreUpdateRequest
 			{
@@ -57,7 +58,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 
 		[Test]
-		public void When_Validate_and_store_exists_Then_returns_no_errors()
+		public void Validate_When_called_and_store_exists_Then_returns_no_errors()
 		{
 			var request = new StoreUpdateRequest()
 			{
