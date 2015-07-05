@@ -49,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryExecuter\PagingOptions.cs" />
     <Compile Include="QueryExecuter\QueryCriteria.cs" />
+    <Compile Include="Repository\Exceptions\NonPersistentEntityException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
