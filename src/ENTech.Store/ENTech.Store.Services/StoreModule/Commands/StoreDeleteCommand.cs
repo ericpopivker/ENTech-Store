@@ -18,6 +18,10 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 		public override StoreDeleteResponse Execute(StoreDeleteRequest request)
 		{
+			var store = _repository.GetById(request.StoreId);
+
+			_repository.Delete(store);
+
 			return new StoreDeleteResponse
 			{
 				IsSuccess = true
