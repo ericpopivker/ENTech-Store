@@ -12,13 +12,11 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 	{
 		private ObservableCollection<T> _data;
 		private IQueryable<T> _query;
-		private Expression<Func<T, bool>> _filter;
 
 		public FakeDbSet(ObservableCollection<T> data)
 		{
 			_data = data;
 			_query = _data.AsQueryable();
-			_filter = _ => true;
 		}
 
 		public virtual T Find(params object[] keyValues)
@@ -72,22 +70,22 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 		Expression IQueryable.Expression
 		{
-			get { return _query.Where(_filter).Expression; }
+			get { return _query.Expression; }
 		}
 
 		IQueryProvider IQueryable.Provider
 		{
-			get { return _query.Where(_filter).Provider; }
+			get { return _query.Provider; }
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return _query.Where(_filter).GetEnumerator();
+			return _query.GetEnumerator();
 		}
 
 		IEnumerator<T> IEnumerable<T>.GetEnumerator()
 		{
-			return _query.Where(_filter).GetEnumerator();
+			return _query.GetEnumerator();
 		}
 
 		public IList GetList()
