@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Linq;
 using ENTech.Store.Infrastructure.Database.Repository;
-using ENTech.Store.Infrastructure.Database.Repository.Exceptions;
 using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Infrastructure.Database.EF6
@@ -10,32 +9,24 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 	public class Repository<TEntity> : IRepository<TEntity> 
 		where TEntity : class, IEntity
 	{
-		private readonly IDbSetResolver _dbSetResolver;
-		
-		private IDbSet<TEntity> DbSet
-		{
-			get
-			{
-				var dbSet = _dbSetResolver.Resolve<TEntity>();
-				if (dbSet == null)
-					throw new NonPersistentEntityException<TEntity>();
-				return dbSet;
-			}
-		}
+		private readonly IDbSet<TEntity> _dbSet;
 
-		public Repository(IDbSetResolver dbSetResolver)
+		public Repository(IDbSet<TEntity> dbSet)
 		{
-			_dbSetResolver = dbSetResolver;
+			if (dbSet == null)
+				throw new ArgumentNullException("dbSet");
+
+			_dbSet = dbSet;
 		}
 
 		public void Add(TEntity entity)
 		{
-			DbSet.Add(entity);
+			_dbSet.Add(entity);
 		}
 
 		public TEntity GetById(int entityId)
 		{
-			return DbSet.FirstOrDefault(x => x.Id == entityId);
+			return _dbSet.FirstOrDefault(x => x.Id == entityId);
 		}
 
 		public void Delete(TEntity entity)

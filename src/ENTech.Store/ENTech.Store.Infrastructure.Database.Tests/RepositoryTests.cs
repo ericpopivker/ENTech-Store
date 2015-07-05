@@ -11,9 +11,6 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 	public class RepositoryTests
 	{
 		private readonly IRepository<StubEntity> _repository;
-		private readonly IRepository<StubEntityWithNoDbSet> _repositoryForNotRegisteredInDbSetResolverEntity;
-
-		private readonly Mock<IDbSetResolver> _dataSetResolver;
 
 		private readonly StubEntity _firstEntity = new StubEntity { Id = 1 };
 		private readonly StubEntity _secondEntity = new StubEntity { Id = 2 };
@@ -23,10 +20,6 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 		public RepositoryTests()
 		{
-			_dataSetResolver = new Mock<IDbSetResolver>();
-			_repository = new Repository<StubEntity>(_dataSetResolver.Object);
-			_repositoryForNotRegisteredInDbSetResolverEntity = new Repository<StubEntityWithNoDbSet>(_dataSetResolver.Object);
-
 			var fakeDbSet = new FakeDbSet<StubEntity>(new ObservableCollection<StubEntity>
 			{
 				_firstEntity,
@@ -36,25 +29,13 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				_fifthEntityWithDupeId
 			});
 
-			_dataSetResolver.Setup(x => x.Resolve<StubEntity>()).Returns(fakeDbSet);
+			_repository = new Repository<StubEntity>(fakeDbSet);
 		}
 
 		[Test]
-		public void GetById_When_called_for_entity_that_is_registered_ib_dbSetResolver_Then_calls_for_dataSetResolver_resolve_to_get_dataset_for_stubEntity()
+		public void Ctor_When_called_with_null_dbset_Then_throws_argumentNullException()
 		{
-			var entityId = _firstEntity.Id;
-
-			_repository.GetById(entityId);
-
-			_dataSetResolver.Verify(x=>x.Resolve<StubEntity>());
-		}
-
-		[Test]
-		public void GetById_When_called_for_entity_that_is_not_registered_ib_dbSetResolver_Then_calls_for_dataSetResolver_resolve_to_get_dataset_for_stubEntity()
-		{
-			var entityId = 1;
-
-			Assert.Throws<NonPersistentEntityException<StubEntityWithNoDbSet>>(() => _repositoryForNotRegisteredInDbSetResolverEntity.GetById(entityId));
+			Assert.Throws<ArgumentNullException>(()=> new Repository<StubEntityWithNoDbSet>(null));
 		}
 
 		[Test]
@@ -73,16 +54,6 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			var entityId = _fourthEntityWithDupeId.Id;
 
 			Assert.DoesNotThrow(()=>_repository.GetById(entityId));
-		}
-
-		[Test]
-		public void Add_When_called_Then_calls_for_dataSetResolver_resolve_to_get_dataset_for_stubEntity()
-		{
-			var newEntity = new StubEntity();
-
-			_repository.Add(newEntity);
-
-			_dataSetResolver.Verify(x => x.Resolve<StubEntity>());
 		}
 
 		public class StubEntity : IEntity
