@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using ENTech.Store.Infrastructure.Database.Repository;
-using ENTech.Store.Infrastructure.Database.Repository.Exceptions;
 using ENTech.Store.Infrastructure.Entities;
 using Moq;
 using NUnit.Framework;
