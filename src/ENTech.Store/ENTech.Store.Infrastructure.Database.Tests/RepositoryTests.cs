@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
+using System.Linq;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Database.Repository.Exceptions;
 using ENTech.Store.Infrastructure.Entities;
@@ -12,6 +14,8 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 	{
 		private readonly IRepository<StubEntity> _repository;
 
+		private Mock<IDbSet<StubEntity>> _dbSetMock = new Mock<IDbSet<StubEntity>>();
+
 		private readonly StubEntity _firstEntity = new StubEntity { Id = 1 };
 		private readonly StubEntity _secondEntity = new StubEntity { Id = 2 };
 		private readonly StubEntity _thirdEntity = new StubEntity { Id = 3 };
@@ -20,16 +24,24 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 		public RepositoryTests()
 		{
-			var fakeDbSet = new FakeDbSet<StubEntity>(new ObservableCollection<StubEntity>
+			var data = new ObservableCollection<StubEntity>
 			{
 				_firstEntity,
 				_secondEntity,
 				_thirdEntity,
 				_fourthEntityWithDupeId,
 				_fifthEntityWithDupeId
-			});
+			};
 
-			_repository = new Repository<StubEntity>(fakeDbSet);
+			var dataQueryable = data.AsQueryable();
+
+			_dbSetMock.Setup(x => x.Local).Returns(data);
+
+			_dbSetMock.Setup(x => x.Expression).Returns(dataQueryable.Expression);
+			_dbSetMock.Setup(x => x.ElementType).Returns(dataQueryable.ElementType);
+			_dbSetMock.Setup(x => x.Provider).Returns(dataQueryable.Provider);
+
+			_repository = new Repository<StubEntity>(_dbSetMock.Object);
 		}
 
 		[Test]
@@ -41,11 +53,11 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 		[Test]
 		public void GetById_When_called_Then_gets_item_with_correct_id_from_collecion()
 		{
-			var entityId = _firstEntity.Id;
+			var entityId = _thirdEntity.Id;
 
 			var result = _repository.GetById(entityId);
 
-			Assert.AreEqual(_firstEntity, result);
+			Assert.AreEqual(_thirdEntity, result);
 		}
 
 		[Test]
