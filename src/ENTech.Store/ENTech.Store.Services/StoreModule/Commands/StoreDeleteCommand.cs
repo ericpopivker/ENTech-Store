@@ -1,5 +1,7 @@
 ﻿using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
+using ENTech.Store.Infrastructure.Services;
+using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
@@ -26,6 +28,23 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			{
 				IsSuccess = true
 			};
+		}
+
+		protected override ArgumentErrorsCollection ValidateInternal(StoreDeleteRequest request)
+		{
+			var result = new ArgumentErrorsCollection();
+
+			var store = _repository.GetById(request.StoreId);
+
+			if (store == null)
+				result["StoreId"] = new ArgumentError
+				{
+					ArgumentName = "StoreId",
+					ErrorCode = CommonErrorCode.ArgumentErrors,
+					ErrorMessage = "Store does not exist"
+				};
+
+			return result;
 		}
 	}
 }
