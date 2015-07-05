@@ -112,6 +112,9 @@
     <Compile Include="GeoModule\Commands\AddressCreateCommand.cs" />
     <Compile Include="GeoModule\Requests\AddressCreateRequest.cs" />
     <Compile Include="GeoModule\Responses\AddressCreateResponse.cs" />
+    <Compile Include="StoreModule\Commands\StoreDeleteCommand.cs" />
+    <Compile Include="StoreModule\Requests\StoreDeleteRequest.cs" />
+    <Compile Include="StoreModule\Responses\StoreDeleteResponse.cs" />
     <Compile Include="StoreModule\Commands\StoreUpdateCommand.cs" />
     <Compile Include="StoreModule\Criterias\StoreFindCriteria.cs" />
     <Compile Include="StoreModule\Dtos\AddressDto.cs" />
