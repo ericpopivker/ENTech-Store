@@ -4,7 +4,7 @@ using ENTech.Store.Infrastructure.Entities;
 using Moq;
 using NUnit.Framework;
 
-namespace ENTech.Store.Infrastructure.Database.Tests
+namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 {
 	public class RepositoryTests
 	{

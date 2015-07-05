@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Entities;
 
-namespace ENTech.Store.Infrastructure.Database.Repository
+namespace ENTech.Store.Infrastructure.Database.EF6
 {
 	public class Repository<TEntity> : IRepository<TEntity> 
 		where TEntity : class, IEntity
@@ -15,7 +17,7 @@ namespace ENTech.Store.Infrastructure.Database.Repository
 
 		public void Add(TEntity entity)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public TEntity GetById(int entityId)
@@ -26,12 +28,12 @@ namespace ENTech.Store.Infrastructure.Database.Repository
 
 		public void Delete(TEntity entity)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public void Update(TEntity entity)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 	}
 }

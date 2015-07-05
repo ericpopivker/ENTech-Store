@@ -19,7 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Services.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.Database", "ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj", "{1152AA7A-F788-4291-8B0D-C1117D1C7A08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.Database.Tests", "ENTech.Store.Infrastructure.Database.Tests\ENTech.Store.Infrastructure.Database.Tests.csproj", "{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.Database.EF6.Tests", "ENTech.Store.Infrastructure.Database.Tests\ENTech.Store.Infrastructure.Database.EF6.Tests.csproj", "{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.Database.EF6", "ENTech.Store.Infrastructure.Database.EF6\ENTech.Store.Infrastructure.Database.EF6.csproj", "{93C02513-AFFB-43A0-AF4B-B5468987CC9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93C02513-AFFB-43A0-AF4B-B5468987CC9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93C02513-AFFB-43A0-AF4B-B5468987CC9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93C02513-AFFB-43A0-AF4B-B5468987CC9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93C02513-AFFB-43A0-AF4B-B5468987CC9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
