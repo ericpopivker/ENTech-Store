@@ -21,9 +21,11 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 		private readonly StubEntity _fourthEntityWithDupeId = new StubEntity { Id = 4 };
 		private readonly StubEntity _fifthEntityWithDupeId = new StubEntity { Id = 4 };
 
+		private readonly ObservableCollection<StubEntity> _dbSetData;
+
 		public RepositoryTests()
 		{
-			var data = new ObservableCollection<StubEntity>
+			_dbSetData = new ObservableCollection<StubEntity>
 			{
 				_firstEntity,
 				_secondEntity,
@@ -32,9 +34,9 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				_fifthEntityWithDupeId
 			};
 
-			var dataQueryable = data.AsQueryable();
+			var dataQueryable = _dbSetData.AsQueryable();
 
-			_dbSetMock.Setup(x => x.Local).Returns(data);
+			_dbSetMock.Setup(x => x.Local).Returns(_dbSetData);
 
 			_dbSetMock.Setup(x => x.Expression).Returns(dataQueryable.Expression);
 			_dbSetMock.Setup(x => x.ElementType).Returns(dataQueryable.ElementType);
@@ -65,6 +67,26 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			var entityId = _fourthEntityWithDupeId.Id;
 
 			Assert.DoesNotThrow(()=>_repository.GetById(entityId));
+		}
+
+		[Test]
+		public void Add_When_called_for_entity_with_dupe_id_Then_calls_dbSet_add()
+		{
+			var stubEntity = new StubEntity();
+
+			_repository.Add(stubEntity);
+
+			_dbSetMock.Verify(x => x.Add(stubEntity));
+		}
+
+		[Test]
+		public void Delete_When_called_for_entity_with_dupe_id_Then_calls_dbSet_remove()
+		{
+			var stubEntity = new StubEntity();
+
+			_repository.Delete(stubEntity);
+
+			_dbSetMock.Verify(x => x.Remove(stubEntity));
 		}
 
 		public class StubEntity : IEntity

@@ -31,7 +31,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 
 		public void Delete(TEntity entity)
 		{
-			throw new NotImplementedException();
+			_dbSet.Remove(entity);
 		}
 
 		public void Update(TEntity entity)
