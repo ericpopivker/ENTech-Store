@@ -14,6 +14,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 		private readonly IRepository<StubEntity> _repository;
 
 		private Mock<IDbSet<StubEntity>> _dbSetMock = new Mock<IDbSet<StubEntity>>();
+		private Mock<IDbEntityStateManager<StubEntity>> _entityStateManager = new Mock<IDbEntityStateManager<StubEntity>>();
 
 		private readonly StubEntity _firstEntity = new StubEntity { Id = 1 };
 		private readonly StubEntity _secondEntity = new StubEntity { Id = 2 };
@@ -42,13 +43,13 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			_dbSetMock.Setup(x => x.ElementType).Returns(dataQueryable.ElementType);
 			_dbSetMock.Setup(x => x.Provider).Returns(dataQueryable.Provider);
 
-			_repository = new Repository<StubEntity>(_dbSetMock.Object);
+			_repository = new Repository<StubEntity>(_dbSetMock.Object, _entityStateManager.Object);
 		}
 
 		[Test]
-		public void Ctor_When_called_with_null_dbset_Then_throws_argumentNullException()
+		public void Ctor_When_called_with_null_dbset_and_entityStateManager_Then_throws_argumentNullException()
 		{
-			Assert.Throws<ArgumentNullException>(()=> new Repository<StubEntity>(null));
+			Assert.Throws<ArgumentNullException>(()=> new Repository<StubEntity>(null, null));
 		}
 
 		[Test]
@@ -87,6 +88,16 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			_repository.Delete(stubEntity);
 
 			_dbSetMock.Verify(x => x.Remove(stubEntity));
+		}
+
+		[Test]
+		public void Update_When_called_for_entity_without_auditable_interface_Then_calls_entity_state_manager_changeState()
+		{
+			var stubEntity = new StubEntity();
+
+			_repository.Update(stubEntity);
+
+			_entityStateManager.Verify(x => x.MarkUpdated(stubEntity));
 		}
 
 		public class StubEntity : IEntity

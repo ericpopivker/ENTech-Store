@@ -10,13 +10,15 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 		where TEntity : class, IEntity
 	{
 		private readonly IDbSet<TEntity> _dbSet;
+		private readonly IDbEntityStateManager<TEntity> _dbEntityStateManager;
 
-		public Repository(IDbSet<TEntity> dbSet)
+		public Repository(IDbSet<TEntity> dbSet, IDbEntityStateManager<TEntity> dbEntityStateManager)
 		{
 			if (dbSet == null)
 				throw new ArgumentNullException("dbSet");
 
 			_dbSet = dbSet;
+			_dbEntityStateManager = dbEntityStateManager;
 		}
 
 		public void Add(TEntity entity)
@@ -36,7 +38,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 
 		public void Update(TEntity entity)
 		{
-			throw new NotImplementedException();
+			_dbEntityStateManager.MarkUpdated(entity);
 		}
 	}
 }
