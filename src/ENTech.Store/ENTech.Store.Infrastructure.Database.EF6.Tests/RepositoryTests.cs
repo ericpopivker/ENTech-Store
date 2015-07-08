@@ -45,13 +45,15 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 			_repository = new Repository<StubEntity>(_dbSetMock.Object, _entityStateManager.Object);
 		}
-
+		#region Ctor
 		[Test]
 		public void Ctor_When_called_with_null_dbset_and_entityStateManager_Then_throws_argumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(()=> new Repository<StubEntity>(null, null));
 		}
+		#endregion
 
+		#region GetById
 		[Test]
 		public void GetById_When_called_Then_gets_item_with_correct_id_from_collecion()
 		{
@@ -69,7 +71,9 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 			Assert.DoesNotThrow(()=>_repository.GetById(entityId));
 		}
+		#endregion
 
+		#region Add
 		[Test]
 		public void Add_When_called_for_entity_with_dupe_id_Then_calls_dbSet_add()
 		{
@@ -79,7 +83,9 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 			_dbSetMock.Verify(x => x.Add(stubEntity));
 		}
+		#endregion
 
+		#region Delete
 		[Test]
 		public void Delete_When_called_for_entity_without_logically_deletable_interface_Then_calls_dbSet_remove()
 		{
@@ -89,7 +95,9 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 			_dbSetMock.Verify(x => x.Remove(stubEntity));
 		}
+		#endregion
 
+		#region Update
 		[Test]
 		public void Update_When_called_for_entity_without_auditable_interface_Then_calls_entity_state_manager_changeState()
 		{
@@ -99,6 +107,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 			_entityStateManager.Verify(x => x.MarkUpdated(stubEntity));
 		}
+		#endregion
 
 		public class StubEntity : IEntity
 		{
