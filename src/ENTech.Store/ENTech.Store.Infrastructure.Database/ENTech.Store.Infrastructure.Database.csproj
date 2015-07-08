@@ -42,19 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="QueryExecuter\FindCriteriaBase.cs" />
-    <Compile Include="QueryExecuter\GetByIdCriteria.cs" />
     <Compile Include="QueryExecuter\IProjection.cs" />
     <Compile Include="QueryExecuter\IQueryExecuter.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryExecuter\PagingOptions.cs" />
-    <Compile Include="QueryExecuter\QueryCriteria.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
-      <Project>{26B48B70-7CF1-4BE9-9D14-CE616B4CF7AA}</Project>
-      <Name>ENTech.Store.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj">
       <Project>{7d581130-b9a8-4e44-9562-67e41697a123}</Project>
       <Name>ENTech.Store.Infrastructure</Name>
