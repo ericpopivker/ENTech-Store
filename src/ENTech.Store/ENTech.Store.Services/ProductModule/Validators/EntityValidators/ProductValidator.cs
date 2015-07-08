@@ -21,23 +21,20 @@ namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 		private IInternalCommandService _internalCommandService;
 		private IProductQuery _productQuery;
 
-		public ProductValidator(IUnitOfWork unitOfWork, IInternalCommandService internalCommandService, IProductQuery productQuery)
+		public ProductValidator(IInternalCommandService internalCommandService, IProductQuery productQuery)
 		{
-			_unitOfWork = unitOfWork;
 			_internalCommandService = internalCommandService;
 			_productQuery = productQuery;
 		}
 
 
-		public ValidateArgumentResult NameMustBeUnique(string argumentName, string productName)
+		public ValidateArgumentResult NameMustBeUnique(string productName, int storeId)
 		{
-			var query = new ProductExiststByNameQuery();
-			var critera = new ProductExiststByNameQuery.Criteria { Name = productName };
-			var exists = _unitOfWork.Query(query, critera);
+			var exists = _productQuery.ExistsByName(productName, storeId);
 
 			if (exists)
 			{
-				var error = new ProductNameMustBeUniqueArgumentError(argumentName);
+				var error = new ProductNameMustBeUniqueArgumentError();
 				return ValidateArgumentResult.Invalid(error);
 			}
 

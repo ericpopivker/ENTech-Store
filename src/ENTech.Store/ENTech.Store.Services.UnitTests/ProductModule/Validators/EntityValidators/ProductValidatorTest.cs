@@ -15,30 +15,32 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 	[TestFixture]
 	public class ProductValidatorTest
 	{
-		private Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
 		private Mock<IInternalCommandService> _internalCommandService = new Mock<IInternalCommandService>();
 		private Mock<IProductQuery> _productQuery = new Mock<IProductQuery>();
 
 
 		private ProductValidator _productValidator;
+
+		public const string ProductNameFake = "SomeName";
+		public const int StoreIdFake = 23;
+
 		[SetUp]
 		public void SetUp()
 		{
-			_unitOfWorkMock.ResetCalls();
 			_internalCommandService.ResetCalls();
 			_productQuery.ResetCalls();
 
-			_productValidator = new ProductValidator(_unitOfWorkMock.Object, _internalCommandService.Object, _productQuery.Object);
+			_productValidator = new ProductValidator(_internalCommandService.Object, _productQuery.Object);
 		}
 
 		[Test]
 		public void NameMustBeUnique_When_name_is_passed_Then_passed_to_query()
 		{
-			_unitOfWorkMock.Setup(uow => uow.Query(It.IsAny<ProductExiststByNameQuery>(), It.IsAny<ProductExiststByNameQuery.Criteria>())).Returns(false);
+			_productQuery.Setup(pq => pq.ExistsByName(It.IsAny<string>(), It.IsAny<int>())).Returns(false);
 
-			_productValidator.NameMustBeUnique("Product.Name",  "SomeName");
+			_productValidator.NameMustBeUnique(ProductNameFake,  StoreIdFake);
 
-			_unitOfWorkMock.Verify(uow => uow.Query(It.IsAny<ProductExiststByNameQuery>(), It.Is<ProductExiststByNameQuery.Criteria>(c => c.Name == "SomeName")), Times.Once);
+			_productQuery.Verify(pq => pq.ExistsByName(It.Is<string>(name => name == ProductNameFake), It.Is<int>(storeId => storeId  == StoreIdFake)), Times.Once);
 
 		}
 
@@ -46,9 +48,9 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 		[Test]
 		public void NameMustBeUnique_When_name_is_unique_Then_valid()
 		{
-			_unitOfWorkMock.Setup(uow => uow.Query(It.IsAny<ProductExiststByNameQuery>(), It.IsAny<ProductExiststByNameQuery.Criteria>())).Returns(false);
+			_productQuery.Setup(pq => pq.ExistsByName(It.IsAny<string>(), It.IsAny<int>())).Returns(false);
 
-			var argValidatorResult = _productValidator.NameMustBeUnique("Product.Name", "SomeName");
+			var argValidatorResult = _productValidator.NameMustBeUnique(ProductNameFake,  StoreIdFake);
 
 			Assert.IsTrue(argValidatorResult.IsValid);
 		}
@@ -57,9 +59,9 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 		[Test]
 		public void NameMustBeUnique_When_name_is_not_unique_Then_invalid()
 		{
-			_unitOfWorkMock.Setup(uow => uow.Query(It.IsAny<ProductExiststByNameQuery>(), It.IsAny<ProductExiststByNameQuery.Criteria>())).Returns(true);
+			_productQuery.Setup(pq => pq.ExistsByName(It.IsAny<string>(), It.IsAny<int>())).Returns(true);
 
-			var argValidatorResult = _productValidator.NameMustBeUnique("Product.Name", "SomeName");
+			var argValidatorResult = _productValidator.NameMustBeUnique(ProductNameFake,  StoreIdFake);
 
 			Assert.IsFalse(argValidatorResult.IsValid);
 		}

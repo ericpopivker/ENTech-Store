@@ -71,7 +71,7 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 		{
 			ArgumentError argumentError;
 			if (Regex.IsMatch(daErrorMessage, DAErrorMessage_Required))
-				argumentError =new RequiredArgumentError(argumentName);
+				argumentError =new RequiredArgumentError();
 			else
 				throw new ArgumentOutOfRangeException("daErrorMessage", "Data Annotations Error Match not found: " + daErrorMessage);
 

@@ -91,7 +91,9 @@
     <Compile Include="Services\Commands\CommandBase.cs" />
     <Compile Include="Services\Commands\ICommand.cs" />
     <Compile Include="Services\Commands\IInternalCommand.cs" />
-    <Compile Include="Services\Errors\ArgumentErrorsCollection.cs" />
+    <Compile Include="Services\Errors\ArgumentErrors\EntityWithIdIsDeletedError.cs" />
+    <Compile Include="Services\Errors\ArgumentErrors\EntityWithIdDoesNotExistError.cs" />
+    <Compile Include="Services\Errors\ResponseArgumentError.cs" />
     <Compile Include="Services\Errors\ArgumentErrors\PositiveIntArgumentError.cs" />
     <Compile Include="Services\Errors\ArgumentErrors\RequiredArgumentError.cs" />
     <Compile Include="Services\Errors\CommonResponseErrorCode.cs" />
@@ -108,6 +110,8 @@
     <Compile Include="Services\Errors\ResponseErrors\UserNotAuthenticatedResponseError.cs" />
     <Compile Include="Services\Errors\ResponseErrors\InvalidTokenResponseError.cs" />
     <Compile Include="Services\Filters\ListReportFilter.cs" />
+    <Compile Include="Services\Repositories\CachedRepository.cs" />
+    <Compile Include="Services\Repositories\IRepository.cs" />
     <Compile Include="Services\Requests\DeleteRequest.cs" />
     <Compile Include="Services\Requests\IRequest.cs" />
     <Compile Include="Services\Requests\ListReportRequest.cs" />
@@ -131,7 +135,11 @@
     <Compile Include="Services\Commands\ValidateRequestResult.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\Validators\ArgumentName.cs" />
     <Compile Include="Services\Validators\FluentDtoValidator.cs" />
+    <Compile Include="Services\Validators\IArgumentName.cs" />
+    <Compile Include="Services\Validators\IDtoValidatorResult.cs" />
+    <Compile Include="Services\Validators\ValidateArgumentsResult.cs" />
     <Compile Include="Services\Validators\ValidateArgumentResult.cs">
       <SubType>Code</SubType>
     </Compile>

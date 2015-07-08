@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Errors;
@@ -27,12 +29,19 @@ namespace ENTech.Store.Services.ProductModule.Commands
 			_productValidator = productValidator;
 		}
 
-		protected override void ValidateRequestInternal(ProductCreateRequest request, ValidateRequestResult validateArgsResult)
+		protected override void ValidateRequestInternal(ProductCreateRequest request, ValidateRequestResult<ProductCreateRequest> validateRequestResult)
 		{
-			var result = _productValidator.NameMustBeUnique("Product.Name", request.Product.Name);
-			if (!result.IsValid)
-				validateArgsResult.ArgumentErrors.Add(result.ArgumentError);
+			if (validateRequestResult.NoErrorsForArgument(req => req.Product.Name) &&
+			    validateRequestResult.NoErrorsForArgument(req => request.Product.StoreId))
+			{
+
+				var result = _productValidator.NameMustBeUnique(request.Product.Name, request.Product.StoreId);
+
+				if (!result.IsValid)
+					validateRequestResult.AddArgumentError(req => req.Product.Name, result.ArgumentError);
+			}
 		}
+
 
 
 		protected override ValidateOperationResult ValidateOperationInternal(ProductCreateRequest request)

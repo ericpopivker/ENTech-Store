@@ -5,7 +5,7 @@ namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 {
 	public interface IProductValidator
 	{
-		ValidateArgumentResult NameMustBeUnique(string argumentName, string productName);
+		ValidateArgumentResult NameMustBeUnique(string productName, int storeId);
 
 		ValidateOperationResult IsOverMaxProductsLimit(int storeId);
 	}

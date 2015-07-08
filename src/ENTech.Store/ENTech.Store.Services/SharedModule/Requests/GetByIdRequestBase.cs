@@ -12,8 +12,7 @@ namespace ENTech.Store.Services.SharedModule.Requests
 	public abstract class GetByIdRequestBase<TSecurity> : SecureRequestBase<TSecurity> 
 		where TSecurity : ISecurityInformation
 	{
-		[Required]
-		public int? Id { get; set; }
+		public int Id { get; set; }
 	}
 
 

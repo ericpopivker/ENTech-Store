@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using ENTech.Store.Entities;
+using ENTech.Store.Entities.ProductModule;
 using ENTech.Store.Entities.StoreModule;
 using ENTech.Store.Services.ProductModule.Dtos;
 

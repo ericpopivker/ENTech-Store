@@ -7,15 +7,15 @@ namespace ENTech.Store.Infrastructure.Services.Errors.ResponseErrors
 	{
 		private const string _errorMessageTemplate = "Invalid arguments";
 
-		public List<ArgumentError> ArgumentErrors {get; set; } 
+		public List<ResponseArgumentError> ArgumentErrors {get; set; } 
 
 		public InvalidArgumentsResponseError() 
 				: base(CommonResponseErrorCode.InvalidArguments)
 		{
-			ArgumentErrors= new List<ArgumentError>();
+			ArgumentErrors = new List<ResponseArgumentError>();
 		}
 
-		public InvalidArgumentsResponseError(IEnumerable<ArgumentError> argumentErrors) : this()
+		public InvalidArgumentsResponseError(IEnumerable<ResponseArgumentError> argumentErrors) : this()
 		{
 			ArgumentErrors.AddRange(argumentErrors);
 		}

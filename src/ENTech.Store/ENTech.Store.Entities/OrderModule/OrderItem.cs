@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ENTech.Store.Entities.ProductModule;
 using ENTech.Store.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Entities;
 

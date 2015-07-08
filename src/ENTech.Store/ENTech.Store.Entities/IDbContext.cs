@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Entities.PartnerModule;
 using ENTech.Store.Entities.CustomerModule;
+using ENTech.Store.Entities.ProductModule;
 using ENTech.Store.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Entities;
 
@@ -35,7 +36,7 @@ namespace ENTech.Store.Entities
 
 		IFilerableDbSet<StoreModule.Store> Stores { get; }
 
-		IFilerableDbSet<StoreModule.Product> Products { get; }
+		IFilerableDbSet<Product> Products { get; }
 
 		IFilerableDbSet<Customer> Customers { get; }
 

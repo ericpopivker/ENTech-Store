@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ENTech.Store.Infrastructure.Entities;
 
-namespace ENTech.Store.Entities.StoreModule
+namespace ENTech.Store.Entities.ProductModule
 {
 	[Table("Product")]
 	public class Product : IEntity, IAuditable, ILogicallyDeletable
@@ -41,7 +41,7 @@ namespace ENTech.Store.Entities.StoreModule
 		public int? StoreId { get; set; }
 		
 		[ForeignKey("StoreId")]
-		public virtual Store Store { get; set; }
+		public virtual StoreModule.Store Store { get; set; }
 		
 	
 

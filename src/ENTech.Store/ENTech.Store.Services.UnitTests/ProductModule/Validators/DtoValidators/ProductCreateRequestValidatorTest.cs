@@ -21,7 +21,7 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.DtoValidators
 			Assert.IsFalse(validatorResult.IsValid);
 			var argErrors = validatorResult.ArgumentErrors;
 
-			Assert.IsTrue(argErrors.Any(e => e.ArgumentName == "Product" && e.ErrorCode == CommonArgumentErrorCode.Required && e.ErrorMessage == "Required"));
+			Assert.IsTrue(argErrors.Any(e => e.ArgumentName == "Product" && e.ArgumentError.ErrorCode == CommonArgumentErrorCode.Required && e.ArgumentError.ErrorMessage == "Required"));
 		}
 
 
@@ -35,7 +35,7 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.DtoValidators
 			Assert.IsFalse(validatorResult.IsValid);
 			var argErrors = validatorResult.ArgumentErrors;
 
-			Assert.IsTrue(argErrors.Any(e => e.ArgumentName == "Product.Name" && e.ErrorCode == CommonArgumentErrorCode.Required && e.ErrorMessage == "Required"));
+			Assert.IsTrue(argErrors.Any(e => e.ArgumentName == "Product.Name" && e.ArgumentError.ErrorCode == CommonArgumentErrorCode.Required && e.ArgumentError.ErrorMessage == "Required"));
 		}
 	}
 }

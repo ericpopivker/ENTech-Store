@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.UI;
-using ENTech.Store.Infrastructure.Services.Errors;
+﻿using System;
+using System.Linq.Expressions;
 using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
@@ -31,7 +29,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 
 		public ValidateCommandResult Validate(TRequest request)
 		{
-			var validateRequestResult = new ValidateRequestResult();
+			var validateRequestResult = new ValidateRequestResult<TRequest>();
 
 			ValidateRequest(request, validateRequestResult);
 
@@ -46,7 +44,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 			return ValidateCommandResult.Valid();
 		}
 
-		private void ValidateRequest(TRequest request, ValidateRequestResult validateRequestResult)
+		private void ValidateRequest(TRequest request, ValidateRequestResult<TRequest> validateRequestResult)
 		{
 			var dtoValidator = _dtoValidatorFactory.TryCreate<TRequest>();
 			if (dtoValidator != null)
@@ -59,7 +57,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 			ValidateRequestInternal(request, validateRequestResult);
 		}
 
-		protected virtual void ValidateRequestInternal(TRequest request, ValidateRequestResult validateRequestResult)
+		protected virtual void ValidateRequestInternal(TRequest request, ValidateRequestResult<TRequest> validateRequestResult)
 		{
 		}
 

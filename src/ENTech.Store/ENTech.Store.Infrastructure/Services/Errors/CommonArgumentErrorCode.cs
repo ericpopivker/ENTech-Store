@@ -9,5 +9,10 @@ namespace ENTech.Store.Infrastructure.Services.Errors
 		public const int Required = 100001;
 
 		public const int PositiveInt = 100002;
+
+		public const int EntityWithIdDoesNotExist = 100003;
+
+		public const int EntityWithIdIsDeleted = 100003;
+
 	}
 }

@@ -1,5 +1,6 @@
 ﻿
 using ENTech.Store.Infrastructure.Services.Errors;
+using ENTech.Store.Infrastructure.Services.Validators;
 
 namespace ENTech.Store.Services.ProductModule.Errors.ArgumentErrors
 {
@@ -7,8 +8,8 @@ namespace ENTech.Store.Services.ProductModule.Errors.ArgumentErrors
 	{
 		private const string _errorMessageTemplate = "Must be unique";
 
-		public ProductNameMustBeUniqueArgumentError(string argumentName) 
-					: base(argumentName, ProductArgumentErrorCode.NameMustBeUnique)
+		public ProductNameMustBeUniqueArgumentError() 
+					: base(ProductArgumentErrorCode.NameMustBeUnique)
 		{
 		}
 		

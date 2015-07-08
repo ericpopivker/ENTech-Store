@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq.Expressions;
 using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Services.ProductModule.Validators.DtoValidators;
 using FluentValidation;
+using FluentValidation.Results;
 using ValidationContext = FluentValidation.ValidationContext;
 
 namespace ENTech.Store.Infrastructure.Services.Validators
@@ -26,35 +28,48 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 		}
 
 		
-		DtoValidatorResult IDtoValidator.Validate(object dto, string propertyParentPath)
+		IDtoValidatorResult IDtoValidator.Validate(object dto, string propertyParentPath)
 		{
 			return Validate((TDto)dto, propertyParentPath);
 		}
 
 
-		public virtual DtoValidatorResult Validate(TDto dto, string propertyParentPath=null)
+		public virtual DtoValidatorResult<TDto> Validate(TDto dto, string propertyParentPath=null)
 		{
-			var fluentValidatorResult = _fluentDtoValidator.Validate(dto);
-			var result = new DtoValidatorResult();
+			var result = new DtoValidatorResult<TDto>();
+			var argumentErrors = new List<ResponseArgumentError>();
 
-			var argumentErrors = new List<ArgumentError>();
+			VisitAndValidateDependents(dto, argumentErrors, propertyParentPath);
+
+			var fluentValidatorResult = _fluentDtoValidator.Validate(dto);
 			
 			foreach (var validationFailure in fluentValidatorResult.Errors)
 			{
-				string argumentName = propertyParentPath != null ? propertyParentPath + "." + validationFailure.PropertyName : validationFailure.PropertyName;
-				var argumentError = FluentValidationResources.GetArgumentError(validationFailure.ErrorMessage, argumentName);
-				argumentErrors.Add(argumentError);
+				var responseArgumentError = ConverFluentValidationFailureToResponseArgumentError(validationFailure, propertyParentPath);
+				argumentErrors.Add(responseArgumentError);
 			}
 
-			VisitAndValidateDependents(dto, argumentErrors, propertyParentPath);
 			result.ArgumentErrors = argumentErrors;
+
+			//ValidateInternal(dto, result);
 
 			return result;
 		}
 
+		private static ResponseArgumentError ConverFluentValidationFailureToResponseArgumentError(ValidationFailure validationFailure, string propertyParentPath)
+		{
+			string argumentName = propertyParentPath != null
+				? propertyParentPath + "." + validationFailure.PropertyName
+				: validationFailure.PropertyName;
+
+			var argumentError = FluentValidationResources.GetArgumentError(validationFailure.ErrorMessage, argumentName);
 
 
-		public void VisitAndValidateDependents(object dto, List<ArgumentError> argumentErrors, string propertyParentPath = null)
+			return new ResponseArgumentError(argumentName, argumentError);
+		}
+
+
+		public void VisitAndValidateDependents(object dto, List<ResponseArgumentError> argumentErrors, string propertyParentPath = null)
 		{
 			
 			foreach (var propertyInfo in dto.GetType().GetProperties())
@@ -136,7 +151,11 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 			_fluentDtoValidator.Unless(predicate, action);
 		}
 
-	
+
+		protected IArgumentName ArgumentName(Expression<Func<TDto, object>> expresison)
+		{
+			return ArgumentName<TDto>.For(expresison);
+		}
 	}
 
 

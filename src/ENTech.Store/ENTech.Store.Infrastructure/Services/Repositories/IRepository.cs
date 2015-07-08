@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ENTech.Store.Infrastructure.Entities;
 
-namespace ENTech.Store.Services.ProductModule.Repositories
+namespace ENTech.Store.Infrastructure.Services.Repositories
 {
+	public enum EntityMetaState
+	{
+		NotFound,
+		Exists,
+		Deleted
+	}
+
+
 	public interface IRepository<T> where T : IEntity
 	{
 		void Add(T entity);
@@ -18,5 +22,8 @@ namespace ENTech.Store.Services.ProductModule.Repositories
 		T GetById(IList<int> entityIds);
 
 		void Delete(int entityId);
+
+
+		EntityMetaState GetEntityMetaState(int entityId);
 	}
 }

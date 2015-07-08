@@ -1,6 +1,9 @@
-﻿using ENTech.Store.Entities.UnitOfWork;
+﻿using System.IO;
+using ENTech.Store.Entities.UnitOfWork;
+using ENTech.Store.Infrastructure.Services.Repositories;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.SharedModule.Commands;
+using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Queries;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
@@ -9,22 +12,21 @@ namespace ENTech.Store.Services.StoreModule.Commands
 {
 	public class StoreGetByIdCommand : DbContextCommandBase<StoreGetByIdRequest, StoreGetByIdResponse>
 	{
-		public StoreGetByIdCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory)
+		private IRepository<Entities.StoreModule.Store> _storeRepository;
+		public StoreGetByIdCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory, IRepository<Entities.StoreModule.Store> storeRepository)
 			: base(unitOfWork.DbContext, dtoValidatorFactory, false)
 		{
+			_storeRepository = storeRepository;
 		}
 
 		public override StoreGetByIdResponse Execute(StoreGetByIdRequest request)
 		{
-			var query = new StoreGetByIdQuery();
-			var result = query.Execute(DbContext, new StoreGetByIdQuery.Criteria
-			{
-				Id = request.Id.Value
-			});
-			return new StoreGetByIdResponse
-			{
-				Item = result
-			};
+			Entities.StoreModule.Store store = _storeRepository.GetById(request.Id);
+			StoreDto storeDto = new StoreDto();
+			
+			//map store to storeDto
+
+			return new StoreGetByIdResponse {Item = storeDto};
 		}
 	}
 }

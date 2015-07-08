@@ -3,5 +3,7 @@
 	public interface IProductQuery
 	{
 		int GetTotalByStoreId(int storeId);
+
+		bool ExistsByName(string name, int storeId);
 	}
 }

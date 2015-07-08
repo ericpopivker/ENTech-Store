@@ -57,7 +57,7 @@ namespace ENTech.Store.Services.ProductModule.Validators.DtoValidators
 			switch (errorCode)
 			{
 				case CommonArgumentErrorCode.Required:
-					return new RequiredArgumentError(argumentName);
+					return new RequiredArgumentError();
 				default:
 					throw new ArgumentOutOfRangeException(vals[0] + " is not supported.");
 			}

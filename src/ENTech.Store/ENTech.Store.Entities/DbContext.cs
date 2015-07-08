@@ -6,6 +6,7 @@ using System.Text;
 using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Entities.PartnerModule;
 using ENTech.Store.Entities.CustomerModule;
+using ENTech.Store.Entities.ProductModule;
 using ENTech.Store.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Cache;
 using ENTech.Store.Infrastructure.Entities;

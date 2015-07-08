@@ -71,7 +71,7 @@
     <Compile Include="OrderModule\OrderPayment.cs" />
     <Compile Include="Query\IQuery.cs" />
     <Compile Include="Query\IQueryCriteria.cs" />
-    <Compile Include="StoreModule\Product.cs" />
+    <Compile Include="ProductModule\Product.cs" />
     <Compile Include="StoreModule\Store.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="IDbContext.cs" />
