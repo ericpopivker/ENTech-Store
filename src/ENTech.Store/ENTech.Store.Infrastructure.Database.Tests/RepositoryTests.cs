@@ -48,7 +48,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 		[Test]
 		public void Ctor_When_called_with_null_dbset_Then_throws_argumentNullException()
 		{
-			Assert.Throws<ArgumentNullException>(()=> new Repository<StubEntityWithNoDbSet>(null));
+			Assert.Throws<ArgumentNullException>(()=> new Repository<StubEntity>(null));
 		}
 
 		[Test]
@@ -80,7 +80,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 		}
 
 		[Test]
-		public void Delete_When_called_for_entity_with_dupe_id_Then_calls_dbSet_remove()
+		public void Delete_When_called_for_entity_without_logically_deletable_interface_Then_calls_dbSet_remove()
 		{
 			var stubEntity = new StubEntity();
 
@@ -90,11 +90,6 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 		}
 
 		public class StubEntity : IEntity
-		{
-			public int Id { get; set; }
-		}
-
-		public class StubEntityWithNoDbSet : IEntity
 		{
 			public int Id { get; set; }
 		}
