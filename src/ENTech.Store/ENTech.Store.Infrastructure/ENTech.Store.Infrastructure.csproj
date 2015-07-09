@@ -81,6 +81,9 @@
     </Compile>
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
+    <Compile Include="FileStorage\AzureFileStorage.cs" />
+    <Compile Include="FileStorage\FileStoragebase.cs" />
+    <Compile Include="FileStorage\LocalFileStorage.cs" />
     <Compile Include="Helpers\PropertyHelper.cs" />
     <Compile Include="Enums\SortDirection.cs" />
     <Compile Include="IoC.cs" />

@@ -105,8 +105,10 @@
     <Compile Include="SharedModule\Dtos\SortFieldDto.cs" />
     <Compile Include="SharedModule\ModuleLogic\TokenData.cs" />
     <Compile Include="SharedModule\ModuleLogic\TokenUtilService.cs" />
+    <Compile Include="SharedModule\Requests\EntityFinishUploadRequest.cs" />
     <Compile Include="SharedModule\Requests\FindRequestBase.cs" />
     <Compile Include="SharedModule\Requests\GetByIdRequestBase.cs" />
+    <Compile Include="SharedModule\Responses\EntityFinishUploadResponse.cs" />
     <Compile Include="SharedModule\Responses\FindResponseBase.cs" />
     <Compile Include="StoreModule\Commands\StoreUpdateCommand.cs" />
     <Compile Include="StoreModule\Dtos\StoreUpdateDto.cs" />
@@ -128,6 +130,24 @@
     <Compile Include="StoreModule\Responses\StoreGetByIdResponse.cs" />
     <Compile Include="StoreModule\Requests\StoreCreateRequest.cs" />
     <Compile Include="StoreModule\Responses\StoreCreateResponse.cs" />
+    <Compile Include="UploadModule\Commands\UploadAttachCommand.cs" />
+    <Compile Include="UploadModule\Commands\UploadCreateCommand.cs" />
+    <Compile Include="UploadModule\Commands\UploadDetachCommand.cs" />
+    <Compile Include="UploadModule\Commands\UploadFinishCommand.cs" />
+    <Compile Include="UploadModule\Commands\UploadGetByIdCommand.cs" />
+    <Compile Include="UploadModule\Commands\UploadUpdateCommand.cs" />
+    <Compile Include="UploadModule\Requests\UploadAttachRequest.cs" />
+    <Compile Include="UploadModule\Requests\UploadCreateRequest.cs" />
+    <Compile Include="UploadModule\Requests\UploadDetachRequest.cs" />
+    <Compile Include="UploadModule\Requests\UploadFinishRequest.cs" />
+    <Compile Include="UploadModule\Requests\UploadGetByIdRequest.cs" />
+    <Compile Include="UploadModule\Requests\UploadUpdateRequest.cs" />
+    <Compile Include="UploadModule\Responses\UploadAttachResponse.cs" />
+    <Compile Include="UploadModule\Responses\UploadCreateResponse.cs" />
+    <Compile Include="UploadModule\Responses\UploadDetachResponse.cs" />
+    <Compile Include="UploadModule\Responses\UploadFinishResponse.cs" />
+    <Compile Include="UploadModule\Responses\UploadGetByIdResponse.cs" />
+    <Compile Include="UploadModule\Responses\UploadUpdateResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
