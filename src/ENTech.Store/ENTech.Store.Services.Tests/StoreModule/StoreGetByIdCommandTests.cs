@@ -13,7 +13,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 {
 	public class StoreGetByIdCommandTests : CommandTestsBase<StoreGetByIdRequest, StoreGetByIdResponse>
 	{
-		private readonly Mock<IStoreQueryExecuter> _queryExecuterMock = new Mock<IStoreQueryExecuter>();
+		private readonly Mock<IStoreQuery> _queryExecuterMock = new Mock<IStoreQuery>();
 
 		protected override void TearDownInternal()
 		{

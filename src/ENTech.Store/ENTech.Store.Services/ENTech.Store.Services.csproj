@@ -125,7 +125,7 @@
     <Compile Include="StoreModule\Criterias\StoreFindCriteria.cs" />
     <Compile Include="StoreModule\Dtos\AddressDto.cs" />
     <Compile Include="StoreModule\Dtos\StoreUpdateDto.cs" />
-    <Compile Include="StoreModule\IStoreQueryExecuter.cs" />
+    <Compile Include="StoreModule\IStoreQuery.cs" />
     <Compile Include="StoreModule\Projections\StoreProjection.cs" />
     <Compile Include="StoreModule\Queries\StoreFindQuery.cs" />
     <Compile Include="StoreModule\Queries\ProductGetByIdQuery.cs" />

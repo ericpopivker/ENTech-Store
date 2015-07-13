@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\EntityDeletedException.cs" />
+    <Compile Include="Exceptions\EntityLoadMismatchException.cs" />
     <Compile Include="QueryExecuter\FindCriteriaBase.cs" />
     <Compile Include="QueryExecuter\IProjection.cs" />
-    <Compile Include="QueryExecuter\IQueryExecuter.cs" />
+    <Compile Include="QueryExecuter\IQuery.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryExecuter\PagingOptions.cs" />

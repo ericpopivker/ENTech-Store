@@ -19,7 +19,6 @@ namespace ENTech.Store.Entities.StoreModule
 
 		public DateTime? DeletedAt { get; set; }
 		
-
 		public string Name { get; set; }
 
 		public string Logo { get; set; }
