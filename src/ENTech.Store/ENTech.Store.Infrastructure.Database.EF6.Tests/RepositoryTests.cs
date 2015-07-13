@@ -20,7 +20,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			private readonly ObservableCollection<StubEntity> _dbSetData;
 
 			private Mock<IDbSet<StubEntity>> _dbSetMock = new Mock<IDbSet<StubEntity>>();
-			private Mock<IDbEntityStateManager<StubEntity>> _entityStateManagerMock = new Mock<IDbEntityStateManager<StubEntity>>();
+			private Mock<IDbEntityStateManager> _entityStateManagerMock = new Mock<IDbEntityStateManager>();
 
 			private readonly StubEntity _firstEntity = new StubEntity { Id = 1 };
 			private readonly StubEntity _secondEntity = new StubEntity { Id = 2 };
@@ -218,7 +218,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			private readonly IRepository<StubLogicallyDeletableEntity> _repository;
 
 			private Mock<IDbSet<StubLogicallyDeletableEntity>> _dbSetMock = new Mock<IDbSet<StubLogicallyDeletableEntity>>();
-			private Mock<IDbEntityStateManager<StubLogicallyDeletableEntity>> _entityStateManagerMock = new Mock<IDbEntityStateManager<StubLogicallyDeletableEntity>>();
+			private Mock<IDbEntityStateManager> _entityStateManagerMock = new Mock<IDbEntityStateManager>();
 
 			public For_ILogicallyDeletable()
 			{
@@ -323,7 +323,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			private readonly IRepository<StubAuditableEntity> _repository;
 
 			private Mock<IDbSet<StubAuditableEntity>> _dbSetMock = new Mock<IDbSet<StubAuditableEntity>>();
-			private Mock<IDbEntityStateManager<StubAuditableEntity>> _entityStateManagerMock = new Mock<IDbEntityStateManager<StubAuditableEntity>>();
+			private Mock<IDbEntityStateManager> _entityStateManagerMock = new Mock<IDbEntityStateManager>();
 
 			public For_IAuditable()
 			{

@@ -58,6 +58,10 @@
     <Compile Include="RepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
+      <Project>{26B48B70-7CF1-4BE9-9D14-CE616B4CF7AA}</Project>
+      <Name>ENTech.Store.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure.Database.EF6\ENTech.Store.Infrastructure.Database.EF6.csproj">
       <Project>{93c02513-affb-43a0-af4b-b5468987cc9e}</Project>
       <Name>ENTech.Store.Infrastructure.Database.EF6</Name>

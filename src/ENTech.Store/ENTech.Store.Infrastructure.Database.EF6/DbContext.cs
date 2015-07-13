@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Text;
 using ENTech.Store.Entities.GeoModule;
@@ -8,24 +9,25 @@ using ENTech.Store.Entities.PartnerModule;
 using ENTech.Store.Entities.CustomerModule;
 using ENTech.Store.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Cache;
+using ENTech.Store.Infrastructure.Database.EF6.Utility;
 using ENTech.Store.Infrastructure.Entities;
 using ENTech.Store.Infrastructure.Utils;
 
 namespace ENTech.Store.Entities
 {
-	public class DbContext : System.Data.Entity.DbContext, IDbContext
+	public class DbContext : System.Data.Entity.DbContext, IDbContext, IDbEntityStateManager
 	{
 
-		private IFilerableDbSet<Country> _countries;
-		private IFilerableDbSet<State> _states;
-		private IFilerableDbSet<Address> _addresses;
+		private IFilterableDbSet<Country> _countries;
+		private IFilterableDbSet<State> _states;
+		private IFilterableDbSet<Address> _addresses;
 
-		private IFilerableDbSet<Customer> _customers;
-		private IFilerableDbSet<StoreModule.Store> _stores;
+		private IFilterableDbSet<Customer> _customers;
+		private IFilterableDbSet<StoreModule.Store> _stores;
 
 		private DbContextTransaction _transaction;
-		private IFilerableDbSet<Partner> _partners;
-		private IFilerableDbSet<Product> _products;
+		private IFilterableDbSet<Partner> _partners;
+		private IFilterableDbSet<Product> _products;
 
 		public DbContext() : base(EnvironmentUtils.GetConnectionStringName())
 		{
@@ -40,18 +42,17 @@ namespace ENTech.Store.Entities
 
 		private void InitDbSets()
 		{
-			_partners = new Lazy<IFilerableDbSet<Partner>>(() => new FilterableDbSet<Partner>(this)).Value;
+			_partners = new Lazy<IFilterableDbSet<Partner>>(() => new FilterableDbSet<Partner>(this)).Value;
 
-			_stores = new Lazy<IFilerableDbSet<StoreModule.Store>>(() => new FilterableDbSet<StoreModule.Store>(this)).Value;
+			_stores = new Lazy<IFilterableDbSet<StoreModule.Store>>(() => new FilterableDbSet<StoreModule.Store>(this)).Value;
 
-			_customers = new Lazy<IFilerableDbSet<Customer>>(() => new FilterableDbSet<Customer>(this)).Value;
+			_customers = new Lazy<IFilterableDbSet<Customer>>(() => new FilterableDbSet<Customer>(this)).Value;
 
-			_countries = new Lazy<IFilerableDbSet<Country>>(() => new FilterableDbSet<Country>(this)).Value;
-			_states = new Lazy<IFilerableDbSet<State>>(() => new FilterableDbSet<State>(this)).Value;
-			_addresses = new Lazy<IFilerableDbSet<Address>>(() => new FilterableDbSet<Address>(this)).Value;
+			_countries = new Lazy<IFilterableDbSet<Country>>(() => new FilterableDbSet<Country>(this)).Value;
+			_states = new Lazy<IFilterableDbSet<State>>(() => new FilterableDbSet<State>(this)).Value;
+			_addresses = new Lazy<IFilterableDbSet<Address>>(() => new FilterableDbSet<Address>(this)).Value;
 
-			_products = new Lazy<IFilerableDbSet<Product>>(() => new FilterableDbSet<Product>(this)).Value;
-
+			_products = new Lazy<IFilterableDbSet<Product>>(() => new FilterableDbSet<Product>(this)).Value;
 		}
 
 
@@ -62,7 +63,7 @@ namespace ENTech.Store.Entities
 
 
 
-		public bool ValidateEntity<TEntity>(TEntity entity) where TEntity : class
+		public bool ValidateEntity<TEntity>(TEntity entity) where TEntity : class, IEntity
 		{
 			DbEntityValidationResult res = Entry(entity).GetValidationResult();
 			if (!res.IsValid)
@@ -133,40 +134,40 @@ namespace ENTech.Store.Entities
 		}
 
 
-		public IFilerableDbSet<Partner> Partners
+		public IFilterableDbSet<Partner> Partners
 		{
 			get { return _partners; }
 		}
 
-		public IFilerableDbSet<StoreModule.Store> Stores
+		public IFilterableDbSet<StoreModule.Store> Stores
 		{
 			get { return _stores; }
 		}
 
-		public IFilerableDbSet<Product> Products
+		public IFilterableDbSet<Product> Products
 		{
 			get { return _products; }
 		}
 
-		public IFilerableDbSet<Customer> Customers
+		public IFilterableDbSet<Customer> Customers
 		{
 			get { return _customers; }
 		}
 
 
 
-		public IFilerableDbSet<Address> Addresses
+		public IFilterableDbSet<Address> Addresses
 		{
 			get { return _addresses; }
 		}
 
-		public IFilerableDbSet<Country> Countries
+		public IFilterableDbSet<Country> Countries
 		{
 			get { return _countries; }
 		}
 
 
-		public IFilerableDbSet<State> States
+		public IFilterableDbSet<State> States
 		{
 			get { return _states; }
 		}
@@ -179,13 +180,18 @@ namespace ENTech.Store.Entities
 			Customers.ApplyFilter(p => p.StoreId == storeId);
 			return this;
 		}
-
-	
+		
 		public bool IsDisposed { get; private set; }
 
 		public IDbSet<TEntity> DbSet<TEntity>() where TEntity : class
 		{
 			return Set<TEntity>();
+		}
+
+		public void MarkUpdated<TEntity>(TEntity stubEntity) where TEntity : class, IEntity
+		{
+			var entry = Entry(stubEntity);
+			entry.State = EntityState.Modified;
 		}
 	}
 }

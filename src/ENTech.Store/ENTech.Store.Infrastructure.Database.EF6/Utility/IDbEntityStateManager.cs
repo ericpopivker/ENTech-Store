@@ -2,8 +2,8 @@
 
 namespace ENTech.Store.Infrastructure.Database.EF6.Utility
 {
-	public interface IDbEntityStateManager<TEntity> where TEntity : IEntity
+	public interface IDbEntityStateManager
 	{
-		void MarkUpdated(TEntity stubEntity);
+		void MarkUpdated<TEntity>(TEntity stubEntity) where TEntity : class, IEntity;
 	}
 }

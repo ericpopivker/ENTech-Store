@@ -13,9 +13,9 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 		where TEntity : class, IEntity
 	{
 		private readonly IDbSet<TEntity> _dbSet;
-		private readonly IDbEntityStateManager<TEntity> _dbEntityStateManager;
+		private readonly IDbEntityStateManager _dbEntityStateManager;
 
-		public Repository(IDbSet<TEntity> dbSet, IDbEntityStateManager<TEntity> dbEntityStateManager)
+		public Repository(IDbSet<TEntity> dbSet, IDbEntityStateManager dbEntityStateManager)
 		{
 			if (dbSet == null)
 				throw new ArgumentNullException("dbSet");

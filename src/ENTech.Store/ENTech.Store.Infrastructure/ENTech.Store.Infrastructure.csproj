@@ -85,6 +85,7 @@
     <Compile Include="Enums\SortDirection.cs" />
     <Compile Include="IoC.cs" />
     <Compile Include="Mapping\IMapper.cs" />
+    <Compile Include="Mapping\Mapper.cs" />
     <Compile Include="Services\BuilderBase.cs" />
     <Compile Include="Services\Commands\CommandBase.cs" />
     <Compile Include="Services\Commands\ICommand.cs" />

@@ -5,7 +5,7 @@ using ENTech.Store.Services.CommandService.Definition;
 
 namespace ENTech.Store.Services.CommandService
 {
-	internal class InternalCommandService :
+	public class InternalCommandService :
 		CommandServiceBase,
 		IInternalCommandService
 	{

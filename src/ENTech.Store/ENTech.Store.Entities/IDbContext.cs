@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,7 +18,6 @@ namespace ENTech.Store.Entities
 {
 	public interface IDbContext : IDisposable
 	{
-
 		IDbSet<TEntity> DbSet<TEntity>() where TEntity : class;
 
 		int SaveChanges();
@@ -31,184 +31,27 @@ namespace ENTech.Store.Entities
 		bool IsDisposed { get; }
 
 
-		IFilerableDbSet<Partner> Partners { get; }
+		IFilterableDbSet<Partner> Partners { get; }
 
-		IFilerableDbSet<StoreModule.Store> Stores { get; }
+		IFilterableDbSet<StoreModule.Store> Stores { get; }
 
-		IFilerableDbSet<StoreModule.Product> Products { get; }
+		IFilterableDbSet<Product> Products { get; }
 
-		IFilerableDbSet<Customer> Customers { get; }
+		IFilterableDbSet<Customer> Customers { get; }
 
-		IFilerableDbSet<Address> Addresses { get; }
+		IFilterableDbSet<Address> Addresses { get; }
 
-		IFilerableDbSet<Country> Countries { get; }
+		IFilterableDbSet<Country> Countries { get; }
 		
-		IFilerableDbSet<State> States { get; }
+		IFilterableDbSet<State> States { get; }
 
 		IDbSet<T> GetDbSet<T>() where T : class, IEntity;
 
 		IDbContext LimitByStore(int storeId);
 	}
 
-	public class FakeDbContext : IDbContext
-	{
-		public void Dispose()
-		{
-			
-		}
 
-		public IDbSet<TEntity> DbSet<TEntity>() where TEntity : class
-		{
-			return new FakeDbSet<TEntity>();
-		}
-
-		public int SaveChanges()
-		{
-			return 0;
-		}
-
-		public void BeginTransaction()
-		{
-			;
-		}
-
-		public void CompleteTransaction()
-		{
-			;
-		}
-
-		public void RollbackTransaction()
-		{
-			;
-		}
-
-		public bool IsDisposed { get; private set; }
-		public IFilerableDbSet<Partner> Partners { get; private set; }
-		public IFilerableDbSet<StoreModule.Store> Stores { get; private set; }
-		public IFilerableDbSet<Product> Products { get; private set; }
-		public IFilerableDbSet<Customer> Customers { get; private set; }
-		public IFilerableDbSet<Address> Addresses { get; private set; }
-		public IFilerableDbSet<Country> Countries { get; private set; }
-		public IFilerableDbSet<State> States { get; private set; }
-		public IDbSet<T> GetDbSet<T>() where T : class, IEntity
-		{
-			return new FakeDbSet<T>();
-		}
-
-		public IDbContext LimitByStore(int storeId)
-		{
-			return this;
-			;
-		}
-
-		public class FakeDbSet<T> : IListSource, IFilerableDbSet<T> where T : class
-		{
-			private ObservableCollection<T> _data;
-			private IQueryable<T> _query;
-			private Expression<Func<T, bool>> _filter;
-
-			public FakeDbSet()
-			{
-				_data = new ObservableCollection<T>();
-				_query = _data.AsQueryable();
-				_filter = _ => true;
-			}
-
-			public virtual T Find(params object[] keyValues)
-			{
-				throw new NotImplementedException("Derive from FakeDbSet<T> and override Find");
-			}
-
-			public T Add(T item)
-			{
-				_data.Add(item);
-				return item;
-			}
-
-			public T Remove(T item)
-			{
-				_data.Remove(item);
-				return item;
-			}
-
-			public T Attach(T item)
-			{
-				_data.Add(item);
-				return item;
-			}
-
-			public T Detach(T item)
-			{
-				_data.Remove(item);
-				return item;
-			}
-
-			public T Create()
-			{
-				return Activator.CreateInstance<T>();
-			}
-
-			public TDerivedEntity Create<TDerivedEntity>() where TDerivedEntity : class, T
-			{
-				return Activator.CreateInstance<TDerivedEntity>();
-			}
-
-			public ObservableCollection<T> Local
-			{
-				get { return _data; }
-			}
-
-			Type IQueryable.ElementType
-			{
-				get { return typeof(T); }
-			}
-
-			System.Linq.Expressions.Expression IQueryable.Expression
-			{
-				get { return _query.Where(_filter).Expression; }
-			}
-
-			IQueryProvider IQueryable.Provider
-			{
-				get { return _query.Where(_filter).Provider; }
-			}
-
-			public void ApplyFilter(Expression<Func<T, bool>> filter)
-			{
-				_filter = FilterableDbSetHelper.AttachFilter(_filter, filter);
-			}
-
-			System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-			{
-				return _query.Where(_filter).GetEnumerator();
-			}
-
-			IEnumerator<T> IEnumerable<T>.GetEnumerator()
-			{
-				return _query.Where(_filter).GetEnumerator();
-			}
-
-			public IList GetList()
-			{
-				return _data.ToList();
-			}
-
-			public bool ContainsListCollection { get { return true; } }
-
-			public void Clear()
-			{
-				foreach (var entity in Local.ToList())
-				{
-					Remove(entity);
-				}
-			}
-		}
-
-	}
-
-
-
-	public interface IFilerableDbSet<TEntity> : IDbSet<TEntity> where TEntity:class
+	public interface IFilterableDbSet<TEntity> : IDbSet<TEntity> where TEntity:class
 	{
 		void ApplyFilter(Expression<Func<TEntity, bool>> filter);
 	}
@@ -248,7 +91,7 @@ namespace ENTech.Store.Entities
 		}
 	}	
 
-	public class FilterableDbSet<TEntity> : IFilerableDbSet<TEntity>, IOrderedQueryable<TEntity>, IListSource where TEntity : class
+	public class FilterableDbSet<TEntity> : IFilterableDbSet<TEntity>, IOrderedQueryable<TEntity>, IListSource where TEntity : class
 	{
 		private readonly DbSet<TEntity> _set;
 		private Expression<Func<TEntity, bool>> _filter;

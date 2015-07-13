@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using ENTech.Store.Entities;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Dtos;
@@ -18,6 +20,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 	public class StoreFindCommandTests : CommandTestsBase<StoreFindRequest, StoreFindResponse>
 	{
 		private readonly Mock<IStoreQuery> _queryExecuterMock = new Mock<IStoreQuery>();
+		private readonly Mock<IFilterableDbSet<Entities.StoreModule.Store>> _storesMock = new Mock<IFilterableDbSet<Entities.StoreModule.Store>>();
 		private readonly IEnumerable<StoreProjection> _findResult = new List<StoreProjection>
 		{
 			new StoreProjection{Id = 1},
@@ -27,7 +30,17 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		public StoreFindCommandTests()
 		{
 			Mock<IDbContext> dbContextMock = new Mock<IDbContext>();
-			dbContextMock.SetupGet(x => x.Stores).Returns(new FakeDbContext.FakeDbSet<Entities.StoreModule.Store>());
+
+			var dbSetData = new ObservableCollection<Entities.StoreModule.Store>();
+			var dataQueryable = dbSetData.AsQueryable();
+
+			_storesMock.Setup(x => x.Local).Returns(dbSetData);
+
+			_storesMock.Setup(x => x.Expression).Returns(dataQueryable.Expression);
+			_storesMock.Setup(x => x.ElementType).Returns(dataQueryable.ElementType);
+			_storesMock.Setup(x => x.Provider).Returns(dataQueryable.Provider);
+
+			dbContextMock.SetupGet(x => x.Stores).Returns(_storesMock.Object);
 
 			UnitOfWorkMock.Setup(x => x.DbContext).Returns(dbContextMock.Object);
 
