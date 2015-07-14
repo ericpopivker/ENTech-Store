@@ -84,8 +84,6 @@
     <Compile Include="Misc\SecurityInformation.cs" />
     <Compile Include="ProductModule\Commands\ProductFindCommand.cs" />
     <Compile Include="ProductModule\Dtos\ProductFindCriteriaDto.cs" />
-    <Compile Include="ProductModule\Queries\ProductFindQuery.cs" />
-    <Compile Include="ProductModule\Queries\ProductGetByIdQuery.cs" />
     <Compile Include="ProductModule\Requests\ProductFindRequest.cs" />
     <Compile Include="ProductModule\Responses\ProductFindResponse.cs" />
     <Compile Include="ProductModule\Commands\ProductGetByIdCommand.cs" />
@@ -127,8 +125,6 @@
     <Compile Include="StoreModule\Dtos\StoreUpdateDto.cs" />
     <Compile Include="StoreModule\IStoreQuery.cs" />
     <Compile Include="StoreModule\Projections\StoreProjection.cs" />
-    <Compile Include="StoreModule\Queries\StoreFindQuery.cs" />
-    <Compile Include="StoreModule\Queries\ProductGetByIdQuery.cs" />
     <Compile Include="StoreModule\Requests\StoreUpdateRequest.cs" />
     <Compile Include="StoreModule\Responses\StoreUpdateResponse.cs" />
     <Compile Include="StoreModule\Requests\StoreFindRequest.cs" />

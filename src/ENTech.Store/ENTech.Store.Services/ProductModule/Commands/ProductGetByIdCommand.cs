@@ -1,5 +1,5 @@
-﻿using ENTech.Store.Entities.UnitOfWork;
-using ENTech.Store.Services.ProductModule.Queries;
+﻿using System;
+using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
 using ENTech.Store.Services.SharedModule.Commands;
@@ -15,17 +15,7 @@ namespace ENTech.Store.Services.ProductModule.Commands
 
 		public override ProductGetByIdResponse Execute(ProductGetByIdRequest request)
 		{
-			var query = new ProductGetByIdQuery();
-			var result = query.Execute(DbContext, new ProductGetByIdQuery.Criteria
-			{
-				Id = request.Id
-			});
-
-			return new ProductGetByIdResponse
-			{
-				IsSuccess = true,
-				Item = result
-			};
+			throw new NotImplementedException();
 		}
 	}
 }

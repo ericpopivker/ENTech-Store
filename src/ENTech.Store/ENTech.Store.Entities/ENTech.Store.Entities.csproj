@@ -62,18 +62,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IDbContextFactory.cs" />
-    <Compile Include="IQuery.cs" />
-    <Compile Include="IQueryCriteria.cs" />
     <Compile Include="OrderModule\Order.cs" />
     <Compile Include="OrderModule\OrderItem.cs" />
     <Compile Include="OrderModule\OrderShipping.cs" />
     <Compile Include="OrderModule\OrderPayment.cs" />
-    <Compile Include="Query\IQuery.cs" />
     <Compile Include="StoreModule\Product.cs" />
     <Compile Include="StoreModule\Store.cs" />
     <Compile Include="IDbContext.cs" />
     <Compile Include="PartnerModule\Partner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitOfWork\DbContextScope.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
