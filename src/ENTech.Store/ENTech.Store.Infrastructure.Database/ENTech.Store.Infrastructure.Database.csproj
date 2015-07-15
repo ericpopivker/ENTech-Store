@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\EntityDeletedException.cs" />
     <Compile Include="Exceptions\EntityLoadMismatchException.cs" />
+    <Compile Include="Exceptions\EntityPersistenceException.cs" />
     <Compile Include="QueryExecuter\FindCriteriaBase.cs" />
     <Compile Include="QueryExecuter\IDbEntity.cs" />
     <Compile Include="QueryExecuter\IQuery.cs" />

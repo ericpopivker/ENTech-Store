@@ -13,6 +13,7 @@ using ENTech.Store.Services.CommandService;
 using ENTech.Store.Services.CommandService.Concrete;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
+using ENTech.Store.Services.StoreModule.Projections;
 using Unity.WebApi;
 
 namespace ENTech.Store.Api
@@ -30,8 +31,8 @@ namespace ENTech.Store.Api
 				.RegisterType<IExternalCommandService<BusinessAdminSecurityInformation>, BusinessAdminExternalCommandService>()
 				.RegisterType<IInternalCommandService, InternalCommandService>()
 				.RegisterType<IMapper, Mapper>()
-				.RegisterType<IRepository<Entities.StoreModule.Store>, Repository<Entities.StoreModule.Store>>()
-				.RegisterType<IDbEntityStateManager>(new InjectionFactory(c => DbContextScope.CurrentDbContext))	
+				.RegisterType<IRepository<Entities.StoreModule.Store>, Repository<StoreDbEntity, Entities.StoreModule.Store>>()
+				.RegisterType<IDbEntityStateKeeper>(new InjectionFactory(c => DbContextScope.CurrentDbContext))	
 
 				.RegisterType<IDbSet<Entities.StoreModule.Store>>(new InjectionFactory(c => DbContextScope.CurrentDbContext.Stores))	//try reflection	
 	

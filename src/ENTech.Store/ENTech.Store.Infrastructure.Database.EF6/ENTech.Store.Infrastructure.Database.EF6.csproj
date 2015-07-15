@@ -49,8 +49,9 @@
   <ItemGroup>
     <Compile Include="DbContext.cs" />
     <Compile Include="FakeDbContext.cs" />
+    <Compile Include="IDbEntityMapper.cs" />
     <Compile Include="QueryBase.cs" />
-    <Compile Include="Utility\IDbEntityStateManager.cs" />
+    <Compile Include="Utility\IDbEntityStateKeeper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
   </ItemGroup>

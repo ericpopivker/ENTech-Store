@@ -16,7 +16,7 @@ using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Infrastructure.Database.EF6
 {
-	public class FakeDbContext : IDbContext, IDbEntityStateManager
+	public class FakeDbContext : IDbContext
 	{
 		public void Dispose()
 		{

@@ -15,7 +15,7 @@ using ENTech.Store.Infrastructure.Utils;
 
 namespace ENTech.Store.Entities
 {
-	public class DbContext : System.Data.Entity.DbContext, IDbContext, IDbEntityStateManager
+	public class DbContext : System.Data.Entity.DbContext, IDbContext
 	{
 
 		private IFilterableDbSet<Country> _countries;
