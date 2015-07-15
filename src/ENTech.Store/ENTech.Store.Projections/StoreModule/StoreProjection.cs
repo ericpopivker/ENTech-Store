@@ -6,6 +6,7 @@ using ENTech.Store.Projections.GeoModule;
 
 namespace ENTech.Store.Projections.StoreModule
 {
+	//TABLE SCHEMA
 	public class StoreProjection : IProjection
 	{
 		public int Id { get; set; }

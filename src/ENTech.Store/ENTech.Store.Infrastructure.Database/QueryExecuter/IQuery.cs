@@ -2,9 +2,8 @@
 
 namespace ENTech.Store.Infrastructure.Database.QueryExecuter
 {
-	public interface IQuery<out TProjection> where TProjection : IProjection
+	public interface IQuery
 	{
-		TProjection GetById(int id);
-		IEnumerable<TProjection> Find<TCriteria>(TCriteria criteria) where TCriteria : FindCriteriaBase;
+		IEnumerable<int> Find<TCriteria>(TCriteria criteria) where TCriteria : FindCriteriaBase;
 	}
 }

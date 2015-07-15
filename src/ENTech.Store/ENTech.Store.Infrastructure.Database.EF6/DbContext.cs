@@ -55,14 +55,6 @@ namespace ENTech.Store.Entities
 			_products = new Lazy<IFilterableDbSet<Product>>(() => new FilterableDbSet<Product>(this)).Value;
 		}
 
-
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		{
-			base.OnModelCreating(modelBuilder);
-		}
-
-
-
 		public bool ValidateEntity<TEntity>(TEntity entity) where TEntity : class, IEntity
 		{
 			DbEntityValidationResult res = Entry(entity).GetValidationResult();
@@ -132,8 +124,7 @@ namespace ENTech.Store.Entities
 			base.Dispose(disposing);
 			IsDisposed = true;
 		}
-
-
+		
 		public IFilterableDbSet<Partner> Partners
 		{
 			get { return _partners; }
@@ -154,8 +145,6 @@ namespace ENTech.Store.Entities
 			get { return _customers; }
 		}
 
-
-
 		public IFilterableDbSet<Address> Addresses
 		{
 			get { return _addresses; }
@@ -165,16 +154,12 @@ namespace ENTech.Store.Entities
 		{
 			get { return _countries; }
 		}
-
-
+		
 		public IFilterableDbSet<State> States
 		{
 			get { return _states; }
 		}
-
 		
-
-
 		public IDbContext LimitByStore(int storeId)
 		{
 			Customers.ApplyFilter(p => p.StoreId == storeId);
@@ -195,6 +180,3 @@ namespace ENTech.Store.Entities
 		}
 	}
 }
-
-
-

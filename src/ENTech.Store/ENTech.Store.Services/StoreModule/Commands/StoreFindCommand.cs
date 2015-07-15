@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ENTech.Store.Entities.UnitOfWork;
+using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Criterias;
@@ -13,12 +14,14 @@ namespace ENTech.Store.Services.StoreModule.Commands
 {
 	public class StoreFindCommand : DbContextCommandBase<StoreFindRequest, StoreFindResponse>
 	{
+		private readonly IRepository<Entities.StoreModule.Store> _storeRepository;
 		private readonly IStoreQuery _query;
 		private readonly IMapper _mapper;
 
-		public StoreFindCommand(IStoreQuery query, IUnitOfWork unitOfWork, IMapper mapper)
+		public StoreFindCommand(IRepository<Entities.StoreModule.Store> storeRepository, IStoreQuery query, IUnitOfWork unitOfWork, IMapper mapper)
 			: base(unitOfWork.DbContext, false)
 		{
+			_storeRepository = storeRepository;
 			_query = query;
 			_mapper = mapper;
 		}
@@ -27,9 +30,11 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		{
 			var criteria = _mapper.Map<StoreFindCriteriaDto, StoreFindCriteria>(request.Criteria);
 
-			var result = _query.Find(criteria);
+			var itemIds = _query.Find(criteria);
 
-			var mappedResult = _mapper.Map<IEnumerable<StoreProjection>, IEnumerable<StoreDto>>(result);
+			var items = _storeRepository.FindByIds(itemIds);
+
+			var mappedResult = _mapper.Map<IEnumerable<Entities.StoreModule.Store>, IEnumerable<StoreDto>>(items);
 
 			return new StoreFindResponse
 			{

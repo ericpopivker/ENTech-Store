@@ -2,13 +2,13 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using ENTech.Store.Entities;
+using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Dtos;
 using ENTech.Store.Services.StoreModule;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Criterias;
 using ENTech.Store.Services.StoreModule.Dtos;
-using ENTech.Store.Services.StoreModule.Projections;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 using ENTech.Store.Services.Tests.Shared;
@@ -21,10 +21,13 @@ namespace ENTech.Store.Services.Tests.StoreModule
 	{
 		private readonly Mock<IStoreQuery> _queryExecuterMock = new Mock<IStoreQuery>();
 		private readonly Mock<IFilterableDbSet<Entities.StoreModule.Store>> _storesMock = new Mock<IFilterableDbSet<Entities.StoreModule.Store>>();
-		private readonly IEnumerable<StoreProjection> _findResult = new List<StoreProjection>
+		private readonly Mock<IRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<IRepository<Entities.StoreModule.Store>>();
+		private readonly IEnumerable<int> _findResult = new[] {1, 2};
+
+		private readonly IEnumerable<Entities.StoreModule.Store> _domainEntities = new List<Entities.StoreModule.Store>
 		{
-			new StoreProjection{Id = 1},
-			new StoreProjection{Id = 2}
+			new Entities.StoreModule.Store {Id = 1},
+			new Entities.StoreModule.Store {Id = 2}
 		};
 
 		public StoreFindCommandTests()
@@ -41,6 +44,8 @@ namespace ENTech.Store.Services.Tests.StoreModule
 			_storesMock.Setup(x => x.Provider).Returns(dataQueryable.Provider);
 
 			dbContextMock.SetupGet(x => x.Stores).Returns(_storesMock.Object);
+
+			_storeRepositoryMock.Setup(x => x.FindByIds(_findResult)).Returns(_domainEntities);
 
 			UnitOfWorkMock.Setup(x => x.DbContext).Returns(dbContextMock.Object);
 
@@ -78,13 +83,23 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		}
 
 		[Test]
+		public void Execute_When_called_with_valid_criteria_Then_uses_repository_findByIds_with_query_result()
+		{
+			var request = GetStoreFindRequest();
+
+			Command.Execute(request);
+
+			_storeRepositoryMock.Verify(x=>x.FindByIds(It.Is<IEnumerable<int>>(y=> y.Equals(_findResult))));
+		}
+
+		[Test]
 		public void Execute_When_called_with_valid_criteria_Then_uses_mapper_to_map_results()
 		{
 			var request = GetStoreFindRequest();
 
 			Command.Execute(request);
 
-			MapperMock.Verify(x=>x.Map<IEnumerable<StoreProjection>, IEnumerable<StoreDto>>(_findResult), Times.Once);
+			MapperMock.Verify(x=>x.Map<IEnumerable<Entities.StoreModule.Store>, IEnumerable<StoreDto>>(_domainEntities), Times.Once);
 		}
 
 
@@ -106,7 +121,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreFindRequest, StoreFindResponse> CreateCommand()
 		{
-			return new StoreFindCommand(_queryExecuterMock.Object, UnitOfWorkMock.Object, MapperMock.Object);
+			return new StoreFindCommand(_storeRepositoryMock.Object, _queryExecuterMock.Object, UnitOfWorkMock.Object, MapperMock.Object);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using ENTech.Store.Entities.UnitOfWork;
+using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
@@ -11,20 +12,21 @@ namespace ENTech.Store.Services.StoreModule.Commands
 	public class StoreGetByIdCommand : DbContextCommandBase<StoreGetByIdRequest, StoreGetByIdResponse>
 	{
 		private readonly IStoreQuery _query;
+		private readonly IRepository<Entities.StoreModule.Store> _storeRepository;
 		private readonly IMapper _mapper;
 
-		public StoreGetByIdCommand(IUnitOfWork unitOfWork, IStoreQuery query, IMapper mapper)
+		public StoreGetByIdCommand(IRepository<Entities.StoreModule.Store> storeRepository, IUnitOfWork unitOfWork, IMapper mapper)
 			: base(unitOfWork.DbContext, false)
 		{
-			_query = query;
+			_storeRepository = storeRepository;
 			_mapper = mapper;
 		}
 
 		public override StoreGetByIdResponse Execute(StoreGetByIdRequest request)
 		{
-			var projection = _query.GetById(request.Id);
+			var entity = _storeRepository.GetById(request.Id);
 			
-			var result = _mapper.Map<StoreProjection, StoreDto>(projection);
+			var result = _mapper.Map<Entities.StoreModule.Store, StoreDto>(entity);
 
 			return new StoreGetByIdResponse
 			{

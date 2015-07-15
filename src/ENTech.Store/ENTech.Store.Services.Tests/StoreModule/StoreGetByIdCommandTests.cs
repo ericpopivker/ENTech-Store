@@ -1,4 +1,5 @@
-﻿using ENTech.Store.Infrastructure.Services.Commands;
+﻿using ENTech.Store.Infrastructure.Database.Repository;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.StoreModule;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
@@ -13,17 +14,17 @@ namespace ENTech.Store.Services.Tests.StoreModule
 {
 	public class StoreGetByIdCommandTests : CommandTestsBase<StoreGetByIdRequest, StoreGetByIdResponse>
 	{
-		private readonly Mock<IStoreQuery> _queryExecuterMock = new Mock<IStoreQuery>();
+		private readonly Mock<IRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<IRepository<Entities.StoreModule.Store>>();
 
 		protected override void TearDownInternal()
 		{
-			_queryExecuterMock.ResetCalls();
+			_storeRepositoryMock.ResetCalls();
 		}
 
 		public StoreGetByIdCommandTests()
 		{
-			_queryExecuterMock.Setup(x => x.GetById(It.IsAny<int>()))
-				.Returns((int id) => new StoreProjection
+			_storeRepositoryMock.Setup(x => x.GetById(It.IsAny<int>()))
+				.Returns((int id) => new Entities.StoreModule.Store
 				{
 					Id = id
 				});
@@ -37,7 +38,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Id = 1
 			});
 
-			_queryExecuterMock.Verify(mock => mock.GetById(It.IsAny<int>()), Times.Once);
+			_storeRepositoryMock.Verify(mock => mock.GetById(It.IsAny<int>()), Times.Once);
 		}
 
 		[Test]
@@ -48,7 +49,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Id = 1
 			});
 
-			_queryExecuterMock.Verify(mock => mock.GetById(It.IsAny<int>()), Times.Once);
+			_storeRepositoryMock.Verify(mock => mock.GetById(It.IsAny<int>()), Times.Once);
 		}
 
 		[Test]
@@ -61,7 +62,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Id = storeId
 			});
 
-			_queryExecuterMock.Verify(mock => mock.GetById(It.Is<int>(id => id == storeId)), Times.Once);
+			_storeRepositoryMock.Verify(mock => mock.GetById(It.Is<int>(id => id == storeId)), Times.Once);
 		}
 
 		[Test]
@@ -74,12 +75,12 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Id = id
 			});
 
-			MapperMock.Verify(mock => mock.Map<StoreProjection, StoreDto>(It.Is<StoreProjection>(proj => proj.Id == id)), Times.Once);
+			MapperMock.Verify(mock => mock.Map<Entities.StoreModule.Store, StoreDto>(It.Is<Entities.StoreModule.Store>(proj => proj.Id == id)), Times.Once);
 		}
 
 		protected override ICommand<StoreGetByIdRequest, StoreGetByIdResponse> CreateCommand()
 		{
-			return new StoreGetByIdCommand(UnitOfWorkMock.Object, _queryExecuterMock.Object, MapperMock.Object);
+			return new StoreGetByIdCommand(_storeRepositoryMock.Object, UnitOfWorkMock.Object, MapperMock.Object);
 		}
 	}
 }

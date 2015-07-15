@@ -32,6 +32,8 @@ namespace ENTech.Store.Entities.StoreModule
 		[Required]
 		public string TimezoneId { get; set; }
 
+		public int[] ProductIds { get; set; }
+
 		public int? AddressId { get; set; }
 	}
 }

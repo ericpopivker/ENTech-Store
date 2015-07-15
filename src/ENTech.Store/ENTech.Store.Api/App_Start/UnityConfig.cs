@@ -32,7 +32,9 @@ namespace ENTech.Store.Api
 				.RegisterType<IMapper, Mapper>()
 				.RegisterType<IRepository<Entities.StoreModule.Store>, Repository<Entities.StoreModule.Store>>()
 				.RegisterType<IDbEntityStateManager>(new InjectionFactory(c => DbContextScope.CurrentDbContext))	
-				.RegisterType<IDbSet<Entities.StoreModule.Store>>(new InjectionFactory(c => DbContextScope.CurrentDbContext.Stores))			
+
+				.RegisterType<IDbSet<Entities.StoreModule.Store>>(new InjectionFactory(c => DbContextScope.CurrentDbContext.Stores))	//try reflection	
+	
 				.RegisterType<IDbContext>(new InjectionFactory(c => c.Resolve<IDbContextFactory>().Create()));			
 
 			config.DependencyResolver = new UnityDependencyResolver(container);
