@@ -1,4 +1,4 @@
-namespace ENTech.Store.Projections.OrderModule
+namespace ENTech.Store.DbEntities.OrderModule
 {
 	public enum OrderShippingStatus
 	{

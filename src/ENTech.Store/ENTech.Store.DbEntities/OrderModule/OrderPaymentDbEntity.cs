@@ -1,8 +1,8 @@
 ﻿using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
-namespace ENTech.Store.Projections.OrderModule
+namespace ENTech.Store.DbEntities.OrderModule
 {
-	public class OrderPaymentProjection : IProjection
+	public class OrderPaymentDbEntity : IProjection
 	{
 		public int Id { get; set; }
 

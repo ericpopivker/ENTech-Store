@@ -1,10 +1,10 @@
 ﻿using System;
+using ENTech.Store.DbEntities.OrderModule;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
-using ENTech.Store.Projections.OrderModule;
 
-namespace ENTech.Store.Projections.StoreModule
+namespace ENTech.Store.DbEntities.StoreModule
 {
-	public class ProductProjection : IProjection
+	public class ProductDbEntity : IProjection
 	{
 		public int Id { get; set; }
 
@@ -30,8 +30,8 @@ namespace ENTech.Store.Projections.StoreModule
 
 		public bool IsActive { get; set; }
 
-		public StoreProjection Store { get; set; }
+		public StoreDbEntity Store { get; set; }
 
-		public OrderItemProjection OrderItems { get; set; }
+		public OrderItemDbEntity OrderItems { get; set; }
 	}
 }

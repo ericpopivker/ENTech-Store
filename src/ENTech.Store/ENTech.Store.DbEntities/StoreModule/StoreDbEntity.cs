@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using ENTech.Store.DbEntities.CustomerModule;
+using ENTech.Store.DbEntities.GeoModule;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
-using ENTech.Store.Projections.CustomerModule;
-using ENTech.Store.Projections.GeoModule;
 
-namespace ENTech.Store.Projections.StoreModule
+namespace ENTech.Store.DbEntities.StoreModule
 {
 	//TABLE SCHEMA
-	public class StoreProjection : IProjection
+	public class StoreDbEntity : IProjection
 	{
 		public int Id { get; set; }
 
@@ -29,10 +29,10 @@ namespace ENTech.Store.Projections.StoreModule
 
 		public string TimezoneId { get; set; }
 
-		public AddressProjection Address { get; set; }
+		public AddressDbEntity Address { get; set; }
 
-		public IEnumerable<CustomerProjection> Customers { get; set; }
+		public IEnumerable<CustomerDbEntity> Customers { get; set; }
 
-		public IEnumerable<ProductProjection> Products { get; set; }
+		public IEnumerable<ProductDbEntity> Products { get; set; }
 	}
 }

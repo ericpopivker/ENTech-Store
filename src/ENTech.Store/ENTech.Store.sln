@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.Database.EF6.Tests", "ENTech.Store.Infrastructure.Database.EF6.Tests\ENTech.Store.Infrastructure.Database.EF6.Tests.csproj", "{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Projections", "ENTech.Store.Projections\ENTech.Store.Projections.csproj", "{B2738CFF-4567-4537-9CC9-69CE92E95DCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.DbEntities", "ENTech.Store.DbEntities\ENTech.Store.DbEntities.csproj", "{B2738CFF-4567-4537-9CC9-69CE92E95DCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

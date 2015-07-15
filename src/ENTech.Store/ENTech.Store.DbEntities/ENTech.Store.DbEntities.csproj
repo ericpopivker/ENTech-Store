@@ -7,8 +7,8 @@
     <ProjectGuid>{B2738CFF-4567-4537-9CC9-69CE92E95DCA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ENTech.Store.Projections</RootNamespace>
-    <AssemblyName>ENTech.Store.Projections</AssemblyName>
+    <RootNamespace>ENTech.Store.DbEntities</RootNamespace>
+    <AssemblyName>ENTech.Store.DbEntities</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -41,20 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerModule\CustomerProjection.cs" />
-    <Compile Include="GeoModule\AddressProjection.cs" />
-    <Compile Include="GeoModule\CountryProjection.cs" />
-    <Compile Include="GeoModule\StateProjection.cs" />
-    <Compile Include="OrderModule\OrderProjection.cs" />
-    <Compile Include="OrderModule\OrderItemProjection.cs" />
-    <Compile Include="OrderModule\OrderPaymentProjection.cs" />
-    <Compile Include="OrderModule\OrderShippingProjection.cs" />
+    <Compile Include="CustomerModule\CustomerDbEntity.cs" />
+    <Compile Include="GeoModule\AddressDbEntity.cs" />
+    <Compile Include="GeoModule\CountryDbEntity.cs" />
+    <Compile Include="GeoModule\StateDbEntity.cs" />
+    <Compile Include="OrderModule\OrderDbEntity.cs" />
+    <Compile Include="OrderModule\OrderItemDbEntity.cs" />
+    <Compile Include="OrderModule\OrderPaymentDbEntity.cs" />
+    <Compile Include="OrderModule\OrderShippingDbEntity.cs" />
     <Compile Include="OrderModule\OrderShippingStatus.cs" />
     <Compile Include="OrderModule\OrderStatus.cs" />
-    <Compile Include="PartnerModule\PartnerProjection.cs" />
+    <Compile Include="PartnerModule\PartnerDbEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StoreModule\ProductProjection.cs" />
-    <Compile Include="StoreModule\StoreProjection.cs" />
+    <Compile Include="StoreModule\ProductDbEntity.cs" />
+    <Compile Include="StoreModule\StoreDbEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj">

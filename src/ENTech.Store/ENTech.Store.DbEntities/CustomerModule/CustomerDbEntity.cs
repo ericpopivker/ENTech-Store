@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using ENTech.Store.DbEntities.GeoModule;
+using ENTech.Store.DbEntities.OrderModule;
+using ENTech.Store.DbEntities.StoreModule;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
-using ENTech.Store.Projections.GeoModule;
-using ENTech.Store.Projections.OrderModule;
-using ENTech.Store.Projections.StoreModule;
 
-namespace ENTech.Store.Projections.CustomerModule
+namespace ENTech.Store.DbEntities.CustomerModule
 {
-	public class CustomerProjection : IProjection
+	public class CustomerDbEntity : IProjection
 	{
 		public int Id { get; set; }
 
@@ -27,12 +27,12 @@ namespace ENTech.Store.Projections.CustomerModule
 
 		public string Phone { get; set; }
 
-		public StoreProjection Store { get; set; }
+		public StoreDbEntity Store { get; set; }
 
-		public AddressProjection BillingAddress { get; set; }
+		public AddressDbEntity BillingAddress { get; set; }
 
-		public AddressProjection ShippingAddress { get; set; }
+		public AddressDbEntity ShippingAddress { get; set; }
 
-		public IEnumerable<OrderProjection> Orders { get; set; }
+		public IEnumerable<OrderDbEntity> Orders { get; set; }
 	}
 }

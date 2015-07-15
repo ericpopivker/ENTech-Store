@@ -1,9 +1,9 @@
 ﻿using System;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
-namespace ENTech.Store.Projections.PartnerModule
+namespace ENTech.Store.DbEntities.PartnerModule
 {
-	public class PartnerProjection : IProjection
+	public class PartnerDbEntity : IProjection
 	{
 		public int Id { get; set; }
 

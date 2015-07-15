@@ -1,8 +1,8 @@
 ﻿using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
-namespace ENTech.Store.Projections.GeoModule
+namespace ENTech.Store.DbEntities.GeoModule
 {
-	public class AddressProjection : IProjection
+	public class AddressDbEntity : IProjection
 	{
 		public int Id { get; set; }
 
@@ -14,10 +14,10 @@ namespace ENTech.Store.Projections.GeoModule
 
 		public string Street2 { get; set; }
 
-		public StateProjection State { get; set; }
+		public StateDbEntity State { get; set; }
 
 		public string StateOther { get; set; }
 
-		public CountryProjection Country { get; set; }
+		public CountryDbEntity Country { get; set; }
 	}
 }
