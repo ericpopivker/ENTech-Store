@@ -6,7 +6,7 @@ using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.DbEntities.OrderModule
 {
-	public class OrderDbEntity : IProjection
+	public class OrderDbEntity : IDbEntity
 	{
 		public int Id { get; set; }
 

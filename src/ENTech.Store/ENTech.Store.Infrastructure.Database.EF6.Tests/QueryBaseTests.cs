@@ -10,13 +10,13 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 	public class QueryBaseTests
 	{
 		private IQuery _stubEntityQuery;
-		private readonly ObservableCollection<StubEntityProjection> _dbSetData;
+		private readonly ObservableCollection<StubEntityDbEntity> _dbSetData;
 
-		private Mock<IDbSet<StubEntityProjection>> _dbSetMock = new Mock<IDbSet<StubEntityProjection>>();
+		private Mock<IDbSet<StubEntityDbEntity>> _dbSetMock = new Mock<IDbSet<StubEntityDbEntity>>();
 
 		public QueryBaseTests()
 		{
-			_dbSetData = new ObservableCollection<StubEntityProjection>();
+			_dbSetData = new ObservableCollection<StubEntityDbEntity>();
 
 			var dataQueryable = _dbSetData.AsQueryable();
 
@@ -26,7 +26,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			_dbSetMock.Setup(x => x.ElementType).Returns(dataQueryable.ElementType);
 			_dbSetMock.Setup(x => x.Provider).Returns(dataQueryable.Provider);
 
-			_stubEntityQuery = new QueryBase<StubEntityProjection>(_dbSetMock.Object);
+			_stubEntityQuery = new QueryBase<StubEntityDbEntity>(_dbSetMock.Object);
 		}
 
 		[Test]
@@ -34,7 +34,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 		{
 		}
 
-		public class StubEntityProjection : IProjection
+		public class StubEntityDbEntity : IDbEntity
 		{
 			public int Id { get; set; }
 		}

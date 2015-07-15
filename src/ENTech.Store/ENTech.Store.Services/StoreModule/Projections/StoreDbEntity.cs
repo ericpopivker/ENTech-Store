@@ -3,7 +3,7 @@ using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.Services.StoreModule.Projections
 {
-	public class StoreProjection : IProjection
+	public class StoreDbEntity : IDbEntity
 	{
 		public int Id { get; set; }
 	}

@@ -124,7 +124,7 @@
     <Compile Include="StoreModule\Dtos\AddressDto.cs" />
     <Compile Include="StoreModule\Dtos\StoreUpdateDto.cs" />
     <Compile Include="StoreModule\IStoreQuery.cs" />
-    <Compile Include="StoreModule\Projections\StoreProjection.cs" />
+    <Compile Include="StoreModule\Projections\StoreDbEntity.cs" />
     <Compile Include="StoreModule\Requests\StoreUpdateRequest.cs" />
     <Compile Include="StoreModule\Responses\StoreUpdateResponse.cs" />
     <Compile Include="StoreModule\Requests\StoreFindRequest.cs" />

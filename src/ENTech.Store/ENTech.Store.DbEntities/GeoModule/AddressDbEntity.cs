@@ -2,7 +2,7 @@
 
 namespace ENTech.Store.DbEntities.GeoModule
 {
-	public class AddressDbEntity : IProjection
+	public class AddressDbEntity : IDbEntity
 	{
 		public int Id { get; set; }
 

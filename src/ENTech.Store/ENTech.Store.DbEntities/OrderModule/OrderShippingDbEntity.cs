@@ -3,7 +3,7 @@ using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.DbEntities.OrderModule
 {
-	public class OrderShippingDbEntity : IProjection
+	public class OrderShippingDbEntity : IDbEntity
 	{
 		public int Id { get; set; }
 

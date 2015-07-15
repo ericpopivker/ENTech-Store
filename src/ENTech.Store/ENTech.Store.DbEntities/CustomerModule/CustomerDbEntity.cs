@@ -7,7 +7,7 @@ using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.DbEntities.CustomerModule
 {
-	public class CustomerDbEntity : IProjection
+	public class CustomerDbEntity : IDbEntity
 	{
 		public int Id { get; set; }
 

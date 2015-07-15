@@ -1,6 +1,6 @@
 namespace ENTech.Store.Infrastructure.Database.QueryExecuter
 {
-	public interface IProjection
+	public interface IDbEntity
 	{
 		int Id { get; set; }
 	}

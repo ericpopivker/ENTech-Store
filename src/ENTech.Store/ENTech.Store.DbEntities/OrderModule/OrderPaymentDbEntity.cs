@@ -2,7 +2,7 @@
 
 namespace ENTech.Store.DbEntities.OrderModule
 {
-	public class OrderPaymentDbEntity : IProjection
+	public class OrderPaymentDbEntity : IDbEntity
 	{
 		public int Id { get; set; }
 

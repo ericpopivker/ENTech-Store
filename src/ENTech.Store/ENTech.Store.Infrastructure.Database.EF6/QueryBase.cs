@@ -5,7 +5,7 @@ using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.Infrastructure.Database.EF6
 {
-	public class QueryBase<TEntity> : IQuery where TEntity : class, IProjection
+	public class QueryBase<TEntity> : IQuery where TEntity : class, IDbEntity
 	{
 		private readonly IDbSet<TEntity> _dbSet;
 
