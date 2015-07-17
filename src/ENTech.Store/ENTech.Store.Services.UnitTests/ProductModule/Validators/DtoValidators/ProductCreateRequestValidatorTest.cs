@@ -26,16 +26,13 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.DtoValidators
 
 
 		[Test]
-		public void Validate_When_has_nested_object_errors_Then_those_errors_are_returned()
+		public void Validate_When_has_nested_object_errors_Then_those_errors_are_not_returned()
 		{
 			var validator = new ProductCreateRequestValidator();
 			var request = new ProductCreateRequest { Product = new  ProductCreateDto() };
 			var validatorResult = validator.Validate(request);
 
-			Assert.IsFalse(validatorResult.IsValid);
-			var argErrors = validatorResult.ArgumentErrors;
-
-			Assert.IsTrue(argErrors.Any(e => e.ArgumentName == "Product.Name" && e.ArgumentError.ErrorCode == CommonArgumentErrorCode.Required && e.ArgumentError.ErrorMessage == "Required"));
+			Assert.IsTrue(validatorResult.IsValid);
 		}
 	}
 }

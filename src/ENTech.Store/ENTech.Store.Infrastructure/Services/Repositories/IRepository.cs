@@ -11,15 +11,15 @@ namespace ENTech.Store.Infrastructure.Services.Repositories
 	}
 
 
-	public interface IRepository<T> where T : IEntity
+	public interface IRepository<TEntity> where TEntity : IEntity
 	{
-		void Add(T entity);
+		void Add(TEntity entity);
 
-		void Update(T entity);
+		void Update(TEntity entity);
 		
-		T GetById(int entityId);
+		TEntity GetById(int entityId);
 
-		T GetById(IList<int> entityIds);
+		TEntity FindByIds(IList<int> entityIds);
 
 		void Delete(int entityId);
 

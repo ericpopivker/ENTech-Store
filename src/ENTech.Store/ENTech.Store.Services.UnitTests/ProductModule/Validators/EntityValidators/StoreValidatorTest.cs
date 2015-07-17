@@ -79,7 +79,7 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 			var result = _storeValidator.ValidateId(StoreIdFake);
 
 			Assert.IsFalse(result.IsValid);
-			Assert.IsTrue(result.ArgumentError is EntityWithIdIsDeletedError);
+			Assert.IsTrue(result.ArgumentError is EntityWithIdIsDeletedArgumentError);
 		}
 	}
 }

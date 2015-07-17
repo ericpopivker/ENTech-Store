@@ -55,7 +55,7 @@ namespace ENTech.Store.Services.CommandService
 				{
 					//ErrorLogUtils.AddError(e);
 
-					var error = new InternalResponseError();
+					var error = new InternalServerResponseError();
 					return new ErrorResponseStatus<TResponse>(error);
 				}
 			}

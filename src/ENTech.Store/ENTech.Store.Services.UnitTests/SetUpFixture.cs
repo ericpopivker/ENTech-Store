@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace ENTech.Store.Services.UnitTests
 {
 	[SetUpFixture]
-	public class MySetUpClass
+	public class SetUpFixture
 	{
 		[SetUp]
 		public void SetUp()

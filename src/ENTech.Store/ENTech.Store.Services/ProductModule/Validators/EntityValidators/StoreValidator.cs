@@ -31,7 +31,7 @@ namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 
 			if (response.EntityMetaState == EntityMetaState.Deleted)
 			{
-				var error = new EntityWithIdIsDeletedError("Store");
+				var error = new EntityWithIdIsDeletedArgumentError("Store");
 				return ValidateArgumentResult.Invalid(error);
 			}
 

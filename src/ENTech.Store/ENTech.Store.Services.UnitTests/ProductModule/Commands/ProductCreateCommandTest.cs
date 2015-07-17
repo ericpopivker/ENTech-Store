@@ -16,9 +16,11 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Commands
 		private Mock<IInternalCommandService> _internalCommandService = new Mock<IInternalCommandService>();
 		private Mock<IProductQuery> _productQuery = new Mock<IProductQuery>();
 		private Mock<IProductValidator> _productValidator = new Mock<IProductValidator>();
+		private Mock<IStoreValidator> _storeValidator = new Mock<IStoreValidator>();
 
 
 		private ProductCreateCommand _createCommand;
+
 		[SetUp]
 		public void SetUp()
 		{
@@ -27,7 +29,10 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Commands
 			_internalCommandService.ResetCalls();
 			_productQuery.ResetCalls();
 
-			_createCommand = new ProductCreateCommand(_unitOfWorkMock.Object, _dtoValidatorFactorykMock.Object, _internalCommandService.Object, _productQuery.Object, _productValidator.Object);
+			_productValidator.ResetCalls();
+			_storeValidator.ResetCalls();
+
+			_createCommand = new ProductCreateCommand(_unitOfWorkMock.Object, _dtoValidatorFactorykMock.Object, _internalCommandService.Object, _productQuery.Object, _productValidator.Object, _storeValidator.Object);
 		}
 
 	}

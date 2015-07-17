@@ -9,7 +9,7 @@ using ENTech.Store.Services.ProductModule.Responses;
 
 namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 {
-	[RoutePrefix("1.0/store-admin-api/products")]
+	[RoutePrefix("v1/store-admin-api/products")]
 	public class ProductController : ApiController
 	{
 		private readonly IExternalCommandService<BusinessAdminSecurityInformation> _businessAdminExternalCommandService;
@@ -21,12 +21,12 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 
 		[HttpPost]
 		[ResponseType(typeof(ProductCreateResponse))]
-		[Route("create")]
 		public HttpResponseMessage Create([FromBody]ProductCreateRequest request)
 		{
 			var response = _businessAdminExternalCommandService.Execute<ProductCreateRequest, ProductCreateResponse, ProductCreateCommand>(request);
 			return Request.CreateResponse(response);
 		}
+
 
 		[HttpPut]
 		[ResponseType(typeof(ProductUpdateResponse))]
@@ -63,5 +63,8 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 			var response = _businessAdminExternalCommandService.Execute<ProductFindRequest, ProductFindResponse, ProductFindCommand>(request);
 			return Request.CreateResponse(response);
 		}
+
 	}
+
+	
 }

@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 
-namespace ENTech.Store.Infrastructure.Tests
+namespace ENTech.Store.Infrastructure.UnitTests
 {
 	[SetUpFixture]
-	public class MySetUpClass
+	public class SetUpFixture
 	{
 		[SetUp]
 		public void SetUp()

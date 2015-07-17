@@ -8,5 +8,9 @@ namespace ENTech.Store.Infrastructure.Services.Validators
 		bool IsValid { get; }
 
 		List<ResponseArgumentError> ArgumentErrors { get; }
+
+		void AddPrefixToArgumentErrorNames(string prefix);
+
+		void AddArgumentErrors(List<ResponseArgumentError> argumentErrors, bool insertFirst = false);
 	}
 }

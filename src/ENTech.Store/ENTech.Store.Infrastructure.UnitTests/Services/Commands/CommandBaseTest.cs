@@ -15,23 +15,60 @@ namespace ENTech.Store.Infrastructure.UnitTests.Services.Commands
 	{
 		private Mock<IDtoValidatorFactory> _dtoValidatorFactorykMock = new Mock<IDtoValidatorFactory>();
 	
+		
+
+		[Test]
+		public void Validate_When_called_Then_ValidateRequest_is_called_first()
+		{
+			var command = new CommandStub(_dtoValidatorFactorykMock.Object, failValidateRequest: true, failValidateOperation: true);
+			var validateResult = command.Validate(new RequestStub());
+
+			Assert.IsFalse(validateResult.IsValid);
+			Assert.IsTrue(validateResult.ResponseError is InvalidArgumentsResponseError);
+			Assert.IsTrue(((InvalidArgumentsResponseError)validateResult.ResponseError).ArgumentErrors[0].ArgumentError is ArgumentErrorStub);
+		}
+
+
+		[Test]
+		public void Validate_When_ValidateRequest_is_valid_Then_ValidateOperation_is_called()
+		{
+			var command = new CommandStub(_dtoValidatorFactorykMock.Object, failValidateRequest: false, failValidateOperation: true);
+			var validateResult = command.Validate(new RequestStub());
+
+			Assert.IsFalse(validateResult.IsValid);
+			Assert.IsTrue(validateResult.ResponseError is ResponseErrorStub);
+		}
+
+
+		[Test]
+		public void Validate_When_ValidateRequest_is_valid_and_ValidateOperation_is_valid_Then_Validate_is_valid()
+		{
+			var command = new CommandStub(_dtoValidatorFactorykMock.Object, failValidateRequest: false, failValidateOperation: false);
+			var validateResult = command.Validate(new RequestStub());
+
+			Assert.IsTrue(validateResult.IsValid);
+		}
+
+
+
 		public class RequestStub : IRequest
 		{
 			public string UserToken { get; set; }
 
 			public string ApiKey { get; set; }
-			
+
 			public string SomeValue { get; set; }
 		}
 
 		public class ResponseStub : IResponse
 		{
-		
+
 		}
 
 		public class ArgumentErrorStub : ArgumentError
 		{
-			public ArgumentErrorStub() : base(1)
+			public ArgumentErrorStub()
+				: base(1)
 			{
 			}
 
@@ -44,7 +81,8 @@ namespace ENTech.Store.Infrastructure.UnitTests.Services.Commands
 
 		public class ResponseErrorStub : ResponseError
 		{
-			public ResponseErrorStub(): base(2)
+			public ResponseErrorStub()
+				: base(2)
 			{
 			}
 
@@ -87,38 +125,6 @@ namespace ENTech.Store.Infrastructure.UnitTests.Services.Commands
 			{
 				throw new System.NotImplementedException();
 			}
-		}
-
-		[Test]
-		public void Validate_When_called_Then_ValidateRequest_is_called_first()
-		{
-			var command = new CommandStub(_dtoValidatorFactorykMock.Object, failValidateRequest: true, failValidateOperation: true);
-			var validateResult = command.Validate(new RequestStub());
-
-			Assert.IsFalse(validateResult.IsValid);
-			Assert.IsTrue(validateResult.ResponseError is InvalidArgumentsResponseError);
-			Assert.IsTrue(((InvalidArgumentsResponseError)validateResult.ResponseError).ArgumentErrors[0].ArgumentError is ArgumentErrorStub);
-		}
-
-
-		[Test]
-		public void Validate_When_ValidateRequest_is_valid_Then_ValidateOperation_is_called()
-		{
-			var command = new CommandStub(_dtoValidatorFactorykMock.Object, failValidateRequest: false, failValidateOperation: true);
-			var validateResult = command.Validate(new RequestStub());
-
-			Assert.IsFalse(validateResult.IsValid);
-			Assert.IsTrue(validateResult.ResponseError is ResponseErrorStub);
-		}
-
-
-		[Test]
-		public void Validate_When_ValidateRequest_is_valid_and_ValidateOperation_is_valid_Then_Validate_is_valid()
-		{
-			var command = new CommandStub(_dtoValidatorFactorykMock.Object, failValidateRequest: false, failValidateOperation: false);
-			var validateResult = command.Validate(new RequestStub());
-
-			Assert.IsTrue(validateResult.IsValid);
 		}
 	}
 }

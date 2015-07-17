@@ -91,8 +91,8 @@
     <Compile Include="Services\Commands\CommandBase.cs" />
     <Compile Include="Services\Commands\ICommand.cs" />
     <Compile Include="Services\Commands\IInternalCommand.cs" />
-    <Compile Include="Services\Errors\ArgumentErrors\EntityWithIdIsDeletedError.cs" />
-    <Compile Include="Services\Errors\ArgumentErrors\EntityWithIdDoesNotExistError.cs" />
+    <Compile Include="Services\Errors\ArgumentErrors\EntityWithIdIsDeletedArgumentError.cs" />
+    <Compile Include="Services\Errors\ArgumentErrors\EntityWithIdDoesNotExistArgumentError.cs" />
     <Compile Include="Services\Errors\ResponseArgumentError.cs" />
     <Compile Include="Services\Errors\ArgumentErrors\PositiveIntArgumentError.cs" />
     <Compile Include="Services\Errors\ArgumentErrors\RequiredArgumentError.cs" />
@@ -139,11 +139,11 @@
     <Compile Include="Services\Validators\FluentDtoValidator.cs" />
     <Compile Include="Services\Validators\IArgumentName.cs" />
     <Compile Include="Services\Validators\IDtoValidatorResult.cs" />
+    <Compile Include="Services\Validators\DtoValidatorVisitor.cs" />
     <Compile Include="Services\Validators\ValidateArgumentsResult.cs" />
     <Compile Include="Services\Validators\ValidateArgumentResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Validators\DtoValidator.cs" />
     <Compile Include="Services\Errors\CommonArgumentErrorCode.cs" />
     <Compile Include="Services\Errors\ErrorCodeBase.cs" />
     <Compile Include="Services\Validators\DtoValidatorBase.cs" />

@@ -92,7 +92,7 @@ namespace ENTech.Store.Services.CommandService
 
 					//ErrorLogUtils.AddError(e);
 
-					var error = new InternalResponseError();
+					var error = new InternalServerResponseError();
 					responseStatus = new ErrorResponseStatus<TResponse>(error);
 				}
 
@@ -103,7 +103,7 @@ namespace ENTech.Store.Services.CommandService
 			catch (Exception e)
 			{
 				//ErrorLogUtils.AddError(e);
-				var error = new InternalResponseError(e.Message);
+				var error = new InternalServerResponseError(e.Message);
 				responseStatus = new ErrorResponseStatus<TResponse>(error);
 				return responseStatus;
 			}

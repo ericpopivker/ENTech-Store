@@ -5,13 +5,13 @@ using ENTech.Store.Infrastructure.Services.Validators;
 
 namespace ENTech.Store.Infrastructure.Services.Errors.ArgumentErrors
 {
-	public class EntityWithIdIsDeletedError : ArgumentError
+	public class EntityWithIdIsDeletedArgumentError : ArgumentError
 	{
 		private const string _errorMessageTemplate = "{0} was deleted";
 
 		public string EntityType { get; internal set; }
 
-		public EntityWithIdIsDeletedError(string entityType)
+		public EntityWithIdIsDeletedArgumentError(string entityType)
 			: base(CommonArgumentErrorCode.EntityWithIdIsDeleted)
 		{
 			EntityType = entityType;

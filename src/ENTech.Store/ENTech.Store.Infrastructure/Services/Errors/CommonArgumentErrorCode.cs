@@ -12,7 +12,7 @@ namespace ENTech.Store.Infrastructure.Services.Errors
 
 		public const int EntityWithIdDoesNotExist = 100003;
 
-		public const int EntityWithIdIsDeleted = 100003;
+		public const int EntityWithIdIsDeleted = 100004;
 
 	}
 }

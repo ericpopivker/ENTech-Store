@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 namespace ENTech.Store.Infrastructure.Services.Errors.ResponseErrors
 {
-	public class InternalResponseError : ResponseError
+	public class InternalServerResponseError : ResponseError
 	{
 		private const string _errorMessageTemplate = "Internal server error";
 
 		private string _debugInfo;
 		
-		public InternalResponseError()
+		public InternalServerResponseError()
 			: base(CommonResponseErrorCode.InternalServerError)
 		{
 		}
 
-		public InternalResponseError(string debugInfo) : this()
+		public InternalServerResponseError(string debugInfo) : this()
 		{
 			_debugInfo = debugInfo;
 		}

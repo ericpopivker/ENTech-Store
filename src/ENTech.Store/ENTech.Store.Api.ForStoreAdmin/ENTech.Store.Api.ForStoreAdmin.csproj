@@ -84,6 +84,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\HttpRequestMessageExtensions.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

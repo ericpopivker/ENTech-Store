@@ -8,7 +8,7 @@
 		{
 			Verify.Argument.IsNotNull(response, "response");
 
-			this.Response = Response;
+			this.Response = response;
 		}
 	}
 }

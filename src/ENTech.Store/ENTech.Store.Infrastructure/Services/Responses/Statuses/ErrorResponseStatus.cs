@@ -11,7 +11,7 @@ namespace ENTech.Store.Infrastructure.Services.Responses.Statuses
 		{
 			Verify.Argument.IsNotNull(error, "error");
 
-			this.Error = Error;
+			this.Error = error;
 		}
 	}
 }
