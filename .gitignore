@@ -25,3 +25,9 @@ _ReSharper*/
 *.wadcfg
 ConnectionStrings.config
 LocalResources/*
+
+# Ignore Nuget. From: https://docs.nuget.org/consume/package-restore
+*.nupkg
+**/packages/*
+!**/packages/build/
+#!**/packages/repositories.config

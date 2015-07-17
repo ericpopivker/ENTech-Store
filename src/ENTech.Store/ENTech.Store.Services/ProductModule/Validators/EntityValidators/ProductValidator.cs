@@ -17,7 +17,6 @@ namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 {
 	public class ProductValidator : IProductValidator
 	{
-		private IUnitOfWork _unitOfWork;
 		private IInternalCommandService _internalCommandService;
 		private IProductQuery _productQuery;
 

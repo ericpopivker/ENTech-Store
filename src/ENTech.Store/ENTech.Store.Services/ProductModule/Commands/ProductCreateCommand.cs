@@ -22,13 +22,14 @@ namespace ENTech.Store.Services.ProductModule.Commands
 		private IProductValidator _productValidator;
 		private IStoreValidator _storeValidator;
 
-		public ProductCreateCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory, IInternalCommandService internalCommandService, IProductQuery productQuery, IProductValidator productValidator, IStoreValidator _storeValidator)
+		public ProductCreateCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory, IInternalCommandService internalCommandService, IProductQuery productQuery, IProductValidator productValidator, IStoreValidator storeValidator)
 			: base(unitOfWork.DbContext, dtoValidatorFactory, false)
 		{
 			_unitOfWork = unitOfWork;
 			_internalCommandService = internalCommandService;
 			_productQuery = productQuery;
 			_productValidator = productValidator;
+			_storeValidator = storeValidator;
 		}
 
 		protected override void ValidateRequestInternal(ProductCreateRequest request, ValidateRequestResult<ProductCreateRequest> validateRequestResult)
