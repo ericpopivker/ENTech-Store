@@ -1,14 +1,14 @@
 ﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
 
 namespace ENTech.Store.Services.ProductModule.Commands
 {
-	public class ProductDeleteCommand : DbContextCommandBase<ProductDeleteRequest, ProductDeleteResponse>
+	public class ProductDeleteCommand : CommandBase<ProductDeleteRequest, ProductDeleteResponse>
 	{
-		public ProductDeleteCommand(IUnitOfWork unitOfWork)
-			: base(unitOfWork.DbContext, false)
+		public ProductDeleteCommand()
+			: base(false)
 		{
 		}
 

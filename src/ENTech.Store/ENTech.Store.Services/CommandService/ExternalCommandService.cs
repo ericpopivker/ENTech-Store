@@ -105,7 +105,7 @@ namespace ENTech.Store.Services.CommandService
 			}
 			finally
 			{
-				if (unitOfWork != null)
+				if (unitOfWork != null && unitOfWork.IsDisposed == false)
 					unitOfWork.Dispose();
 
 				stopwatch.Stop();

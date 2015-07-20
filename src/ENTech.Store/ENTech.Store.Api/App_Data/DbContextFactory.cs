@@ -6,7 +6,7 @@ namespace ENTech.Store.Api.App_Data
 	{
 		public IDbContext Create()
 		{
-			return new FakeDbContext();
+			return new DbContext();
 		}
 	}
 }

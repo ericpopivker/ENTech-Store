@@ -11,6 +11,7 @@ using ENTech.Store.DbEntities.StoreModule;
 using ENTech.Store.Infrastructure.Database.EF6.Configurations.CustomerModule;
 using ENTech.Store.Infrastructure.Database.EF6.Configurations.GeoModule;
 using ENTech.Store.Infrastructure.Database.EF6.Configurations.OrderModule;
+using ENTech.Store.Infrastructure.Database.EF6.Configurations.PartnerModule;
 using ENTech.Store.Infrastructure.Database.EF6.Configurations.StoreModule;
 using ENTech.Store.Infrastructure.Database.EF6.Conventions;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
@@ -76,6 +77,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 			modelBuilder.Configurations.Add(new AddressConfiguration());
 			modelBuilder.Configurations.Add(new StateConfiguration());
 			modelBuilder.Configurations.Add(new CountryConfiguration());
+			modelBuilder.Configurations.Add(new PartnerConfiguration());
 		}
 
 		public override int SaveChanges()

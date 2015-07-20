@@ -52,6 +52,14 @@
     <Compile Include="Migrations\201507202107062_Init.Designer.cs">
       <DependentUpon>201507202107062_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507202116167_Add_Partners_Table.cs" />
+    <Compile Include="Migrations\201507202116167_Add_Partners_Table.Designer.cs">
+      <DependentUpon>201507202116167_Add_Partners_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507202116417_Insert_Test_Partner.cs" />
+    <Compile Include="Migrations\201507202116417_Insert_Test_Partner.Designer.cs">
+      <DependentUpon>201507202116417_Insert_Test_Partner.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,6 +88,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507202107062_Init.resx">
       <DependentUpon>201507202107062_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507202116167_Add_Partners_Table.resx">
+      <DependentUpon>201507202116167_Add_Partners_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507202116417_Insert_Test_Partner.resx">
+      <DependentUpon>201507202116417_Insert_Test_Partner.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

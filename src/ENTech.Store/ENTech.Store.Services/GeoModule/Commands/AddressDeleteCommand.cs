@@ -1,14 +1,14 @@
 using System;
 using ENTech.Store.Infrastructure.Database.EF6;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
 
 namespace ENTech.Store.Services.GeoModule.Commands
 {
-	public class AddressDeleteCommand : DbContextCommandBase<AddressDeleteRequest, AddressDeleteResponse>
+	public class AddressDeleteCommand : CommandBase<AddressDeleteRequest, AddressDeleteResponse>
 	{
-		public AddressDeleteCommand(IDbContext dbContext, bool requiresTransaction) : base(dbContext, requiresTransaction)
+		public AddressDeleteCommand(bool requiresTransaction) : base(requiresTransaction)
 		{
 		}
 

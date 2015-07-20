@@ -107,7 +107,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreFindRequest, StoreFindResponse> CreateCommand()
 		{
-			return new StoreFindCommand(_storeRepositoryMock.Object, _queryExecuterMock.Object, UnitOfWorkMock.Object, MapperMock.Object);
+			return new StoreFindCommand(_storeRepositoryMock.Object, _queryExecuterMock.Object, MapperMock.Object);
 		}
 	}
 }

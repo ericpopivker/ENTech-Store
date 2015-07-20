@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
-using ENTech.Store.Services.SharedModule.Commands;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.StoreModule.Criterias;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
@@ -11,14 +10,14 @@ using ENTech.Store.Services.StoreModule.Responses;
 
 namespace ENTech.Store.Services.StoreModule.Commands
 {
-	public class StoreFindCommand : DbContextCommandBase<StoreFindRequest, StoreFindResponse>
+	public class StoreFindCommand : CommandBase<StoreFindRequest, StoreFindResponse>
 	{
 		private readonly IRepository<Entities.StoreModule.Store> _storeRepository;
 		private readonly IStoreQuery _query;
 		private readonly IMapper _mapper;
 
-		public StoreFindCommand(IRepository<Entities.StoreModule.Store> storeRepository, IStoreQuery query, IUnitOfWork unitOfWork, IMapper mapper)
-			: base(unitOfWork.DbContext, false)
+		public StoreFindCommand(IRepository<Entities.StoreModule.Store> storeRepository, IStoreQuery query, IMapper mapper)
+			: base(false)
 		{
 			_storeRepository = storeRepository;
 			_query = query;

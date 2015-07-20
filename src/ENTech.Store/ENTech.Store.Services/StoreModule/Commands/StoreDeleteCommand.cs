@@ -1,19 +1,18 @@
-﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
-using ENTech.Store.Infrastructure.Database.Repository;
+﻿using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 
 namespace ENTech.Store.Services.StoreModule.Commands
 {
-	public class StoreDeleteCommand : DbContextCommandBase<StoreDeleteRequest, StoreDeleteResponse>
+	public class StoreDeleteCommand : CommandBase<StoreDeleteRequest, StoreDeleteResponse>
 	{
 		private readonly IRepository<Entities.StoreModule.Store> _repository;
 
-		public StoreDeleteCommand(IUnitOfWork unitOfWork, IRepository<Entities.StoreModule.Store> repository)
-			: base(unitOfWork.DbContext, false)
+		public StoreDeleteCommand(IRepository<Entities.StoreModule.Store> repository)
+			: base(false)
 		{
 			_repository = repository;
 		}

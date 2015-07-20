@@ -371,7 +371,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreUpdateRequest, StoreUpdateResponse> CreateCommand()
 		{
-			return new StoreUpdateCommand(UnitOfWorkMock.Object, _internalCommandServiceMock.Object, _storeRepositoryMock.Object);
+			return new StoreUpdateCommand(_internalCommandServiceMock.Object, _storeRepositoryMock.Object);
 		}
 	}
 }

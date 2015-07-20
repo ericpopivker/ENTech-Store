@@ -103,7 +103,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreDeleteRequest, StoreDeleteResponse> CreateCommand()
 		{
-			return new StoreDeleteCommand(UnitOfWorkMock.Object, _storeRepositoryMock.Object);
+			return new StoreDeleteCommand(_storeRepositoryMock.Object);
 		}
 	}
 }

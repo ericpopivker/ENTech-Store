@@ -78,7 +78,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreGetByIdRequest, StoreGetByIdResponse> CreateCommand()
 		{
-			return new StoreGetByIdCommand(_storeRepositoryMock.Object, UnitOfWorkMock.Object, MapperMock.Object);
+			return new StoreGetByIdCommand(_storeRepositoryMock.Object, MapperMock.Object);
 		}
 	}
 }

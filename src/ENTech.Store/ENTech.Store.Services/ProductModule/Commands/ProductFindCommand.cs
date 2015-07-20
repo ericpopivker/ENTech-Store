@@ -1,15 +1,15 @@
 ﻿using System;
 using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
 
 namespace ENTech.Store.Services.ProductModule.Commands
 {
-	public class ProductFindCommand : DbContextCommandBase<ProductFindRequest, ProductFindResponse>
+	public class ProductFindCommand : CommandBase<ProductFindRequest, ProductFindResponse>
 	{
-		public ProductFindCommand(IUnitOfWork unitOfWork)
-			: base(unitOfWork.DbContext, false)
+		public ProductFindCommand()
+			: base(false)
 		{
 		}
 

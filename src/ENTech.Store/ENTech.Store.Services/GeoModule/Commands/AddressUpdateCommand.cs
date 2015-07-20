@@ -1,14 +1,14 @@
 using System;
 using ENTech.Store.Infrastructure.Database.EF6;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
 
 namespace ENTech.Store.Services.GeoModule.Commands
 {
-	public class AddressUpdateCommand : DbContextCommandBase<AddressUpdateRequest, AddressUpdateResponse>
+	public class AddressUpdateCommand : CommandBase<AddressUpdateRequest, AddressUpdateResponse>
 	{
-		public AddressUpdateCommand(IDbContext dbContext, bool requiresTransaction) : base(dbContext, requiresTransaction)
+		public AddressUpdateCommand(bool requiresTransaction) : base(requiresTransaction)
 		{
 		}
 

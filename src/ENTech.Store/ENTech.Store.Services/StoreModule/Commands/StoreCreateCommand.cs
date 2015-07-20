@@ -1,27 +1,27 @@
 ﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Dtos;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 
 namespace ENTech.Store.Services.StoreModule.Commands
 {
-	public class StoreCreateCommand : DbContextCommandBase<StoreCreateRequest, StoreCreateResponse>
+	public class StoreCreateCommand : CommandBase<StoreCreateRequest, StoreCreateResponse>
 	{
 		private readonly IRepository<Entities.StoreModule.Store> _storeRepository;
 		private readonly IMapper _mapper;
 		private readonly IInternalCommandService _internalCommandService;
 		
-		public StoreCreateCommand(IUnitOfWork unitOfWork, IRepository<Entities.StoreModule.Store> storeRepository, 
+		public StoreCreateCommand(IRepository<Entities.StoreModule.Store> storeRepository, 
 			IInternalCommandService internalCommandService, IMapper mapper)
-			: base(unitOfWork.DbContext, false)
+			: base(false)
 		{
 			_storeRepository = storeRepository;
 			_internalCommandService = internalCommandService;
@@ -34,7 +34,8 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 			var addressCreateRequest = new AddressCreateRequest
 			{
-				Address = _mapper.Map<AddressDto, AddressCreateOrUpdateDto>(storeDto.Address)
+				Address = _mapper.Map<AddressDto, AddressCreateOrUpdateDto>(storeDto.Address),
+				ApiKey = request.ApiKey
 			};
 
 			var addressCreateResponse = _internalCommandService.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(addressCreateRequest);

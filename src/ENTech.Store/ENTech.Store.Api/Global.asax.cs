@@ -16,6 +16,7 @@ namespace ENTech.Store.Api
             GlobalConfiguration.Configure(UnityConfig.RegisterComponents);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+			AutoMapperConfig.RegisterComponents();
         }
     }
 }

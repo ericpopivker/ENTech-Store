@@ -1,25 +1,25 @@
 ﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 
 namespace ENTech.Store.Services.StoreModule.Commands
 {
-	public class StoreUpdateCommand : DbContextCommandBase<StoreUpdateRequest, StoreUpdateResponse>
+	public class StoreUpdateCommand : CommandBase<StoreUpdateRequest, StoreUpdateResponse>
 	{
 		private readonly IInternalCommandService _internalCommandService;
 		private readonly IRepository<Entities.StoreModule.Store> _repository;
 
-		public StoreUpdateCommand(IUnitOfWork unitOfWork, IInternalCommandService internalCommandService, IRepository<Entities.StoreModule.Store> repository)
-			: base(unitOfWork.DbContext, false)
+		public StoreUpdateCommand(IInternalCommandService internalCommandService, IRepository<Entities.StoreModule.Store> repository)
+			: base(false)
 		{
 			_internalCommandService = internalCommandService;
 			_repository = repository;
