@@ -12,7 +12,7 @@ namespace ENTech.Store.Entities.OrderModule
 	}
 
 	[Table("OrderShipping")]
-	public class OrderShipping : IEntity
+	public class OrderShipping : IDomainEntity
 	{
 		public int Id { get; set; }
 

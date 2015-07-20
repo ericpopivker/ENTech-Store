@@ -6,7 +6,7 @@ using ENTech.Store.Infrastructure.Entities;
 namespace ENTech.Store.Entities.StoreModule
 {
 	[Table("Product")]
-	public class Product : IEntity, IAuditable, ILogicallyDeletable
+	public class Product : IDomainEntity, IAuditable, ILogicallyDeletable
 	{
 		public int Id { get; set; }
 
@@ -39,11 +39,8 @@ namespace ENTech.Store.Entities.StoreModule
 
 		[Required]
 		public int? StoreId { get; set; }
-		
+
 		[ForeignKey("StoreId")]
 		public virtual Store Store { get; set; }
-		
-	
-
 	}
 }

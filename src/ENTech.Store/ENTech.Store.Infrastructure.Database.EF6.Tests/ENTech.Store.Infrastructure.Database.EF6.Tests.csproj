@@ -54,8 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbEntityStateKeeperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryBaseTests.cs" />
     <Compile Include="RepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>

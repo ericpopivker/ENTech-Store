@@ -1,9 +1,8 @@
-﻿using ENTech.Store.Entities.UnitOfWork;
+﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
-using ENTech.Store.Services.StoreModule.Projections;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 

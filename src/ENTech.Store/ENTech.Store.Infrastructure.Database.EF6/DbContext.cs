@@ -1,67 +1,54 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Text;
-using ENTech.Store.Entities.GeoModule;
-using ENTech.Store.Entities.PartnerModule;
-using ENTech.Store.Entities.CustomerModule;
-using ENTech.Store.Entities.StoreModule;
-using ENTech.Store.Infrastructure.Cache;
-using ENTech.Store.Infrastructure.Database.EF6.Utility;
-using ENTech.Store.Infrastructure.Entities;
+using ENTech.Store.DbEntities.CustomerModule;
+using ENTech.Store.DbEntities.GeoModule;
+using ENTech.Store.DbEntities.PartnerModule;
+using ENTech.Store.DbEntities.StoreModule;
+using ENTech.Store.Infrastructure.Database.QueryExecuter;
 using ENTech.Store.Infrastructure.Utils;
 
-namespace ENTech.Store.Entities
+namespace ENTech.Store.Infrastructure.Database.EF6
 {
 	public class DbContext : System.Data.Entity.DbContext, IDbContext
 	{
+		private IFilterableDbSet<CountryDbEntity> _countries;
+		private IFilterableDbSet<StateDbEntity> _states;
+		private IFilterableDbSet<AddressDbEntity> _addresses;
 
-		private IFilterableDbSet<Country> _countries;
-		private IFilterableDbSet<State> _states;
-		private IFilterableDbSet<Address> _addresses;
+		private IFilterableDbSet<CustomerDbEntity> _customers;
+		private IFilterableDbSet<StoreDbEntity> _stores;
 
-		private IFilterableDbSet<Customer> _customers;
-		private IFilterableDbSet<StoreModule.Store> _stores;
+		private IFilterableDbSet<PartnerDbEntity> _partners;
+		private IFilterableDbSet<ProductDbEntity> _products;
 
 		private DbContextTransaction _transaction;
-		private IFilterableDbSet<Partner> _partners;
-		private IFilterableDbSet<Product> _products;
 
-		public DbContext() : base(EnvironmentUtils.GetConnectionStringName())
+		public DbContext()
+			: base(EnvironmentUtils.GetConnectionStringName())
 		{
-			InitDbSets();
+			_partners = new Lazy<IFilterableDbSet<PartnerDbEntity>>(() => new FilterableDbSet<PartnerDbEntity>(this)).Value;
+
+			_stores = new Lazy<IFilterableDbSet<StoreDbEntity>>(() => new FilterableDbSet<StoreDbEntity>(this)).Value;
+
+			_customers = new Lazy<IFilterableDbSet<CustomerDbEntity>>(() => new FilterableDbSet<CustomerDbEntity>(this)).Value;
+
+			_countries = new Lazy<IFilterableDbSet<CountryDbEntity>>(() => new FilterableDbSet<CountryDbEntity>(this)).Value;
+			_states = new Lazy<IFilterableDbSet<StateDbEntity>>(() => new FilterableDbSet<StateDbEntity>(this)).Value;
+			_addresses = new Lazy<IFilterableDbSet<AddressDbEntity>>(() => new FilterableDbSet<AddressDbEntity>(this)).Value;
+
+			_products = new Lazy<IFilterableDbSet<ProductDbEntity>>(() => new FilterableDbSet<ProductDbEntity>(this)).Value;
 		}
 
-		public IDbSet<TEntity> GetDbSet<TEntity>()
-			where TEntity : class, IEntity
-		{
-			return Set<TEntity>();
-		}
-
-		private void InitDbSets()
-		{
-			_partners = new Lazy<IFilterableDbSet<Partner>>(() => new FilterableDbSet<Partner>(this)).Value;
-
-			_stores = new Lazy<IFilterableDbSet<StoreModule.Store>>(() => new FilterableDbSet<StoreModule.Store>(this)).Value;
-
-			_customers = new Lazy<IFilterableDbSet<Customer>>(() => new FilterableDbSet<Customer>(this)).Value;
-
-			_countries = new Lazy<IFilterableDbSet<Country>>(() => new FilterableDbSet<Country>(this)).Value;
-			_states = new Lazy<IFilterableDbSet<State>>(() => new FilterableDbSet<State>(this)).Value;
-			_addresses = new Lazy<IFilterableDbSet<Address>>(() => new FilterableDbSet<Address>(this)).Value;
-
-			_products = new Lazy<IFilterableDbSet<Product>>(() => new FilterableDbSet<Product>(this)).Value;
-		}
-
-		public bool ValidateEntity<TEntity>(TEntity entity) where TEntity : class, IEntity
+		public bool ValidateEntity<TEntity>(TEntity entity) where TEntity : class, IDbEntity
 		{
 			DbEntityValidationResult res = Entry(entity).GetValidationResult();
 			if (!res.IsValid)
 			{
 				var e = new DbEntityValidationException
-					("Entity validation failed", new List<DbEntityValidationResult> {res});
+					("Entity validation failed", new List<DbEntityValidationResult> { res });
 				throw e;
 			}
 			return true;
@@ -124,59 +111,46 @@ namespace ENTech.Store.Entities
 			base.Dispose(disposing);
 			IsDisposed = true;
 		}
-		
-		public IFilterableDbSet<Partner> Partners
+
+		public bool IsDisposed { get; private set; }
+
+		public IFilterableDbSet<PartnerDbEntity> Partners
 		{
 			get { return _partners; }
 		}
-
-		public IFilterableDbSet<StoreModule.Store> Stores
+		public IFilterableDbSet<StoreDbEntity> Stores
 		{
 			get { return _stores; }
 		}
-
-		public IFilterableDbSet<Product> Products
+		public IFilterableDbSet<ProductDbEntity> Products
 		{
 			get { return _products; }
 		}
-
-		public IFilterableDbSet<Customer> Customers
+		public IFilterableDbSet<CustomerDbEntity> Customers
 		{
 			get { return _customers; }
 		}
-
-		public IFilterableDbSet<Address> Addresses
+		public IFilterableDbSet<AddressDbEntity> Addresses
 		{
 			get { return _addresses; }
 		}
-
-		public IFilterableDbSet<Country> Countries
+		public IFilterableDbSet<CountryDbEntity> Countries
 		{
 			get { return _countries; }
 		}
-		
-		public IFilterableDbSet<State> States
+		public IFilterableDbSet<StateDbEntity> States
 		{
 			get { return _states; }
 		}
-		
+		public IDbSet<T> GetDbSet<T>() where T : class, IDbEntity
+		{
+			return Set<T>();
+		}
+
 		public IDbContext LimitByStore(int storeId)
 		{
 			Customers.ApplyFilter(p => p.StoreId == storeId);
 			return this;
-		}
-		
-		public bool IsDisposed { get; private set; }
-
-		public IDbSet<TEntity> DbSet<TEntity>() where TEntity : class
-		{
-			return Set<TEntity>();
-		}
-
-		public void MarkUpdated<TEntity>(TEntity stubEntity) where TEntity : class, IEntity
-		{
-			var entry = Entry(stubEntity);
-			entry.State = EntityState.Modified;
 		}
 	}
 }

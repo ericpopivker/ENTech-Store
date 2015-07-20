@@ -3,18 +3,16 @@ using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Infrastructure.Database.EF6.Utility
 {
-	public interface IDbEntityStateKeeper
+	public interface IDbEntityStateKeeper<TEntity, TDbEntity>
+		where TEntity : IDomainEntity
+		where TDbEntity : IDbEntity
 	{
-		void Store<TEntity, TDbEntity>(TEntity entity, TDbEntity dbEntity)
-			where TEntity : IEntity
-			where TDbEntity : IDbEntity;
+		void Store(TEntity entity, TDbEntity dbEntity);
 
-		TDbEntity Get<TEntity, TDbEntity>(TEntity entity)
-			where TEntity : IEntity
-			where TDbEntity : IDbEntity;
+		TDbEntity Get(TEntity entity);
 
-		void Remove<TEntity, TDbEntity>(TEntity entity)
-			where TEntity : IEntity
-			where TDbEntity : IDbEntity;
+		void Remove(TEntity entity);
+
+		void Clear();
 	}
 }

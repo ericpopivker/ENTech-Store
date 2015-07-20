@@ -1,8 +1,7 @@
 ﻿using System;
-using ENTech.Store.Infrastructure;
 using ENTech.Store.Infrastructure.Context;
 
-namespace ENTech.Store.Entities.UnitOfWork
+namespace ENTech.Store.Infrastructure.Database.EF6.UnitOfWork
 {
 	public class DbContextScope : IDisposable
 	{

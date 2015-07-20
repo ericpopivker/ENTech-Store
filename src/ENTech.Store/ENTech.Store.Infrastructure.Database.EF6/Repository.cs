@@ -10,15 +10,17 @@ using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Infrastructure.Database.EF6
 {
-	public class Repository<TDbEntity, TEntity> : IRepository<TEntity> 
-		where TEntity : class, IEntity
+	public class Repository<TEntity, TDbEntity> : IRepository<TEntity> 
+		where TEntity : class, IDomainEntity
 		where TDbEntity : class, IDbEntity
 	{
 		private readonly IDbSet<TDbEntity> _dbSet;
-		private readonly IDbEntityStateKeeper _dbEntityStateKeeper;
+		private readonly IDbEntityStateKeeper<TEntity, TDbEntity> _dbEntityStateKeeper;
 		private readonly IDbEntityMapper _dbEntityMapper;
 
-		public Repository(IDbSet<TDbEntity> dbSet, IDbEntityStateKeeper dbEntityStateKeeper, IDbEntityMapper dbEntityMapper)
+		public Repository(IDbSet<TDbEntity> dbSet, 
+			IDbEntityStateKeeper<TEntity, TDbEntity> dbEntityStateKeeper, 
+			IDbEntityMapper dbEntityMapper)
 		{
 			_dbSet = dbSet;
 			_dbEntityStateKeeper = dbEntityStateKeeper;
@@ -85,7 +87,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 
 		public void Delete(TEntity entity)
 		{
-			var dbEntity = _dbEntityStateKeeper.Get<TEntity, TDbEntity>(entity);
+			var dbEntity = _dbEntityStateKeeper.Get(entity);
 
 			if (dbEntity == null)
 				throw new EntityPersistenceException();
@@ -109,7 +111,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 				_dbSet.Remove(dbEntity);
 			}
 
-			_dbEntityStateKeeper.Remove<TEntity, TDbEntity>(entity);
+			_dbEntityStateKeeper.Remove(entity);
 		}
 
 		public void Delete(IEnumerable<TEntity> entities)
@@ -122,7 +124,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 
 		public void Update(TEntity entity)
 		{
-			var dbEntity = _dbEntityStateKeeper.Get<TEntity, TDbEntity>(entity);
+			var dbEntity = _dbEntityStateKeeper.Get(entity);
 
 			if (dbEntity == null)
 				throw new EntityPersistenceException();

@@ -1,5 +1,4 @@
-﻿using ENTech.Store.Entities.UnitOfWork;
-using ENTech.Store.Infrastructure.Database;
+﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Services.CommandService.Definition;

@@ -1,4 +1,4 @@
-﻿using ENTech.Store.Entities;
+﻿using ENTech.Store.Infrastructure.Database.EF6;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;

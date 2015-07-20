@@ -4,7 +4,7 @@ using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Infrastructure.Database.Repository
 {
-	public interface IRepository<T> where T : IEntity 
+	public interface IRepository<T> where T : IDomainEntity 
 	{
 		void Add(T entity);
 		void Add(IEnumerable<T> entity);

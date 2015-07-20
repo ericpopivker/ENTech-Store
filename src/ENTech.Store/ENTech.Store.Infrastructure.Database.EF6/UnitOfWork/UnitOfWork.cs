@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ENTech.Store.Entities.UnitOfWork
+namespace ENTech.Store.Infrastructure.Database.EF6.UnitOfWork
 {
 	public class UnitOfWork : IUnitOfWork
 	{

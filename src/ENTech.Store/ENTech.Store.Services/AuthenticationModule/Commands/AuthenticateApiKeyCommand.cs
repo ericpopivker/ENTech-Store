@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using AutoMapper;
-using ENTech.Store.Entities.UnitOfWork;
+using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Services.AuthenticationModule.Dtos;

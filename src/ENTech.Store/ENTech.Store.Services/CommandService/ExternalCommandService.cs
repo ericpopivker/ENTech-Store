@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
-using ENTech.Store.Entities;
-using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure;
-using ENTech.Store.Infrastructure.Enums;
+using ENTech.Store.Infrastructure.Database.EF6;
+using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Extensions;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
@@ -15,7 +12,6 @@ using ENTech.Store.Services.AuthenticationModule.Dtos;
 using ENTech.Store.Services.AuthenticationModule.Responses;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
-using Newtonsoft.Json;
 
 namespace ENTech.Store.Services.CommandService
 {

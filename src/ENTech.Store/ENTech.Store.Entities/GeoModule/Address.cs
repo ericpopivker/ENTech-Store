@@ -5,7 +5,7 @@ using ENTech.Store.Infrastructure.Entities;
 namespace ENTech.Store.Entities.GeoModule
 {
 	[Table("Address")]
-	public class Address : IEntity
+	public class Address : IDomainEntity
 	{
 		public int Id { get; set; }
 

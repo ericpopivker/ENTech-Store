@@ -73,7 +73,7 @@
     <Compile Include="Entities\IAuditable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entities\IEntity.cs">
+    <Compile Include="Entities\IDomainEntity.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entities\ILogicallyDeletable.cs">

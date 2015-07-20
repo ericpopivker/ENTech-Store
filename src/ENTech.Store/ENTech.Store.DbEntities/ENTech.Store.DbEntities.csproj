@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -41,10 +47,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerModule\Configurations\CustomerConfiguration.cs" />
     <Compile Include="CustomerModule\CustomerDbEntity.cs" />
     <Compile Include="GeoModule\AddressDbEntity.cs" />
+    <Compile Include="GeoModule\Configurations\AddressConfiguration.cs" />
+    <Compile Include="GeoModule\Configurations\CountryConfiguration.cs" />
+    <Compile Include="GeoModule\Configurations\StateConfiguration.cs" />
     <Compile Include="GeoModule\CountryDbEntity.cs" />
     <Compile Include="GeoModule\StateDbEntity.cs" />
+    <Compile Include="OrderModule\Configurations\OrderConfiguration.cs" />
+    <Compile Include="OrderModule\Configurations\OrderItemConfiguration.cs" />
+    <Compile Include="OrderModule\Configurations\OrderPaymentConfiguration.cs" />
+    <Compile Include="OrderModule\Configurations\OrderShippingConfiguration.cs" />
     <Compile Include="OrderModule\OrderDbEntity.cs" />
     <Compile Include="OrderModule\OrderItemDbEntity.cs" />
     <Compile Include="OrderModule\OrderPaymentDbEntity.cs" />
@@ -53,14 +67,28 @@
     <Compile Include="OrderModule\OrderStatus.cs" />
     <Compile Include="PartnerModule\PartnerDbEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoreModule\Configurations\ProductConfiguration.cs" />
+    <Compile Include="StoreModule\Configurations\StoreConfiguration.cs" />
     <Compile Include="StoreModule\ProductDbEntity.cs" />
     <Compile Include="StoreModule\StoreDbEntity.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
+      <Project>{26B48B70-7CF1-4BE9-9D14-CE616B4CF7AA}</Project>
+      <Name>ENTech.Store.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj">
       <Project>{1152aa7a-f788-4291-8b0d-c1117d1c7a08}</Project>
       <Name>ENTech.Store.Infrastructure.Database</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj">
+      <Project>{7D581130-B9A8-4E44-9562-67E41697A123}</Project>
+      <Name>ENTech.Store.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

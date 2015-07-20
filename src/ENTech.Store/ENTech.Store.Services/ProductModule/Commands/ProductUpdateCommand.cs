@@ -1,5 +1,4 @@
-﻿using ENTech.Store.Entities;
-using ENTech.Store.Entities.UnitOfWork;
+﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
 using ENTech.Store.Services.SharedModule.Commands;

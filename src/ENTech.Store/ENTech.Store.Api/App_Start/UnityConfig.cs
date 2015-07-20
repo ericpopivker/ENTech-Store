@@ -1,12 +1,9 @@
 using System.Data.Entity;
-using Microsoft.Practices.Unity;
 using System.Web.Http;
 using ENTech.Store.Api.App_Data;
-using ENTech.Store.Entities;
-using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure;
 using ENTech.Store.Infrastructure.Database.EF6;
-using ENTech.Store.Infrastructure.Database.EF6.Utility;
+using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Services.CommandService;
@@ -14,6 +11,7 @@ using ENTech.Store.Services.CommandService.Concrete;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
 using ENTech.Store.Services.StoreModule.Projections;
+using Microsoft.Practices.Unity;
 using Unity.WebApi;
 
 namespace ENTech.Store.Api
@@ -31,10 +29,9 @@ namespace ENTech.Store.Api
 				.RegisterType<IExternalCommandService<BusinessAdminSecurityInformation>, BusinessAdminExternalCommandService>()
 				.RegisterType<IInternalCommandService, InternalCommandService>()
 				.RegisterType<IMapper, Mapper>()
-				.RegisterType<IRepository<Entities.StoreModule.Store>, Repository<StoreDbEntity, Entities.StoreModule.Store>>()
-				.RegisterType<IDbEntityStateKeeper>(new InjectionFactory(c => DbContextScope.CurrentDbContext))	
-
-				.RegisterType<IDbSet<Entities.StoreModule.Store>>(new InjectionFactory(c => DbContextScope.CurrentDbContext.Stores))	//try reflection	
+				.RegisterType<IRepository<Entities.StoreModule.Store>, Repository<Entities.StoreModule.Store, StoreDbEntity>>()
+				
+				.RegisterType<IDbSet<StoreDbEntity>>(new InjectionFactory(c => DbContextScope.CurrentDbContext.Stores))	//try reflection	
 	
 				.RegisterType<IDbContext>(new InjectionFactory(c => c.Resolve<IDbContextFactory>().Create()));			
 

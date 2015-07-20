@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\DbContextFactory.cs" />
+    <Compile Include="App_Data\IDbContextFactory.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
@@ -218,6 +219,10 @@
     <ProjectReference Include="..\ENTech.Store.Api.ForStoreAdmin\ENTech.Store.Api.ForStoreAdmin.csproj">
       <Project>{79c917d2-ad5f-4837-8501-067899065c68}</Project>
       <Name>ENTech.Store.Api.ForStoreAdmin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTech.Store.DbEntities\ENTech.Store.DbEntities.csproj">
+      <Project>{B2738CFF-4567-4537-9CC9-69CE92E95DCA}</Project>
+      <Name>ENTech.Store.DbEntities</Name>
     </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
       <Project>{26B48B70-7CF1-4BE9-9D14-CE616B4CF7AA}</Project>

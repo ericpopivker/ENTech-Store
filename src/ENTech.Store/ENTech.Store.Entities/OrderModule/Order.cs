@@ -19,7 +19,7 @@ namespace ENTech.Store.Entities.OrderModule
 	}
 
 	[Table("Order")]
-	public class Order:IEntity, IAuditable
+	public class Order:IDomainEntity, IAuditable
 	{
 		public int Id { get; set; }
 

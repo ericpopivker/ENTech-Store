@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ENTech.Store.DbEntities.OrderModule;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
@@ -30,8 +31,10 @@ namespace ENTech.Store.DbEntities.StoreModule
 
 		public bool IsActive { get; set; }
 
+		public int StoreId { get; set; }
+
 		public StoreDbEntity Store { get; set; }
 
-		public OrderItemDbEntity OrderItems { get; set; }
+		public ICollection<OrderItemDbEntity> OrderItems { get; set; }
 	}
 }

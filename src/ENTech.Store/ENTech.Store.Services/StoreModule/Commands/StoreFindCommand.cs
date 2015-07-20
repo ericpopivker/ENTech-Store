@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using ENTech.Store.Entities.UnitOfWork;
+using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Services.SharedModule.Commands;
 using ENTech.Store.Services.StoreModule.Criterias;
 using ENTech.Store.Services.StoreModule.Dtos;
-using ENTech.Store.Services.StoreModule.Projections;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 
@@ -32,7 +31,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 			var itemIds = _query.Find(criteria);
 
-			var items = _storeRepository.FindByIds(itemIds);
+			var items = _storeRepository.FindByIds(itemIds); //expand == projection?
 
 			var mappedResult = _mapper.Map<IEnumerable<Entities.StoreModule.Store>, IEnumerable<StoreDto>>(items);
 

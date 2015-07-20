@@ -15,17 +15,22 @@ namespace ENTech.Store.DbEntities.OrderModule
 		public DateTime LastUpdatedAt { get; set; }
 
 		public decimal Total { get; set; }
-		
+
+		public int StoreId { get; set; }
 		public StoreDbEntity Store { get; set; }
-		
+
+		public int CustomerId { get; set; }
 		public CustomerDbEntity Customer { get; set; }
 
+		public int? PaymentId { get; set; }
 		public OrderPaymentDbEntity Payment { get; set; }
 
+		public int? ShippingId { get; set; }
 		public OrderShippingDbEntity Shipping { get; set; }
 
 		public OrderStatus Status{ get; set; }
 
 		public List<OrderItemDbEntity> Items { get; set; }
+		
 	}
 }

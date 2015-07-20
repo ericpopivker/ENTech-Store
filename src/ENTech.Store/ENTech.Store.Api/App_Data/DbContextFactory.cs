@@ -1,5 +1,4 @@
-﻿using ENTech.Store.Entities;
-using ENTech.Store.Infrastructure.Database.EF6;
+﻿using ENTech.Store.Infrastructure.Database.EF6;
 
 namespace ENTech.Store.Api.App_Data
 {

@@ -1,4 +1,4 @@
-﻿using ENTech.Store.Entities.UnitOfWork;
+﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Responses;

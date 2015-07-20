@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using ENTech.Store.Entities;
+using ENTech.Store.Infrastructure.Database.EF6;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Dtos;
@@ -9,6 +9,7 @@ using ENTech.Store.Services.StoreModule;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Criterias;
 using ENTech.Store.Services.StoreModule.Dtos;
+using ENTech.Store.Services.StoreModule.Projections;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 using ENTech.Store.Services.Tests.Shared;
@@ -20,7 +21,6 @@ namespace ENTech.Store.Services.Tests.StoreModule
 	public class StoreFindCommandTests : CommandTestsBase<StoreFindRequest, StoreFindResponse>
 	{
 		private readonly Mock<IStoreQuery> _queryExecuterMock = new Mock<IStoreQuery>();
-		private readonly Mock<IFilterableDbSet<Entities.StoreModule.Store>> _storesMock = new Mock<IFilterableDbSet<Entities.StoreModule.Store>>();
 		private readonly Mock<IRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<IRepository<Entities.StoreModule.Store>>();
 		private readonly IEnumerable<int> _findResult = new[] {1, 2};
 
@@ -33,18 +33,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		public StoreFindCommandTests()
 		{
 			Mock<IDbContext> dbContextMock = new Mock<IDbContext>();
-
-			var dbSetData = new ObservableCollection<Entities.StoreModule.Store>();
-			var dataQueryable = dbSetData.AsQueryable();
-
-			_storesMock.Setup(x => x.Local).Returns(dbSetData);
-
-			_storesMock.Setup(x => x.Expression).Returns(dataQueryable.Expression);
-			_storesMock.Setup(x => x.ElementType).Returns(dataQueryable.ElementType);
-			_storesMock.Setup(x => x.Provider).Returns(dataQueryable.Provider);
-
-			dbContextMock.SetupGet(x => x.Stores).Returns(_storesMock.Object);
-
+			
 			_storeRepositoryMock.Setup(x => x.FindByIds(_findResult)).Returns(_domainEntities);
 
 			UnitOfWorkMock.Setup(x => x.DbContext).Returns(dbContextMock.Object);
@@ -99,7 +88,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			Command.Execute(request);
 
-			MapperMock.Verify(x=>x.Map<IEnumerable<Entities.StoreModule.Store>, IEnumerable<StoreDto>>(_domainEntities), Times.Once);
+			MapperMock.Verify(x => x.Map<IEnumerable<Entities.StoreModule.Store>, IEnumerable<StoreDto>>(_domainEntities), Times.Once);
 		}
 
 

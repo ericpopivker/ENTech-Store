@@ -47,10 +47,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conventions\IdConvention.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="FakeDbContext.cs" />
+    <Compile Include="IDbContext.cs" />
     <Compile Include="IDbEntityMapper.cs" />
+    <Compile Include="IFilterableDbSet.cs" />
     <Compile Include="QueryBase.cs" />
+    <Compile Include="UnitOfWork\DbContextScope.cs" />
+    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="Utility\DbEntityStateKeeper.cs" />
+    <Compile Include="Utility\EntityNotTrackedException.cs" />
+    <Compile Include="Utility\EntityTrackedException.cs" />
     <Compile Include="Utility\IDbEntityStateKeeper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
@@ -60,6 +69,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ENTech.Store.DbEntities\ENTech.Store.DbEntities.csproj">
+      <Project>{B2738CFF-4567-4537-9CC9-69CE92E95DCA}</Project>
+      <Name>ENTech.Store.DbEntities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
       <Project>{26B48B70-7CF1-4BE9-9D14-CE616B4CF7AA}</Project>
       <Name>ENTech.Store.Entities</Name>

@@ -1,5 +1,5 @@
 using System;
-using ENTech.Store.Entities;
+using ENTech.Store.Infrastructure.Database.EF6;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
 using ENTech.Store.Services.SharedModule.Commands;

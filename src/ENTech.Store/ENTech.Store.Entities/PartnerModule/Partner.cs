@@ -6,7 +6,7 @@ using ENTech.Store.Infrastructure.Entities;
 namespace ENTech.Store.Entities.PartnerModule
 {
 	[Table("Partner")]
-	public class Partner : IEntity, IAuditable
+	public class Partner : IDomainEntity, IAuditable
 	{
 		public int Id { get; set; }
 

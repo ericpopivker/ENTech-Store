@@ -7,7 +7,7 @@ using ENTech.Store.Infrastructure.Entities;
 namespace ENTech.Store.Entities.CustomerModule
 {
 	[Table("Customer")]
-	public class Customer : IEntity, IAuditable, ILogicallyDeletable
+	public class Customer : IDomainEntity, IAuditable, ILogicallyDeletable
 	{
 		public int Id { get; set; }
 

@@ -6,12 +6,11 @@ using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using ENTech.Store.Entities;
-using ENTech.Store.Entities.CustomerModule;
-using ENTech.Store.Entities.GeoModule;
-using ENTech.Store.Entities.PartnerModule;
-using ENTech.Store.Entities.StoreModule;
-using ENTech.Store.Infrastructure.Database.EF6.Utility;
+using ENTech.Store.DbEntities.CustomerModule;
+using ENTech.Store.DbEntities.GeoModule;
+using ENTech.Store.DbEntities.PartnerModule;
+using ENTech.Store.DbEntities.StoreModule;
+using ENTech.Store.Infrastructure.Database.QueryExecuter;
 using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Infrastructure.Database.EF6
@@ -49,21 +48,21 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 		}
 
 		public bool IsDisposed { get; private set; }
-		public IFilterableDbSet<Partner> Partners { get; private set; }
-		public IFilterableDbSet<Store.Entities.StoreModule.Store> Stores { get; private set; }
-		public IFilterableDbSet<Product> Products { get; private set; }
-		public IFilterableDbSet<Customer> Customers { get; private set; }
-		public IFilterableDbSet<Address> Addresses { get; private set; }
-		public IFilterableDbSet<Country> Countries { get; private set; }
-		public IFilterableDbSet<State> States { get; private set; }
-		public IDbSet<T> GetDbSet<T>() where T : class, IEntity
+		public IFilterableDbSet<PartnerDbEntity> Partners { get; private set; }
+		public IFilterableDbSet<StoreDbEntity> Stores { get; private set; }
+		public IFilterableDbSet<ProductDbEntity> Products { get; private set; }
+		public IFilterableDbSet<CustomerDbEntity> Customers { get; private set; }
+		public IFilterableDbSet<AddressDbEntity> Addresses { get; private set; }
+		public IFilterableDbSet<CountryDbEntity> Countries { get; private set; }
+		public IFilterableDbSet<StateDbEntity> States { get; private set; }
+		public IDbSet<T> GetDbSet<T>() where T : class, IDbEntity
 		{
 			return new FakeDbSet<T>();
 		}
 
 		public FakeDbContext()
 		{
-			Stores = new FakeDbSet<Store.Entities.StoreModule.Store>();
+			Stores = new FakeDbSet<StoreDbEntity>();
 		}
 
 		public IDbContext LimitByStore(int storeId)
@@ -134,7 +133,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 				get { return typeof(T); }
 			}
 
-			System.Linq.Expressions.Expression IQueryable.Expression
+			Expression IQueryable.Expression
 			{
 				get { return _query.Where(_filter).Expression; }
 			}
@@ -149,7 +148,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 				_filter = FilterableDbSetHelper.AttachFilter(_filter, filter);
 			}
 
-			System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+			IEnumerator IEnumerable.GetEnumerator()
 			{
 				return _query.Where(_filter).GetEnumerator();
 			}
@@ -175,7 +174,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 			}
 		}
 
-		public void MarkUpdated<TEntity>(TEntity stubEntity) where TEntity : class, IEntity
+		public void MarkUpdated<TEntity>(TEntity stubEntity) where TEntity : class, IDomainEntity
 		{
 			throw new NotImplementedException();
 		}

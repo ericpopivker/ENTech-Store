@@ -27,12 +27,13 @@ namespace ENTech.Store.DbEntities.CustomerModule
 
 		public string Phone { get; set; }
 
+		public int StoreId { get; set; }
 		public StoreDbEntity Store { get; set; }
 
 		public AddressDbEntity BillingAddress { get; set; }
 
 		public AddressDbEntity ShippingAddress { get; set; }
 
-		public IEnumerable<OrderDbEntity> Orders { get; set; }
+		public ICollection<OrderDbEntity> Orders { get; set; }
 	}
 }

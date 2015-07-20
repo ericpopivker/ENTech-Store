@@ -6,7 +6,7 @@ using ENTech.Store.Infrastructure.Entities;
 namespace ENTech.Store.Entities.OrderModule
 {
 	[Table("OrderItem")]
-	public class OrderItem : IEntity
+	public class OrderItem : IDomainEntity
 	{
 		public int Id { get; set; }
 

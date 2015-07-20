@@ -1,6 +1,6 @@
 ﻿namespace ENTech.Store.Infrastructure.Entities
 {
-	public interface IEntity
+	public interface IDomainEntity
 	{
 		int Id { get; set; }
 	}
