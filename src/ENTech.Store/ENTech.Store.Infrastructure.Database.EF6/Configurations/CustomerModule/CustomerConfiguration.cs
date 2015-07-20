@@ -1,13 +1,12 @@
 using System.Data.Entity.ModelConfiguration;
+using ENTech.Store.DbEntities.CustomerModule;
 
-namespace ENTech.Store.DbEntities.CustomerModule.Configurations
+namespace ENTech.Store.Infrastructure.Database.EF6.Configurations.CustomerModule
 {
 	internal sealed class CustomerConfiguration : EntityTypeConfiguration<CustomerDbEntity>
 	{
 		public CustomerConfiguration()
 		{
-			ToTable("Customer");
-
 			Property(x => x.FirstName)
 				.IsRequired()
 				.HasMaxLength(100);
@@ -25,19 +24,21 @@ namespace ENTech.Store.DbEntities.CustomerModule.Configurations
 
 			HasRequired(x => x.Store)
 				.WithMany(x=>x.Customers)
-				.HasForeignKey(x=>x.StoreId);
+				.HasForeignKey(x => x.StoreId)
+				.WillCascadeOnDelete(false);
 
 			HasOptional(x => x.BillingAddress)
 				.WithOptionalDependent()
-				.Map(y=>y.MapKey("BillingAddressId"));
+				.WillCascadeOnDelete(false);
 
 			HasOptional(x => x.ShippingAddress)
 				.WithOptionalDependent()
-				.Map(y => y.MapKey("ShippingAddressId"));
+				.WillCascadeOnDelete(false);
 
 			HasMany(y => y.Orders)
 				.WithRequired(y => y.Customer)
-				.HasForeignKey(y => y.CustomerId);
+				.HasForeignKey(y => y.CustomerId)
+				.WillCascadeOnDelete(false);
 		}
 	}
 }

@@ -14,7 +14,6 @@ namespace ENTech.Store.DbEntities.OrderModule
 
 		public OrderShippingStatus Status { get; set; }
 		
-		public int OrderId { get; set; }
 		public OrderDbEntity Order { get; set; }
 	}
 }

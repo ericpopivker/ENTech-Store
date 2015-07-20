@@ -1,13 +1,12 @@
 using System.Data.Entity.ModelConfiguration;
+using ENTech.Store.DbEntities.GeoModule;
 
-namespace ENTech.Store.DbEntities.GeoModule.Configurations
+namespace ENTech.Store.Infrastructure.Database.EF6.Configurations.GeoModule
 {
 	internal sealed class CountryConfiguration : EntityTypeConfiguration<CountryDbEntity>
 	{
 		public CountryConfiguration()
 		{
-			ToTable("Country");
-
 			Property(x => x.Name)
 				.IsRequired()
 				.HasMaxLength(100);

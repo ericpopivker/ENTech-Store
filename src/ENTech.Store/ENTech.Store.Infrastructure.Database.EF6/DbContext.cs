@@ -2,11 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Reflection;
 using System.Text;
 using ENTech.Store.DbEntities.CustomerModule;
 using ENTech.Store.DbEntities.GeoModule;
 using ENTech.Store.DbEntities.PartnerModule;
 using ENTech.Store.DbEntities.StoreModule;
+using ENTech.Store.Infrastructure.Database.EF6.Configurations.CustomerModule;
+using ENTech.Store.Infrastructure.Database.EF6.Configurations.GeoModule;
+using ENTech.Store.Infrastructure.Database.EF6.Configurations.OrderModule;
+using ENTech.Store.Infrastructure.Database.EF6.Configurations.StoreModule;
+using ENTech.Store.Infrastructure.Database.EF6.Conventions;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 using ENTech.Store.Infrastructure.Utils;
 
@@ -52,6 +58,24 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 				throw e;
 			}
 			return true;
+		}
+
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		{
+			modelBuilder.Conventions.Add(new IdConvention());
+			modelBuilder.Conventions.Add(new ForeignKeyNamingConvention());
+			modelBuilder.Conventions.Add(new TableNameConvention());
+
+			modelBuilder.Configurations.Add(new OrderItemConfiguration());
+			modelBuilder.Configurations.Add(new OrderConfiguration());
+			modelBuilder.Configurations.Add(new OrderShippingConfiguration());
+			modelBuilder.Configurations.Add(new OrderPaymentConfiguration());
+			modelBuilder.Configurations.Add(new StoreConfiguration());
+			modelBuilder.Configurations.Add(new ProductConfiguration());
+			modelBuilder.Configurations.Add(new CustomerConfiguration());
+			modelBuilder.Configurations.Add(new AddressConfiguration());
+			modelBuilder.Configurations.Add(new StateConfiguration());
+			modelBuilder.Configurations.Add(new CountryConfiguration());
 		}
 
 		public override int SaveChanges()

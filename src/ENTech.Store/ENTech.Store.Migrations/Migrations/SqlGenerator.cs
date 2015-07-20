@@ -4,7 +4,7 @@ using System.Data.Entity.Migrations.Model;
 using System.Data.Entity.SqlServer;
 using System.Text;
 
-namespace ENTech.Store.Migrations
+namespace ENTech.Store.Migrations.Migrations
 {
 
 	public class SqlGenerator : SqlServerMigrationSqlGenerator

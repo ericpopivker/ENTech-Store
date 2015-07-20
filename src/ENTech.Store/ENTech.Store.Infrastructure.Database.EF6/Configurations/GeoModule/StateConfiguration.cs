@@ -1,13 +1,12 @@
 using System.Data.Entity.ModelConfiguration;
+using ENTech.Store.DbEntities.GeoModule;
 
-namespace ENTech.Store.DbEntities.GeoModule.Configurations
+namespace ENTech.Store.Infrastructure.Database.EF6.Configurations.GeoModule
 {
 	internal sealed class StateConfiguration : EntityTypeConfiguration<StateDbEntity>
 	{
 		public StateConfiguration()
 		{
-			ToTable("State");
-
 			Property(x => x.Name)
 				.HasMaxLength(100);
 

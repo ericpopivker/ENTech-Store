@@ -47,18 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerModule\Configurations\CustomerConfiguration.cs" />
     <Compile Include="CustomerModule\CustomerDbEntity.cs" />
     <Compile Include="GeoModule\AddressDbEntity.cs" />
-    <Compile Include="GeoModule\Configurations\AddressConfiguration.cs" />
-    <Compile Include="GeoModule\Configurations\CountryConfiguration.cs" />
-    <Compile Include="GeoModule\Configurations\StateConfiguration.cs" />
     <Compile Include="GeoModule\CountryDbEntity.cs" />
     <Compile Include="GeoModule\StateDbEntity.cs" />
-    <Compile Include="OrderModule\Configurations\OrderConfiguration.cs" />
-    <Compile Include="OrderModule\Configurations\OrderItemConfiguration.cs" />
-    <Compile Include="OrderModule\Configurations\OrderPaymentConfiguration.cs" />
-    <Compile Include="OrderModule\Configurations\OrderShippingConfiguration.cs" />
     <Compile Include="OrderModule\OrderDbEntity.cs" />
     <Compile Include="OrderModule\OrderItemDbEntity.cs" />
     <Compile Include="OrderModule\OrderPaymentDbEntity.cs" />
@@ -67,8 +59,6 @@
     <Compile Include="OrderModule\OrderStatus.cs" />
     <Compile Include="PartnerModule\PartnerDbEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StoreModule\Configurations\ProductConfiguration.cs" />
-    <Compile Include="StoreModule\Configurations\StoreConfiguration.cs" />
     <Compile Include="StoreModule\ProductDbEntity.cs" />
     <Compile Include="StoreModule\StoreDbEntity.cs" />
   </ItemGroup>

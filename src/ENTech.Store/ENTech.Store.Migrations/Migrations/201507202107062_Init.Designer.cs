@@ -13,7 +13,7 @@ namespace ENTech.Store.Migrations.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201411141313161_Init"; }
+            get { return "201507202107062_Init"; }
         }
         
         string IMigrationMetadata.Source

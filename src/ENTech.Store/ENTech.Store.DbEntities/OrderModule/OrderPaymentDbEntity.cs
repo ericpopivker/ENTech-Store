@@ -7,5 +7,7 @@ namespace ENTech.Store.DbEntities.OrderModule
 		public int Id { get; set; }
 
 		public decimal TotalAmount { get; set; }
+
+		public OrderDbEntity Order { get; set; }
 	}
 }

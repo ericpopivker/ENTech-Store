@@ -1,9 +1,7 @@
 ﻿using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services.Commands;
-using ENTech.Store.Services.StoreModule;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
-using ENTech.Store.Services.StoreModule.Projections;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 using ENTech.Store.Services.Tests.Shared;

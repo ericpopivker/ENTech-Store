@@ -47,7 +47,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\CustomerModule\CustomerConfiguration.cs" />
+    <Compile Include="Configurations\GeoModule\AddressConfiguration.cs" />
+    <Compile Include="Configurations\GeoModule\CountryConfiguration.cs" />
+    <Compile Include="Configurations\GeoModule\StateConfiguration.cs" />
+    <Compile Include="Configurations\OrderModule\OrderConfiguration.cs" />
+    <Compile Include="Configurations\OrderModule\OrderItemConfiguration.cs" />
+    <Compile Include="Configurations\OrderModule\OrderPaymentConfiguration.cs" />
+    <Compile Include="Configurations\OrderModule\OrderShippingConfiguration.cs" />
+    <Compile Include="Configurations\StoreModule\ProductConfiguration.cs" />
+    <Compile Include="Configurations\StoreModule\StoreConfiguration.cs" />
+    <Compile Include="Conventions\ForeignKeyNamingConvention.cs" />
     <Compile Include="Conventions\IdConvention.cs" />
+    <Compile Include="Conventions\TableNameConvention.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="FakeDbContext.cs" />
     <Compile Include="IDbContext.cs" />

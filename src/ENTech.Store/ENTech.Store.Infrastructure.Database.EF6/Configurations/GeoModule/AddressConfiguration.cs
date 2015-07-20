@@ -1,13 +1,12 @@
 using System.Data.Entity.ModelConfiguration;
+using ENTech.Store.DbEntities.GeoModule;
 
-namespace ENTech.Store.DbEntities.GeoModule.Configurations
+namespace ENTech.Store.Infrastructure.Database.EF6.Configurations.GeoModule
 {
 	internal sealed class AddressConfiguration : EntityTypeConfiguration<AddressDbEntity>
 	{
 		public AddressConfiguration()
 		{
-			ToTable("Address");
-
 			Property(x => x.Street)
 				.IsRequired()
 				.HasMaxLength(100);
@@ -23,10 +22,16 @@ namespace ENTech.Store.DbEntities.GeoModule.Configurations
 				.HasMaxLength(20);
 
 			HasOptional(x => x.State)
-				.WithOptionalDependent();
+				.WithOptionalDependent()
+				.WillCascadeOnDelete(false);
 
 			HasOptional(x => x.Country)
-				.WithOptionalDependent();
+				.WithOptionalDependent()
+				.WillCascadeOnDelete(false);
+
+			HasOptional(x => x.Store)
+				.WithOptionalDependent(x => x.Address)
+				.WillCascadeOnDelete(false);
 		}
 	}
 }

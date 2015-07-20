@@ -1,4 +1,6 @@
-﻿using ENTech.Store.Infrastructure.Database.QueryExecuter;
+﻿using ENTech.Store.DbEntities.OrderModule;
+using ENTech.Store.DbEntities.StoreModule;
+using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.DbEntities.GeoModule
 {
@@ -19,5 +21,9 @@ namespace ENTech.Store.DbEntities.GeoModule
 		public string StateOther { get; set; }
 
 		public CountryDbEntity Country { get; set; }
+		
+		public StoreDbEntity Store { get; set; }
+		
+		public OrderShippingDbEntity Shipping { get; set; }
 	}
 }

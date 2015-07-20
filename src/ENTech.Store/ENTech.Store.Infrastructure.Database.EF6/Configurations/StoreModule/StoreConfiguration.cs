@@ -1,13 +1,12 @@
 ﻿using System.Data.Entity.ModelConfiguration;
+using ENTech.Store.DbEntities.StoreModule;
 
-namespace ENTech.Store.DbEntities.StoreModule.Configurations
+namespace ENTech.Store.Infrastructure.Database.EF6.Configurations.StoreModule
 {
 	internal sealed class StoreConfiguration : EntityTypeConfiguration<StoreDbEntity>
 	{
 		public StoreConfiguration()
 		{
-			ToTable("Store");
-
 			Property(x => x.Email).HasMaxLength(255);
 
 			Property(x => x.Phone).HasMaxLength(20);
@@ -15,12 +14,11 @@ namespace ENTech.Store.DbEntities.StoreModule.Configurations
 			Property(x => x.TimezoneId).IsRequired();
 
 			HasMany(x => x.Products)
-				.WithRequired(y=>y.Store)
-				.HasForeignKey(y=>y.StoreId);
+				.WithRequired(y => y.Store)
+				.HasForeignKey(y => y.StoreId);
 
-			HasRequired(o => o.Address)
-				.WithOptional()
-				.Map(o => o.MapKey("AddressId"));
+			HasOptional(x => x.Address)
+				.WithOptionalPrincipal(x => x.Store);
 		}
 	}
 }
