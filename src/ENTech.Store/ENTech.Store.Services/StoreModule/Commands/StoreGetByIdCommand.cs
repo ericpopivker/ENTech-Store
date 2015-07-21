@@ -33,7 +33,6 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 			if (entity.AddressId.HasValue)
 			{
-
 				var addressGetByIdResponse =
 					_internalCommandService.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(new AddressGetByIdRequest
 					{

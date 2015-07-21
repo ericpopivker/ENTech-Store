@@ -1,5 +1,4 @@
-﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
-using ENTech.Store.Infrastructure.Database.Repository;
+﻿using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Responses;
@@ -19,7 +18,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		private readonly IRepository<Entities.StoreModule.Store> _repository;
 
 		public StoreUpdateCommand(IInternalCommandService internalCommandService, IRepository<Entities.StoreModule.Store> repository)
-			: base(true)
+			: base(false)
 		{
 			_internalCommandService = internalCommandService;
 			_repository = repository;

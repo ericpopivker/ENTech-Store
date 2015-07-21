@@ -20,7 +20,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		
 		public StoreCreateCommand(IRepository<Entities.StoreModule.Store> storeRepository, 
 			IInternalCommandService internalCommandService, IMapper mapper)
-			: base(true)
+			: base(false)
 		{
 			_storeRepository = storeRepository;
 			_internalCommandService = internalCommandService;
