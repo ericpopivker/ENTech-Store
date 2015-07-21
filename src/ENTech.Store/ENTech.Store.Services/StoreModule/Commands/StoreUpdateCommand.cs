@@ -19,7 +19,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		private readonly IRepository<Entities.StoreModule.Store> _repository;
 
 		public StoreUpdateCommand(IInternalCommandService internalCommandService, IRepository<Entities.StoreModule.Store> repository)
-			: base(false)
+			: base(true)
 		{
 			_internalCommandService = internalCommandService;
 			_repository = repository;
@@ -51,7 +51,8 @@ namespace ENTech.Store.Services.StoreModule.Commands
 				var addressUpdateResponse = _internalCommandService.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(new AddressUpdateRequest
 				{
 					AddressId = store.AddressId.Value,
-					Address = request.Store.Address
+					Address = request.Store.Address,
+					ApiKey = request.ApiKey
 				});
 
 				if (addressUpdateResponse.IsSuccess == false)
@@ -62,7 +63,8 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			{
 				var addressCreateResponse = _internalCommandService.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(new AddressCreateRequest
 				{
-					Address = request.Store.Address
+					Address = request.Store.Address,
+					ApiKey = request.ApiKey
 				});
 
 				if (addressCreateResponse.IsSuccess == false)
@@ -76,7 +78,8 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			{
 				var addressDeleteResponse = _internalCommandService.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(new AddressDeleteRequest
 				{
-					AddressId = store.AddressId.Value
+					AddressId = store.AddressId.Value,
+					ApiKey = request.ApiKey
 				});
 
 				if (addressDeleteResponse.IsSuccess == false)

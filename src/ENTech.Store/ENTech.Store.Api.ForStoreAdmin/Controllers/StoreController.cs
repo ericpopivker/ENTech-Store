@@ -43,8 +43,9 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[HttpPut]
 		[Route("{Id:int}")]
 		[ResponseType(typeof(StoreUpdateResponse))]
-		public HttpResponseMessage GetById(StoreUpdateRequest request)
+		public HttpResponseMessage Update([FromBody] StoreUpdateRequest request, int id)
 		{
+			request.StoreId = id;
 			var response = _businessAdminExternalCommandService.Execute<StoreUpdateRequest, StoreUpdateResponse, StoreUpdateCommand>(request);
 			return Request.CreateResponse(response);
 		}
