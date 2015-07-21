@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ENTech.Store.Services.GeoModule.Dtos;
-using ENTech.Store.Services.StoreModule.Dtos;
+using AddressDto = ENTech.Store.Services.StoreModule.Dtos.AddressDto;
 
 namespace ENTech.Store.Services.StoreModule.MapProfiles
 {

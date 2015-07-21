@@ -1,5 +1,12 @@
-﻿using ENTech.Store.Infrastructure.Database.Repository;
+﻿using System;
+using ENTech.Store.Infrastructure.Database.Repository;
+using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
+using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Validators;
+using ENTech.Store.Services.GeoModule.Commands;
+using ENTech.Store.Services.GeoModule.Requests;
+using ENTech.Store.Services.GeoModule.Responses;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
@@ -14,18 +21,107 @@ namespace ENTech.Store.Services.Tests.StoreModule
 	{
 		private readonly Mock<IRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<IRepository<Entities.StoreModule.Store>>();
 
+		private const int StoreWithoutAddressId = 423;
+		private const int StoreWithAddressId = 15;
+		private const int StoreWithIncorrectAddressId = 16;
+		private const int StoreAddressId = 43;
+		private const int IncorrectAddressId = 55555;
+
 		protected override void TearDownInternal()
 		{
 			_storeRepositoryMock.ResetCalls();
+			InternalCommandServiceMock.ResetCalls();
+			MapperMock.ResetCalls();
 		}
 
 		public StoreGetByIdCommandTests()
 		{
-			_storeRepositoryMock.Setup(x => x.GetById(It.IsAny<int>()))
-				.Returns((int id) => new Entities.StoreModule.Store
+			_storeRepositoryMock.Setup(x => x.GetById(StoreWithoutAddressId))
+				.Returns(new Entities.StoreModule.Store
 				{
-					Id = id
+					Id = StoreWithoutAddressId,
+					Name = "Test",
+					Phone = "1231231234",
+					CreatedAt = DateTime.UtcNow.AddDays(-1),
+					LastUpdatedAt = DateTime.UtcNow.AddDays(-1),
+					Email = "test@email.gg",
+					Logo = "logo.jpg",
+					TimezoneId = "testtest"
 				});
+
+			_storeRepositoryMock.Setup(x => x.GetById(StoreWithIncorrectAddressId))
+				.Returns(new Entities.StoreModule.Store
+				{
+					Id = StoreWithIncorrectAddressId,
+					Name = "Test-With-Address",
+					Phone = "1231231234",
+					CreatedAt = DateTime.UtcNow.AddDays(-1),
+					LastUpdatedAt = DateTime.UtcNow.AddDays(-1),
+					Email = "test@email.gg",
+					Logo = "logo.jpg",
+					TimezoneId = "testtest1",
+					AddressId = IncorrectAddressId
+				});
+
+			_storeRepositoryMock.Setup(x => x.GetById(StoreWithAddressId))
+				.Returns(new Entities.StoreModule.Store
+				{
+					Id = StoreWithAddressId,
+					Name = "Test-With-Address",
+					Phone = "1231231234",
+					CreatedAt = DateTime.UtcNow.AddDays(-1),
+					LastUpdatedAt = DateTime.UtcNow.AddDays(-1),
+					Email = "test@email.gg",
+					Logo = "logo.jpg",
+					TimezoneId = "testtest1",
+					AddressId = StoreAddressId
+				});
+
+			InternalCommandServiceMock.Setup(x => x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.Is<AddressGetByIdRequest>(y => y.Id == StoreAddressId))).Returns(new AddressGetByIdResponse
+			{
+				IsSuccess = true,
+				Item = new GeoModule.Dtos.AddressDto
+				{
+					Street2 = "Street 2",
+					StateOther = "STA",
+					Zip = "12345",
+					Street = "Street",
+					StateId = 1,
+					CountryId = 1,
+					City = "City"
+				}
+			});
+			
+			InternalCommandServiceMock.Setup(x => x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.Is<AddressGetByIdRequest>(y => y.Id == IncorrectAddressId))).Returns(new AddressGetByIdResponse
+			{
+				IsSuccess = false,
+				Error = new Error()
+			});
+
+			MapperMock.Setup(x => x.Map<Entities.StoreModule.Store, StoreDto>(It.IsAny<Entities.StoreModule.Store>()))
+				.Returns((Entities.StoreModule.Store store) => new StoreDto
+				{
+					Id = store.Id,
+					Address = null,
+					Name = store.Name,
+					Logo = store.Logo,
+					Email = store.Email,
+					Phone = store.Phone
+				});
+
+			MapperMock.Setup(x => x.Map<GeoModule.Dtos.AddressDto, AddressDto>(It.IsAny<GeoModule.Dtos.AddressDto>()))
+				.Returns((GeoModule.Dtos.AddressDto address) => new AddressDto
+				{
+					StateOther = address.StateOther,
+					Street2 = address.Street2,
+					City = address.City,
+					Zip = address.Zip,
+					Street = address.Street,
+					StateId = address.StateId,
+					CountryId = address.CountryId
+				});
+
+			RequestValidatorErrorMessagesDictionary.RegisterAll();
 		}
 
 		[Test]
@@ -33,7 +129,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		{
 			Command.Execute(new StoreGetByIdRequest
 			{
-				Id = 1
+				Id = StoreWithoutAddressId
 			});
 
 			_storeRepositoryMock.Verify(mock => mock.GetById(It.IsAny<int>()), Times.Once);
@@ -44,7 +140,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		{
 			Command.Execute(new StoreGetByIdRequest
 			{
-				Id = 1
+				Id = StoreWithoutAddressId
 			});
 
 			_storeRepositoryMock.Verify(mock => mock.GetById(It.IsAny<int>()), Times.Once);
@@ -53,32 +149,84 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		[Test]
 		public void Execute_When_called_with_concrete_id_Then_passes_that_id_into_criteria()
 		{
-			var storeId = 152125;
-
 			Command.Execute(new StoreGetByIdRequest
 			{
-				Id = storeId
+				Id = StoreWithoutAddressId
 			});
 
-			_storeRepositoryMock.Verify(mock => mock.GetById(It.Is<int>(id => id == storeId)), Times.Once);
+			_storeRepositoryMock.Verify(mock => mock.GetById(It.Is<int>(id => id == StoreWithoutAddressId)), Times.Once);
 		}
 
 		[Test]
 		public void Execute_When_called_Then_uses_mapper_to_map_project()
 		{
-			var id = 152125;
-
 			Command.Execute(new StoreGetByIdRequest
 			{
-				Id = id
+				Id = StoreWithoutAddressId
 			});
 
-			MapperMock.Verify(mock => mock.Map<Entities.StoreModule.Store, StoreDto>(It.Is<Entities.StoreModule.Store>(proj => proj.Id == id)), Times.Once);
+			MapperMock.Verify(mock => mock.Map<Entities.StoreModule.Store, StoreDto>(It.Is<Entities.StoreModule.Store>(proj => proj.Id == StoreWithoutAddressId)), Times.Once);
+		}
+
+		[Test]
+		public void Execute_When_called_for_store_without_address_Then_returns_storeDto_with_null_address()
+		{
+			var result = Command.Execute(new StoreGetByIdRequest
+			{
+				Id = StoreWithoutAddressId
+			});
+
+			Assert.IsNull(result.Item.Address);
+		}
+
+		[Test]
+		public void Execute_When_called_for_store_without_address_Then_does_not_call_internal_command_service_execute_for_addressGetByIdCommand()
+		{
+			Command.Execute(new StoreGetByIdRequest
+			{
+				Id = StoreWithoutAddressId
+			});
+
+			InternalCommandServiceMock.Verify(x=>x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.IsAny<AddressGetByIdRequest>()), Times.Never);
+		}
+
+		[Test]
+		public void Execute_When_called_for_store_with_address_Then_does_not_call_internal_command_service_execute_for_addressGetByIdCommand()
+		{
+			Command.Execute(new StoreGetByIdRequest
+			{
+				Id = StoreWithAddressId
+			});
+
+			InternalCommandServiceMock.Verify(x=>x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.Is<AddressGetByIdRequest>(y=>y.Id == StoreAddressId)), Times.Once);
+		}
+
+		[Test]
+		public void Execute_When_called_for_store_that_has_address_Then_calls_addressGetByIdCommand()
+		{
+			var result = Command.Execute(new StoreGetByIdRequest
+			{
+				Id = StoreWithAddressId
+			});
+
+			Assert.IsNotNull(result.Item.Address);
+		}
+
+		[Test]
+		public void Execute_When_called_for_store_that_has_invalid_addressId_Then_returns_internal_server_error()
+		{
+			var result = Command.Execute(new StoreGetByIdRequest
+			{
+				Id = StoreWithIncorrectAddressId
+			});
+
+			Assert.IsFalse(result.IsSuccess);
+			Assert.AreEqual(CommonErrorCode.InternalServerError, result.Error.ErrorCode);
 		}
 
 		protected override ICommand<StoreGetByIdRequest, StoreGetByIdResponse> CreateCommand()
 		{
-			return new StoreGetByIdCommand(_storeRepositoryMock.Object, MapperMock.Object);
+			return new StoreGetByIdCommand(_storeRepositoryMock.Object, MapperMock.Object, InternalCommandServiceMock.Object);
 		}
 	}
 }

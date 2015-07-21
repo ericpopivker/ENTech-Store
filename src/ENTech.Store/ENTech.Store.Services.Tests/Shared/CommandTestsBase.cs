@@ -3,6 +3,7 @@ using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Services.CommandService.Definition;
 using Moq;
 using NUnit.Framework;
 
@@ -10,11 +11,11 @@ namespace ENTech.Store.Services.Tests.Shared
 {
 	public abstract class CommandTestsBase<TRequest, TResponse> where TRequest : IInternalRequest where TResponse : InternalResponse
 	{
-		private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
 		private readonly Mock<IMapper> _mapperMock = new Mock<IMapper>();
+		private readonly Mock<IInternalCommandService> _internalCommandServiceMock = new Mock<IInternalCommandService>();
 
 		protected Mock<IMapper> MapperMock { get { return _mapperMock; } }
-		protected Mock<IUnitOfWork> UnitOfWorkMock { get { return _unitOfWorkMock; } }
+		protected Mock<IInternalCommandService> InternalCommandServiceMock { get { return _internalCommandServiceMock; } }
 
 		protected ICommand<TRequest, TResponse> Command { get { return CreateCommand(); } }
 
@@ -22,7 +23,6 @@ namespace ENTech.Store.Services.Tests.Shared
 		public void TearDown()
 		{
 			_mapperMock.ResetCalls();
-			_unitOfWorkMock.ResetCalls();
 			TearDownInternal();
 		}
 

@@ -1,5 +1,4 @@
-﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
-using ENTech.Store.Infrastructure.Database.Repository;
+﻿using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.CommandService.Definition;
@@ -7,9 +6,9 @@ using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Dtos;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
-using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
+using AddressDto = ENTech.Store.Services.StoreModule.Dtos.AddressDto;
 
 namespace ENTech.Store.Services.StoreModule.Commands
 {
@@ -21,7 +20,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		
 		public StoreCreateCommand(IRepository<Entities.StoreModule.Store> storeRepository, 
 			IInternalCommandService internalCommandService, IMapper mapper)
-			: base(false)
+			: base(true)
 		{
 			_storeRepository = storeRepository;
 			_internalCommandService = internalCommandService;

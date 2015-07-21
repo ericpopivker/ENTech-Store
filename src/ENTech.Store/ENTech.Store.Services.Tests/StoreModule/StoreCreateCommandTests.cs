@@ -17,6 +17,7 @@ using ENTech.Store.Services.StoreModule.Responses;
 using ENTech.Store.Services.Tests.Shared;
 using Moq;
 using NUnit.Framework;
+using AddressDto = ENTech.Store.Services.StoreModule.Dtos.AddressDto;
 
 namespace ENTech.Store.Services.Tests.StoreModule
 {

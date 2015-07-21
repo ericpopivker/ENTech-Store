@@ -75,6 +75,12 @@
     <Compile Include="CommandService\ICommandFactory.cs" />
     <Compile Include="CommandService\InternalCommandService.cs" />
     <Compile Include="GeoModule\Commands\AddressDeleteCommand.cs" />
+    <Compile Include="GeoModule\Dtos\AddressDto.cs" />
+    <Compile Include="GeoModule\Commands\AddressGetByIdCommand.cs" />
+    <Compile Include="GeoModule\MapProfiles\ToAddressDtoMapProfile.cs" />
+    <Compile Include="GeoModule\MapProfiles\ToAddressMapProfile.cs" />
+    <Compile Include="GeoModule\Requests\AddressGetByIdRequest.cs" />
+    <Compile Include="GeoModule\Responses\AddressGetByIdResponse.cs" />
     <Compile Include="GeoModule\MapProfiles\ToAddressDbEntityMapProfile.cs" />
     <Compile Include="GeoModule\Requests\AddressDeleteRequest.cs" />
     <Compile Include="GeoModule\Responses\AddressDeleteResponse.cs" />
@@ -122,6 +128,7 @@
     <Compile Include="GeoModule\Responses\AddressCreateResponse.cs" />
     <Compile Include="StoreModule\Commands\StoreDeleteCommand.cs" />
     <Compile Include="StoreModule\MapProfiles\ToAddressCreateOrUpdateDtoMapProfile.cs" />
+    <Compile Include="StoreModule\MapProfiles\ToAddressDtoMapProfile.cs" />
     <Compile Include="StoreModule\MapProfiles\ToStoreDbEntityMapProfile.cs" />
     <Compile Include="StoreModule\MapProfiles\ToStoreDtoMapProfile.cs" />
     <Compile Include="StoreModule\MapProfiles\ToStoreMapProfile.cs" />

@@ -29,11 +29,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		public StoreFindCommandTests()
 		{
-			Mock<IDbContext> dbContextMock = new Mock<IDbContext>();
-			
 			_storeRepositoryMock.Setup(x => x.FindByIds(_findResult)).Returns(_domainEntities);
-
-			UnitOfWorkMock.Setup(x => x.DbContext).Returns(dbContextMock.Object);
 
 			_queryExecuterMock.Setup(x => x.Find(It.IsAny<StoreFindCriteria>())).Returns(_findResult);
 		}
