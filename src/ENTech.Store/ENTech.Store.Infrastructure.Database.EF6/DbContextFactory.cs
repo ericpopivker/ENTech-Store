@@ -1,6 +1,4 @@
-﻿using ENTech.Store.Infrastructure.Database.EF6;
-
-namespace ENTech.Store.Api.App_Data
+﻿namespace ENTech.Store.Infrastructure.Database.EF6
 {
 	public class DbContextFactory : IDbContextFactory
 	{

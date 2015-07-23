@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using ENTech.Store.Infrastructure.Database.EF6.Utility;
+using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.Exceptions;
-using ENTech.Store.Infrastructure.Database.QueryExecuter;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Entities;
 using Moq;
@@ -23,6 +23,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			private Mock<IDbSet<StubDbEntity>> _dbSetMock = new Mock<IDbSet<StubDbEntity>>();
 			private Mock<IDbEntityStateKeeper<StubDomainEntity, StubDbEntity>> _entityStateManagerMock = new Mock<IDbEntityStateKeeper<StubDomainEntity, StubDbEntity>>();
 			private Mock<IDbEntityMapper> _dbEntityMapperMock = new Mock<IDbEntityMapper>();
+			private Mock<IDbContext> _dbContextMock = new Mock<IDbContext>();
 
 			private readonly StubDbEntity _firstEntity = new StubDbEntity { Id = 1, PropertyText = "Text Text 1" };
 			private readonly StubDbEntity _secondEntity = new StubDbEntity { Id = 2, PropertyText = "Text Text 2" };
@@ -30,12 +31,15 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			private readonly StubDbEntity _fourthEntityWithDupeId = new StubDbEntity { Id = 4, PropertyText = "Text Text 4" };
 			private readonly StubDbEntity _fifthEntityWithDupeId = new StubDbEntity { Id = 4, PropertyText = "Text Text 5" };
 
+			private int lastId = 152;
+
 			[TearDown]
 			public void TearDown()
 			{
 				_dbSetMock.ResetCalls();
 				_dbEntityMapperMock.ResetCalls();
 				_entityStateManagerMock.ResetCalls();
+				_dbContextMock.ResetCalls();
 			}
 
 			public For_IEntity()
@@ -57,6 +61,13 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				_dbSetMock.Setup(x => x.ElementType).Returns(dataQueryable.ElementType);
 				_dbSetMock.Setup(x => x.Provider).Returns(dataQueryable.Provider);
 
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(It.IsAny<StubDomainEntity>()))
+					.Returns((StubDomainEntity sde) => new StubDbEntity
+					{
+						Id = lastId,
+						PropertyText = sde.Text
+					});
+
 				_dbEntityMapperMock.Setup(x => x.MapToEntity<StubDbEntity, StubDomainEntity>(It.IsAny<StubDbEntity>()))
 					.Returns((StubDbEntity dbEntity) => new StubDomainEntity
 					{
@@ -71,7 +82,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 						Text = dbEntity.PropertyText
 					}));
 
-				_repository = new Repository<StubDomainEntity, StubDbEntity>(_dbSetMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
+				_repository = new Repository<StubDomainEntity, StubDbEntity>(_dbContextMock.Object, _dbSetMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
 			}
 
 			#region GetById
@@ -80,10 +91,10 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			{
 				var entityId = _thirdEntity.Id;
 
-				var entity = new StubDomainEntity{Id = _thirdEntity.Id};
+				var entity = new StubDomainEntity { Id = _thirdEntity.Id };
 
 				_dbEntityMapperMock.Setup(x => x.MapToEntity<StubDbEntity, StubDomainEntity>(_thirdEntity)).Returns(entity);
-				
+
 				var result = _repository.GetById(entityId);
 
 				Assert.AreEqual(entity, result);
@@ -177,6 +188,39 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			}
 
 			[Test]
+			public void Add_When_called_for_entity_Then_calls_dbContext_saveChanges()
+			{
+				var stubEntity = new StubDomainEntity();
+
+				_repository.Add(stubEntity);
+
+				_dbContextMock.Verify(x => x.SaveChanges(), Times.Once);
+			}
+
+			[Test]
+			public void Add_When_called_for_entity_Then_updates_id_after_saveChanges()
+			{
+				int newId = 15;
+
+				var stubEntity = new StubDomainEntity();
+
+				var stubDbEntity = new StubDbEntity();
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(stubEntity))
+					.Returns(stubDbEntity);
+
+				_dbContextMock.Setup(x => x.SaveChanges()).Callback(() =>
+				{
+					stubDbEntity.Id = newId;
+				});
+
+
+				_repository.Add(stubEntity);
+
+				Assert.AreEqual(newId, stubEntity.Id);
+			}
+
+			[Test]
 			public void Add_When_called_for_entity_Then_calls_dbSet_add_for_entity_from_dbEntityMapper_createDbEntity()
 			{
 				var stubEntity = new StubDomainEntity();
@@ -201,6 +245,26 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 					new StubDomainEntity { Text = "world"},
 					new StubDomainEntity { Text = "another"}
 				};
+
+				var dbEntityCollection = new List<StubDbEntity>
+				{
+					new StubDbEntity { PropertyText = "hello"},
+					new StubDbEntity { PropertyText = "world"},
+					new StubDbEntity { PropertyText = "another"}
+				};
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(0)))
+					.Returns(dbEntityCollection.ElementAt(0));
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(1)))
+					.Returns(dbEntityCollection.ElementAt(1));
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(2)))
+					.Returns(dbEntityCollection.ElementAt(2));
+
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(0))).Returns(dbEntityCollection.ElementAt(0));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(1))).Returns(dbEntityCollection.ElementAt(1));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(2))).Returns(dbEntityCollection.ElementAt(2));
 
 				_repository.Add(entityCollection);
 
@@ -229,14 +293,16 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(0)))
 					.Returns(dbEntityCollection.ElementAt(0));
-				
+
 				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(1)))
 					.Returns(dbEntityCollection.ElementAt(1));
-				
+
 				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(2)))
 					.Returns(dbEntityCollection.ElementAt(2));
 
-				
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(0))).Returns(dbEntityCollection.ElementAt(0));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(1))).Returns(dbEntityCollection.ElementAt(1));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(2))).Returns(dbEntityCollection.ElementAt(2));
 
 				_repository.Add(entityCollection);
 
@@ -244,6 +310,85 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				{
 					_dbSetMock.Verify(x => x.Add(dbEntityCollection.ElementAt(i)));
 				}
+			}
+
+			[Test]
+			public void Add_When_called_for_multiple_entities_Then_calls_dbContext_saveChanges_once()
+			{
+				var entityCollection = new List<StubDomainEntity>
+				{
+					new StubDomainEntity { Text = "hello"},
+					new StubDomainEntity { Text = "world"},
+					new StubDomainEntity { Text = "another"}
+				};
+
+				var dbEntityCollection = new List<StubDbEntity>
+				{
+					new StubDbEntity { PropertyText = "hello"},
+					new StubDbEntity { PropertyText = "world"},
+					new StubDbEntity { PropertyText = "another"}
+				};
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(0)))
+					.Returns(dbEntityCollection.ElementAt(0));
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(1)))
+					.Returns(dbEntityCollection.ElementAt(1));
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(2)))
+					.Returns(dbEntityCollection.ElementAt(2));
+
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(0))).Returns(dbEntityCollection.ElementAt(0));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(1))).Returns(dbEntityCollection.ElementAt(1));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(2))).Returns(dbEntityCollection.ElementAt(2));
+
+				_repository.Add(entityCollection);
+
+				_dbContextMock.Verify(x=>x.SaveChanges(), Times.Once);
+			}
+
+			[Test]
+			public void Add_When_called_for_multiple_entities_Then_updates_entity_ids()
+			{
+				var entityCollection = new List<StubDomainEntity>
+				{
+					new StubDomainEntity { Text = "hello"},
+					new StubDomainEntity { Text = "world"},
+					new StubDomainEntity { Text = "another"}
+				};
+
+				var dbEntityCollection = new List<StubDbEntity>
+				{
+					new StubDbEntity { PropertyText = "hello"},
+					new StubDbEntity { PropertyText = "world"},
+					new StubDbEntity { PropertyText = "another"}
+				};
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(0)))
+					.Returns(dbEntityCollection.ElementAt(0));
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(1)))
+					.Returns(dbEntityCollection.ElementAt(1));
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubDomainEntity, StubDbEntity>(entityCollection.ElementAt(2)))
+					.Returns(dbEntityCollection.ElementAt(2));
+
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(0))).Returns(dbEntityCollection.ElementAt(0));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(1))).Returns(dbEntityCollection.ElementAt(1));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(2))).Returns(dbEntityCollection.ElementAt(2));
+
+				_dbContextMock.Setup(x => x.SaveChanges()).Callback(() =>
+				{
+					dbEntityCollection.ElementAt(0).Id = 17;
+					dbEntityCollection.ElementAt(1).Id = 18;
+					dbEntityCollection.ElementAt(2).Id = 19;
+				});
+
+				_repository.Add(entityCollection);
+
+				Assert.AreEqual(17, entityCollection.ElementAt(0).Id);
+				Assert.AreEqual(18, entityCollection.ElementAt(1).Id);
+				Assert.AreEqual(19, entityCollection.ElementAt(2).Id);
 			}
 			#endregion
 
@@ -259,7 +404,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 				_entityStateManagerMock.Verify(x => x.Get(stubEntity), Times.Once);
 			}
-			
+
 			[Test]
 			public void Delete_When_called_for_entity_without_logically_deletable_interface_Then_calls_entityStateManager_clear_after_deletion()
 			{
@@ -286,14 +431,26 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				var stubEntity = new StubDomainEntity();
 				var stubDbEntity = new StubDbEntity();
 				_entityStateManagerMock.Setup(x => x.Get(stubEntity)).Returns(stubDbEntity);
-				
+
 				_repository.Delete(stubEntity);
 
 				_dbSetMock.Verify(x => x.Remove(stubDbEntity));
 			}
 
 			[Test]
-			public void Delete_When_called_for_multiple_entities_without_logically_deletable_interface_Then_calls_dbSet_remove_for_each_entity()
+			public void Delete_When_called_for_entity_without_logically_deletable_interface_Then_calls_dbContext_saveChanges_once()
+			{
+				var stubEntity = new StubDomainEntity();
+				var stubDbEntity = new StubDbEntity();
+				_entityStateManagerMock.Setup(x => x.Get(stubEntity)).Returns(stubDbEntity);
+
+				_repository.Delete(stubEntity);
+
+				_dbContextMock.Verify(x => x.SaveChanges(), Times.Once);
+			}
+
+			[Test]
+			public void Delete_When_called_for_multiple_entities_without_logically_deletable_interface_with_one_untracked_entity_Then_throws_entityPersistenceException()
 			{
 				var entityCollection = new List<StubDomainEntity>
 				{
@@ -313,6 +470,32 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(2))).Returns(dbEntityCollection.ElementAt(2));
 
 				Assert.Throws<EntityPersistenceException>(() => _repository.Delete(entityCollection));
+			}
+
+			[Test]
+			public void Delete_When_called_for_multiple_entities_without_logically_deletable_interface_Then_calls_dbContext_saveChanges_once()
+			{
+				var entityCollection = new List<StubDomainEntity>
+				{
+					new StubDomainEntity {Id = 1, Text = "hello"},
+					new StubDomainEntity {Id = 2, Text = "world"},
+					new StubDomainEntity {Id = 3, Text = "another"}
+				};
+
+				var dbEntityCollection = new List<StubDbEntity>
+				{
+					new StubDbEntity {Id = 1, PropertyText = "hello"},
+					new StubDbEntity {Id = 2, PropertyText = "world"},
+					new StubDbEntity {Id = 3, PropertyText = "another"}
+				};
+
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(0))).Returns(dbEntityCollection.ElementAt(0));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(1))).Returns(dbEntityCollection.ElementAt(1));
+				_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(2))).Returns(dbEntityCollection.ElementAt(2));
+				
+				_repository.Delete(entityCollection);
+
+				_dbContextMock.Verify(x => x.SaveChanges(), Times.Once);
 			}
 
 			[Test]
@@ -339,7 +522,6 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 				_repository.Delete(entityCollection);
 
-
 				foreach (var stubEntity in dbEntityCollection)
 				{
 					var entity = stubEntity;
@@ -357,7 +539,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				_entityStateManagerMock.Setup(x => x.Get(stubEntity)).Returns(stubDbEntity);
 
 				_repository.Update(stubEntity);
-				
+
 				_entityStateManagerMock.Verify(x => x.Get(stubEntity), Times.Once);
 			}
 			[Test]
@@ -376,8 +558,20 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				_entityStateManagerMock.Setup(x => x.Get(stubEntity)).Returns(stubDbEntity);
 
 				_repository.Update(stubEntity);
-				
+
 				_dbEntityMapperMock.Verify(x => x.ApplyChanges(stubEntity, stubDbEntity));
+			}
+
+			[Test]
+			public void Update_When_called_for_entity_without_auditable_interface_Then_calls_dbContext_saveChanges_once()
+			{
+				var stubEntity = new StubDomainEntity();
+				var stubDbEntity = new StubDbEntity();
+				_entityStateManagerMock.Setup(x => x.Get(stubEntity)).Returns(stubDbEntity);
+
+				_repository.Update(stubEntity);
+				
+				_dbContextMock.Verify(x => x.SaveChanges(), Times.Once);
 			}
 
 			[Test]
@@ -410,6 +604,34 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 					var localEntity = entity;
 					_entityStateManagerMock.Verify(x => x.Get(localEntity), Times.Once);
 				}
+			}
+
+			[Test]
+			public void Update_When_called_for_entity_collection_without_auditable_interface_Then_calls_dbContext_saveChanges_once()
+			{
+				var entityCollection = new List<StubDomainEntity>
+				{
+					new StubDomainEntity {Id = 1, Text = "hello"},
+					new StubDomainEntity {Id = 2, Text = "world"},
+					new StubDomainEntity {Id = 3, Text = "another"}
+				};
+
+				var dbEntityCollection = new List<StubDbEntity>
+				{
+					new StubDbEntity {Id = 1, PropertyText = "hello"},
+					new StubDbEntity {Id = 2, PropertyText = "world"},
+					new StubDbEntity {Id = 3, PropertyText = "another"}
+				};
+
+				for (var i = 0; i < entityCollection.Count; i++)
+				{
+					var index = i;
+					_entityStateManagerMock.Setup(x => x.Get(entityCollection.ElementAt(index))).Returns(dbEntityCollection.ElementAt(index));
+				}
+
+				_repository.Update(entityCollection);
+
+				_dbContextMock.Verify(x=>x.SaveChanges(), Times.Once);
 			}
 
 			[Test]
@@ -491,10 +713,11 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			private Mock<IDbSet<StubLogicallyDeletableDbEntity>> _dbSetMock = new Mock<IDbSet<StubLogicallyDeletableDbEntity>>();
 			private Mock<IDbEntityStateKeeper<StubLogicallyDeletableDomainEntity, StubLogicallyDeletableDbEntity>> _entityStateManagerMock = new Mock<IDbEntityStateKeeper<StubLogicallyDeletableDomainEntity, StubLogicallyDeletableDbEntity>>();
 			private Mock<IDbEntityMapper> _dbEntityMapperMock = new Mock<IDbEntityMapper>();
+			private Mock<IDbContext> _dbContextMock = new Mock<IDbContext>();
 
 			public For_ILogicallyDeletable()
 			{
-				_repository = new Repository<StubLogicallyDeletableDomainEntity, StubLogicallyDeletableDbEntity>(_dbSetMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
+				_repository = new Repository<StubLogicallyDeletableDomainEntity, StubLogicallyDeletableDbEntity>(_dbContextMock.Object, _dbSetMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
 			}
 
 			#region Delete
@@ -503,7 +726,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			{
 				var stubEntity = new StubLogicallyDeletableDomainEntity();
 				var stubDbEntity = new StubLogicallyDeletableDbEntity();
-				
+
 				_entityStateManagerMock.Setup(x => x.Get(stubEntity))
 					.Returns(stubDbEntity);
 
@@ -518,7 +741,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			{
 				var stubEntity = new StubLogicallyDeletableDomainEntity();
 				var stubDbEntity = new StubLogicallyDeletableDbEntity();
-				
+
 				_entityStateManagerMock.Setup(x => x.Get(stubEntity))
 					.Returns(stubDbEntity);
 
@@ -531,13 +754,13 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			{
 				var stubEntity = new StubLogicallyDeletableDomainEntity();
 				var stubDbEntity = new StubLogicallyDeletableDbEntity();
-				
+
 				_entityStateManagerMock.Setup(x => x.Get(stubEntity))
 					.Returns(stubDbEntity);
 
 				_repository.Delete(stubEntity);
 
-				_dbEntityMapperMock.Verify(x=>x.ApplyChanges(stubEntity, stubDbEntity));
+				_dbEntityMapperMock.Verify(x => x.ApplyChanges(stubEntity, stubDbEntity));
 			}
 
 			[Test]
@@ -746,10 +969,17 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			private Mock<IDbSet<StubAuditableDbEntity>> _dbSetMock = new Mock<IDbSet<StubAuditableDbEntity>>();
 			private Mock<IDbEntityStateKeeper<StubAuditableDomainEntity, StubAuditableDbEntity>> _entityStateManagerMock = new Mock<IDbEntityStateKeeper<StubAuditableDomainEntity, StubAuditableDbEntity>>();
 			private Mock<IDbEntityMapper> _dbEntityMapperMock = new Mock<IDbEntityMapper>();
+			private Mock<IDbContext> _dbContextMock = new Mock<IDbContext>();
 
 			public For_IAuditable()
 			{
-				_repository = new Repository<StubAuditableDomainEntity, StubAuditableDbEntity>(_dbSetMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
+				_repository = new Repository<StubAuditableDomainEntity, StubAuditableDbEntity>(_dbContextMock.Object, _dbSetMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubAuditableDomainEntity, StubAuditableDbEntity>(It.IsAny<StubAuditableDomainEntity>()))
+					.Returns((StubAuditableDomainEntity sde) => new StubAuditableDbEntity
+					{
+						Id = 1,
+						Number = sde.Number
+					});
 			}
 
 			#region Add
@@ -796,6 +1026,36 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 					}
 				};
 
+				var dbEntityCollection = new List<StubAuditableDbEntity>
+				{
+					new StubAuditableDbEntity
+					{
+						Number = 15
+					},
+					new StubAuditableDbEntity
+					{
+						Number = 16
+					},
+					new StubAuditableDbEntity
+					{
+						Number = 17
+					}
+				};
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubAuditableDomainEntity, StubAuditableDbEntity>(collection.ElementAt(0)))
+					.Returns(dbEntityCollection.ElementAt(0));
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubAuditableDomainEntity, StubAuditableDbEntity>(collection.ElementAt(1)))
+					.Returns(dbEntityCollection.ElementAt(1));
+
+				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubAuditableDomainEntity, StubAuditableDbEntity>(collection.ElementAt(2)))
+					.Returns(dbEntityCollection.ElementAt(2));
+
+
+				_entityStateManagerMock.Setup(x => x.Get(collection.ElementAt(0))).Returns(dbEntityCollection.ElementAt(0));
+				_entityStateManagerMock.Setup(x => x.Get(collection.ElementAt(1))).Returns(dbEntityCollection.ElementAt(1));
+				_entityStateManagerMock.Setup(x => x.Get(collection.ElementAt(2))).Returns(dbEntityCollection.ElementAt(2));
+
 				_repository.Add(collection);
 
 				foreach (var entity in collection)
@@ -833,7 +1093,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 			}
 
 			[Test]
-			public void Update_When_called_for_auditable_entity_Then_updates_lastUpdatedAt()
+			public void Update_When_called_for_auditable_entity_Then_updates_lastUpdatedAt_for_dbEntity()
 			{
 				var entity = new StubAuditableDomainEntity
 				{
@@ -854,6 +1114,30 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				_repository.Update(entity);
 
 				Assert.GreaterOrEqual(dbEntity.LastUpdatedAt, DateTime.UtcNow.AddSeconds(-1));
+			}
+
+			[Test]
+			public void Update_When_called_for_auditable_entity_Then_updates_lastUpdatedAt_for_domainEntity()
+			{
+				var entity = new StubAuditableDomainEntity
+				{
+					Id = 15,
+					CreatedAt = DateTime.UtcNow.AddDays(-1),
+					LastUpdatedAt = DateTime.UtcNow.AddHours(-1)
+				};
+
+				var dbEntity = new StubAuditableDbEntity
+				{
+					Id = 15,
+					CreatedAt = DateTime.UtcNow.AddDays(-1),
+					LastUpdatedAt = DateTime.UtcNow.AddDays(-3)
+				};
+
+				_entityStateManagerMock.Setup(x => x.Get(entity)).Returns(dbEntity);
+
+				_repository.Update(entity);
+
+				Assert.GreaterOrEqual(entity.LastUpdatedAt, DateTime.UtcNow.AddSeconds(-1));
 			}
 
 			[Test]
@@ -917,6 +1201,73 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 				_repository.Update(entities);
 
 				for (var i = 0; i < entities.Length; i++)
+				{
+					var entity = entities[i];
+					Assert.GreaterOrEqual(entity.LastUpdatedAt, DateTime.UtcNow.AddSeconds(-1));
+				}
+			}
+
+			[Test]
+			public void Update_When_called_for_collection_of_previously_updated_entities_Then_updates_lastUpdatedAt_for_each_dbEntity()
+			{
+				var entities = new[]
+				{
+					new StubAuditableDomainEntity
+					{
+						Id = 15,
+						CreatedAt = DateTime.UtcNow.AddDays(-1),
+						LastUpdatedAt = DateTime.UtcNow.AddHours(-1)
+					},
+
+					new StubAuditableDomainEntity
+					{
+						Id = 16,
+						CreatedAt = DateTime.UtcNow.AddDays(-3),
+						LastUpdatedAt = DateTime.UtcNow.AddHours(-3)
+					},
+
+					new StubAuditableDomainEntity
+					{
+						Id = 17,
+						CreatedAt = DateTime.UtcNow.AddDays(-4),
+						LastUpdatedAt = DateTime.UtcNow.AddHours(-3)
+					}
+				};
+
+				var dbEntities =
+					new[]
+					{
+						new StubAuditableDbEntity
+						{
+							Id = 15,
+							CreatedAt = DateTime.UtcNow.AddDays(-1),
+							LastUpdatedAt = DateTime.UtcNow.AddHours(-1)
+						},
+
+						new StubAuditableDbEntity
+						{
+							Id = 16,
+							CreatedAt = DateTime.UtcNow.AddDays(-3),
+							LastUpdatedAt = DateTime.UtcNow.AddHours(-3)
+						},
+
+						new StubAuditableDbEntity
+						{
+							Id = 17,
+							CreatedAt = DateTime.UtcNow.AddDays(-4),
+							LastUpdatedAt = DateTime.UtcNow.AddHours(-3)
+						}
+					};
+
+				for (var i = 0; i < entities.Length; i++)
+				{
+					var index = i;
+					_entityStateManagerMock.Setup(x => x.Get(entities[index])).Returns(dbEntities[index]);
+				}
+
+				_repository.Update(entities);
+
+				for (var i = 0; i < dbEntities.Length; i++)
 				{
 					var entity = dbEntities[i];
 					Assert.GreaterOrEqual(entity.LastUpdatedAt, DateTime.UtcNow.AddSeconds(-1));

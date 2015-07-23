@@ -1,5 +1,5 @@
 ﻿using ENTech.Store.Infrastructure.Database.EF6.Utility;
-using ENTech.Store.Infrastructure.Database.QueryExecuter;
+using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Entities;
 using NUnit.Framework;
 

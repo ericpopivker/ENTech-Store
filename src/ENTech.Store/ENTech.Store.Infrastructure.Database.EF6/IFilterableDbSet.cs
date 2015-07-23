@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
+using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.Infrastructure.Database.EF6

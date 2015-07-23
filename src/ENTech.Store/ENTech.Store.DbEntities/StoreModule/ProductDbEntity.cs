@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ENTech.Store.DbEntities.OrderModule;
+using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.DbEntities.StoreModule

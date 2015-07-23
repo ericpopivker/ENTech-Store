@@ -22,7 +22,9 @@ namespace ENTech.Store.Services.GeoModule.Commands
 		public override AddressGetByIdResponse Execute(AddressGetByIdRequest request)
 		{
 			var address = _addressRepository.GetById(request.Id);
+
 			var dto = _mapper.Map<Address, AddressDto>(address);
+
 			return new AddressGetByIdResponse
 			{
 				Item = dto,

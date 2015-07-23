@@ -1,4 +1,4 @@
-﻿using ENTech.Store.Infrastructure.Database.QueryExecuter;
+﻿using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Infrastructure.Database.EF6.Utility

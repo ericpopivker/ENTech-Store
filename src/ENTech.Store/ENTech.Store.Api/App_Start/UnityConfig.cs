@@ -1,6 +1,5 @@
 using System.Data.Entity;
 using System.Web.Http;
-using ENTech.Store.Api.App_Data;
 using ENTech.Store.DbEntities.GeoModule;
 using ENTech.Store.DbEntities.PartnerModule;
 using ENTech.Store.DbEntities.StoreModule;
@@ -46,7 +45,7 @@ namespace ENTech.Store.Api
 				.RegisterType<IDbSet<StoreDbEntity>>(new InjectionFactory(c => DbContextScope.CurrentDbContext.Stores))	//try reflection	
 				.RegisterType<IDbSet<PartnerDbEntity>>(new InjectionFactory(c => DbContextScope.CurrentDbContext.Partners))	//try reflection	
 				.RegisterType<IDbSet<AddressDbEntity>>(new InjectionFactory(c => DbContextScope.CurrentDbContext.Addresses))	//try reflection	
-				.RegisterType<IDbContext>(new InjectionFactory(c => c.Resolve<IDbContextFactory>().Create()));			
+				.RegisterType<IDbContext>(new InjectionFactory(c => DbContextScope.CurrentDbContext));			
 
 			config.DependencyResolver = new UnityDependencyResolver(container);
         }

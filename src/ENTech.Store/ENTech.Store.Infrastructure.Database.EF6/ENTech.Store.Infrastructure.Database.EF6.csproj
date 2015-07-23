@@ -69,9 +69,11 @@
     <Compile Include="Conventions\IdConvention.cs" />
     <Compile Include="Conventions\TableNameConvention.cs" />
     <Compile Include="DbContext.cs" />
+    <Compile Include="DbContextFactory.cs" />
     <Compile Include="DbEntityMapper.cs" />
     <Compile Include="FakeDbContext.cs" />
     <Compile Include="IDbContext.cs" />
+    <Compile Include="IDbContextFactory.cs" />
     <Compile Include="IDbEntityMapper.cs" />
     <Compile Include="IFilterableDbSet.cs" />
     <Compile Include="QueryBase.cs" />

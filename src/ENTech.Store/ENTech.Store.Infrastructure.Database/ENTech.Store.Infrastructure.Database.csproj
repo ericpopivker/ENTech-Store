@@ -45,7 +45,7 @@
     <Compile Include="Exceptions\EntityLoadMismatchException.cs" />
     <Compile Include="Exceptions\EntityPersistenceException.cs" />
     <Compile Include="QueryExecuter\FindCriteriaBase.cs" />
-    <Compile Include="QueryExecuter\IDbEntity.cs" />
+    <Compile Include="Entities\IDbEntity.cs" />
     <Compile Include="QueryExecuter\IQuery.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

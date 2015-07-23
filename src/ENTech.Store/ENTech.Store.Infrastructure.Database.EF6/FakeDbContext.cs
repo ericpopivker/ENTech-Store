@@ -10,6 +10,7 @@ using ENTech.Store.DbEntities.CustomerModule;
 using ENTech.Store.DbEntities.GeoModule;
 using ENTech.Store.DbEntities.PartnerModule;
 using ENTech.Store.DbEntities.StoreModule;
+using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 using ENTech.Store.Infrastructure.Entities;
 

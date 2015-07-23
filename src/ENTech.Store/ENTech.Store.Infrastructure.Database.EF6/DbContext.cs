@@ -14,6 +14,7 @@ using ENTech.Store.Infrastructure.Database.EF6.Configurations.OrderModule;
 using ENTech.Store.Infrastructure.Database.EF6.Configurations.PartnerModule;
 using ENTech.Store.Infrastructure.Database.EF6.Configurations.StoreModule;
 using ENTech.Store.Infrastructure.Database.EF6.Conventions;
+using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 using ENTech.Store.Infrastructure.Utils;
 

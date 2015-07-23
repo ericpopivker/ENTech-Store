@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ENTech.Store.DbEntities.CustomerModule;
 using ENTech.Store.DbEntities.GeoModule;
 using ENTech.Store.DbEntities.OrderModule;
+using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.DbEntities.StoreModule

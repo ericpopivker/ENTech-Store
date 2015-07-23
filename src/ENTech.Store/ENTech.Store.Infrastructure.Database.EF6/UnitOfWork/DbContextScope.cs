@@ -9,6 +9,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.UnitOfWork
 		private const string DbContextPropertyName = "DbContextScope.CurrentDbContext";
 
 		private static readonly IContextStorage ContextStorage = new Lazy<IContextStorage>(() => new CallContextStorage()).Value;
+		private static readonly IDbContextFactory ContextFactory = new DbContextFactory(); 
 		private bool _isDbContextRegistrator;
 
 		private static int OpenedCount
@@ -37,7 +38,7 @@ namespace ENTech.Store.Infrastructure.Database.EF6.UnitOfWork
 		{
 			if (OpenedCount == 0)
 			{
-				CurrentDbContext = IoC.Resolve<IDbContext>();
+				CurrentDbContext = ContextFactory.Create();
 
 				_isDbContextRegistrator = true;
 			}

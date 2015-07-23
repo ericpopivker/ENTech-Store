@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 using ENTech.Store.Infrastructure.Entities;
 

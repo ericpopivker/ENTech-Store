@@ -1,4 +1,5 @@
 ﻿using ENTech.Store.DbEntities.StoreModule;
+using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.QueryExecuter;
 
 namespace ENTech.Store.DbEntities.OrderModule
