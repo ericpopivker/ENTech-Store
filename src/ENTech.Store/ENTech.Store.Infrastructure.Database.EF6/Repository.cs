@@ -211,7 +211,15 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 
 		public EntityMetaState GetEntityMetaState(int entityId)
 		{
-			throw new NotImplementedException();
+			var dbEntity = _dbSet.FirstOrDefault(x => x.Id == entityId);
+			if (dbEntity == null)
+				return EntityMetaState.NotFound;
+
+			var deletableEntity = dbEntity as ILogicallyDeletable;
+			if (deletableEntity != null && deletableEntity.IsDeleted)
+				return EntityMetaState.Deleted;
+
+			return EntityMetaState.Exists;
 		}
 
 		private static void HandleLogicallyDeletable(ILogicallyDeletable castEntity)

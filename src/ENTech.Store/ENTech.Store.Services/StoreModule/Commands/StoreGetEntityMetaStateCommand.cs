@@ -8,7 +8,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 {
 	public class StoreGetEntityMetaStateCommand : CommandBase<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse>
 	{
-		private IRepository<Entities.StoreModule.Store> _storeRepository;
+		private readonly IRepository<Entities.StoreModule.Store> _storeRepository;
 
 		public StoreGetEntityMetaStateCommand(IDtoValidatorFactory dtoValidatorFactory, IRepository<Entities.StoreModule.Store> storeRepository)
 			: base(dtoValidatorFactory, false)
@@ -19,7 +19,10 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		public override StoreGetEntityMetaStateResponse Execute(StoreGetEntityMetaStateRequest request)
 		{
 			var entityMetaState = _storeRepository.GetEntityMetaState(request.Id);
-			return new StoreGetEntityMetaStateResponse {EntityMetaState = entityMetaState};
+			return new StoreGetEntityMetaStateResponse
+			{
+				EntityMetaState = entityMetaState
+			};
 		}
 	}
 }
