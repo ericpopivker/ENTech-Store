@@ -67,6 +67,7 @@
     <Compile Include="OrderModule\OrderItem.cs" />
     <Compile Include="OrderModule\OrderShipping.cs" />
     <Compile Include="OrderModule\OrderPayment.cs" />
+    <Compile Include="OrderModule\OrderStatus.cs" />
     <Compile Include="StoreModule\Product.cs" />
     <Compile Include="StoreModule\Store.cs" />
     <Compile Include="PartnerModule\Partner.cs" />
