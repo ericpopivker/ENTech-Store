@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using ENTech.Store.DbEntities.PartnerModule;
 using ENTech.Store.Infrastructure.Database.EF6;
@@ -9,13 +9,13 @@ namespace ENTech.Store.Services.AuthenticationModule
 {
 	public class PartnerQuery : QueryBase<PartnerDbEntity>, IPartnerQuery
 	{
-		public PartnerQuery(IDbSet<PartnerDbEntity> dbSet) : base(dbSet)
+		public PartnerQuery(IDbContext dbContext) : base(dbContext)
 		{
 		}
 
 		public override IEnumerable<int> Find<TCriteria>(TCriteria criteria)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public int? GetByApiKey(string apiKey)

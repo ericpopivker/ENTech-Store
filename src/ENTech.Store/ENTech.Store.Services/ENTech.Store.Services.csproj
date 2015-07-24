@@ -82,6 +82,11 @@
     <Compile Include="CommandService\ICommandFactory.cs" />
     <Compile Include="CommandService\InternalCommandService.cs" />
     <Compile Include="GeoModule\Commands\AddressDeleteCommand.cs" />
+    <Compile Include="GeoModule\Commands\AddressGetEntityMetaStateCommand.cs" />
+    <Compile Include="GeoModule\Requests\AddressGetEntityMetaStateRequest.cs" />
+    <Compile Include="GeoModule\Responses\AddressGetEntityMetaStateResponse.cs" />
+    <Compile Include="GeoModule\EntityValidators\IAddressValidator.cs" />
+    <Compile Include="GeoModule\EntityValidators\AddressValidator.cs" />
     <Compile Include="GeoModule\Dtos\AddressDto.cs" />
     <Compile Include="GeoModule\Commands\AddressGetByIdCommand.cs" />
     <Compile Include="GeoModule\MapProfiles\ToAddressDtoMapProfile.cs" />

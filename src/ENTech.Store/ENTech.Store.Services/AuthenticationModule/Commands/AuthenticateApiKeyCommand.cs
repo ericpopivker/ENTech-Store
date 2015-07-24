@@ -16,10 +16,10 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 		private readonly IPartnerQuery _partnerQuery;
 		private readonly IMapper _mapper;
 
-		public AuthenticateApiKeyCommand(IRepository<Partner> partneRepository, IMapper mapper, IPartnerQuery partnerQuery, IDtoValidatorFactory dtoValidatorFactory)
+		public AuthenticateApiKeyCommand(IRepository<Partner> partnerRepository, IMapper mapper, IPartnerQuery partnerQuery, IDtoValidatorFactory dtoValidatorFactory)
 			: base(dtoValidatorFactory, false)
 		{
-			_partnerRepository = partneRepository;
+			_partnerRepository = partnerRepository;
 			_mapper = mapper;
 			_partnerQuery = partnerQuery;
 		}
@@ -29,11 +29,11 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 			var apiKey = request.ApiKey;
 			if (string.IsNullOrEmpty(apiKey))
 			{
-					return new AuthenticateApiKeyResponse
-					{
+				return new AuthenticateApiKeyResponse
+				{
 					IsAuthenticated = false,
 					Error = new ApiKeyRequiredResponseError()
-					};
+				};
 			}
 
 			var partnerId = _partnerQuery.GetByApiKey(apiKey);
@@ -49,7 +49,8 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 
 			return new AuthenticateApiKeyResponse
 			{
-				Partner = _mapper.Map<Partner, PartnerDto>(partner)
+				Partner = _mapper.Map<Partner, PartnerDto>(partner),
+				IsAuthenticated = true
 			};
 		}
 	}

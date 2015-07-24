@@ -9,9 +9,9 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 	{
 		private readonly IDbSet<TEntity> _dbSet;
 
-		protected QueryBase(IDbSet<TEntity> dbSet)
+		protected QueryBase(IDbContext dbContext)
 		{
-			_dbSet = dbSet;
+			_dbSet = dbContext.GetDbSet<TEntity>();
 		}
 
 		protected IDbSet<TEntity> DbSet { get { return _dbSet; } }

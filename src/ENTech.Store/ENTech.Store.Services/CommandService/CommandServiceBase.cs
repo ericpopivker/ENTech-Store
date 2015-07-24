@@ -1,14 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
-using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Infrastructure.Services.Responses.Statuses;
-using ENTech.Store.Infrastructure.Services.Validators;
 
 namespace ENTech.Store.Services.CommandService
 {
@@ -51,7 +46,7 @@ namespace ENTech.Store.Services.CommandService
 				{
 					response = command.Execute(request);
 				}
-				catch //(Exception e)
+				catch (Exception e)
 				{
 					//ErrorLogUtils.AddError(e);
 
@@ -63,7 +58,6 @@ namespace ENTech.Store.Services.CommandService
 			{
 				return new ErrorResponseStatus<TResponse>(validateResult.ResponseError);
 			}
-			
 
 			return new OkResponseStatus<TResponse>(response);
 		}

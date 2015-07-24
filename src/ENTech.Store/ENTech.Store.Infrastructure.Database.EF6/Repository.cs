@@ -21,12 +21,11 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 
 		public Repository(
 			IDbContext dbContext,
-			IDbSet<TDbEntity> dbSet, 
 			IDbEntityStateKeeper<TEntity, TDbEntity> dbEntityStateKeeper, 
 			IDbEntityMapper dbEntityMapper)
 		{
 			_dbContext = dbContext;
-			_dbSet = dbSet;
+			_dbSet = dbContext.GetDbSet<TDbEntity>();
 			_dbEntityStateKeeper = dbEntityStateKeeper;
 			_dbEntityMapper = dbEntityMapper;
 		}

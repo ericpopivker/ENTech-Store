@@ -1,7 +1,5 @@
-using System;
 using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Infrastructure.Database.Repository;
-using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.GeoModule.Requests;
@@ -12,13 +10,11 @@ namespace ENTech.Store.Services.GeoModule.Commands
 	public class AddressCreateCommand : CommandBase<AddressCreateRequest, AddressCreateResponse>
 	{
 		private readonly IRepository<Address> _addressRepository;
-		private IMapper _mapper;
 
-		public AddressCreateCommand(IRepository<Address> addressRepository, IMapper mapper, IDtoValidatorFactory dtoValidatorFactory)
+		public AddressCreateCommand(IRepository<Address> addressRepository, IDtoValidatorFactory dtoValidatorFactory)
 			: base(dtoValidatorFactory, false)
 		{
 			_addressRepository = addressRepository;
-			_mapper = mapper;
 		}
 
 		public override AddressCreateResponse Execute(AddressCreateRequest request)

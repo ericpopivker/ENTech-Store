@@ -82,7 +82,9 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 						Text = dbEntity.PropertyText
 					}));
 
-				_repository = new Repository<StubDomainEntity, StubDbEntity>(_dbContextMock.Object, _dbSetMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
+				_dbContextMock.Setup(x => x.GetDbSet<StubDbEntity>()).Returns(_dbSetMock.Object);
+
+				_repository = new Repository<StubDomainEntity, StubDbEntity>(_dbContextMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
 			}
 
 			#region GetById
@@ -717,7 +719,8 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 			public For_ILogicallyDeletable()
 			{
-				_repository = new Repository<StubLogicallyDeletableDomainEntity, StubLogicallyDeletableDbEntity>(_dbContextMock.Object, _dbSetMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
+				_dbContextMock.Setup(x => x.GetDbSet<StubLogicallyDeletableDbEntity>()).Returns(_dbSetMock.Object);
+				_repository = new Repository<StubLogicallyDeletableDomainEntity, StubLogicallyDeletableDbEntity>(_dbContextMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
 			}
 
 			#region Delete
@@ -973,7 +976,9 @@ namespace ENTech.Store.Infrastructure.Database.EF6.Tests
 
 			public For_IAuditable()
 			{
-				_repository = new Repository<StubAuditableDomainEntity, StubAuditableDbEntity>(_dbContextMock.Object, _dbSetMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
+				_dbContextMock.Setup(x => x.GetDbSet<StubAuditableDbEntity>()).Returns(_dbSetMock.Object);
+
+				_repository = new Repository<StubAuditableDomainEntity, StubAuditableDbEntity>(_dbContextMock.Object, _entityStateManagerMock.Object, _dbEntityMapperMock.Object);
 				_dbEntityMapperMock.Setup(x => x.CreateDbEntity<StubAuditableDomainEntity, StubAuditableDbEntity>(It.IsAny<StubAuditableDomainEntity>()))
 					.Returns((StubAuditableDomainEntity sde) => new StubAuditableDbEntity
 					{
