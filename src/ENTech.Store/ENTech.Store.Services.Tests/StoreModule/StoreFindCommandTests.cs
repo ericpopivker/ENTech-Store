@@ -3,6 +3,7 @@ using ENTech.Store.Infrastructure.Database.EF6;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Dtos;
+using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.StoreModule;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Criterias;
@@ -39,9 +40,9 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		{
 			var request = GetStoreFindRequest();
 			
-			var response = Command.Execute(request);
+			Assert.DoesNotThrow(()=> Command.Execute(request));
 
-			Assert.IsTrue(response.IsSuccess);
+			
 		}
 
 		[Test]
@@ -103,7 +104,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreFindRequest, StoreFindResponse> CreateCommand()
 		{
-			return new StoreFindCommand(_storeRepositoryMock.Object, _queryExecuterMock.Object, MapperMock.Object);
+			return new StoreFindCommand(_storeRepositoryMock.Object, _queryExecuterMock.Object, MapperMock.Object, DtoValidatorFactoryMock.Object);
 		}
 	}
 }

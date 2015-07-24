@@ -21,5 +21,7 @@ namespace ENTech.Store.Entities.StoreModule
 
 		public int? AddressId { get; set; }
 		public int[] ProductIds { get; set; }
+
+		public int? SettingsId { get; set; }
 	}
 }

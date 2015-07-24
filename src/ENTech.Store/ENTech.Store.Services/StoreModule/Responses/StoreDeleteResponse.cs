@@ -2,7 +2,7 @@
 
 namespace ENTech.Store.Services.StoreModule.Responses
 {
-	public class StoreDeleteResponse : InternalResponse
+	public class StoreDeleteResponse : IResponse
 	{
 	}
 }

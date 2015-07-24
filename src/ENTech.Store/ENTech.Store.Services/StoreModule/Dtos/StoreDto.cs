@@ -1,4 +1,6 @@
-﻿namespace ENTech.Store.Services.StoreModule.Dtos
+﻿using ENTech.Store.Entities.StoreModule;
+
+namespace ENTech.Store.Services.StoreModule.Dtos
 {
 	public class StoreDto
 	{
@@ -8,5 +10,6 @@
 		public string Phone { get; set; }
 		public string Email { get; set; }
 		public AddressDto Address { get; set; }
+		public StoreSettingsDto Settings { get; set; }
 	}
 }

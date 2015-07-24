@@ -29,5 +29,7 @@ namespace ENTech.Store.Infrastructure.Database.Repository
 		void Update(T entity);
 
 		void Update(IEnumerable<T> entities);
+
+		EntityMetaState GetEntityMetaState(int entityId);
 	}
 }

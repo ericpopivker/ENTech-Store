@@ -1,17 +1,18 @@
 ﻿using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Validators;
 
 namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public interface ICommand<in TRequest, TResponse> : IInternalCommand
-		where TRequest : IInternalRequest
-		where TResponse : InternalResponse
+		where TRequest : IRequest
+		where TResponse : IResponse
 	{
 		TResponse Execute(TRequest request);
 
 		bool RequiresTransaction { get; }
 
-		ArgumentErrorsCollection Validate(TRequest request);
+		ValidateCommandResult Validate(TRequest request);
 
 		void NotifyExecuted(TRequest request, TResponse response);
 	}

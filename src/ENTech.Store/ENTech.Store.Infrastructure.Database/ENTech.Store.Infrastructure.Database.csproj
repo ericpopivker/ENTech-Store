@@ -47,6 +47,8 @@
     <Compile Include="QueryExecuter\FindCriteriaBase.cs" />
     <Compile Include="Entities\IDbEntity.cs" />
     <Compile Include="QueryExecuter\IQuery.cs" />
+    <Compile Include="Repository\CachedRepository.cs" />
+    <Compile Include="Repository\EntityMetaState.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryExecuter\PagingOptions.cs" />

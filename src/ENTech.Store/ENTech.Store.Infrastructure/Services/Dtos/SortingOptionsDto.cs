@@ -5,10 +5,10 @@ namespace ENTech.Store.Infrastructure.Services.Dtos
 {
 	public class SortingOptionsDto<TSortColumnEnum>
 	{
-		[Required(ErrorMessage = RequestValidatorErrorMessage.Required)]
+		[Required]
 		public TSortColumnEnum Column { get; set; }
 
-		[Required(ErrorMessage = RequestValidatorErrorMessage.Required)]
+		[Required]
 		public SortingDirectionDto Direction { get; set; }
 	}
 }

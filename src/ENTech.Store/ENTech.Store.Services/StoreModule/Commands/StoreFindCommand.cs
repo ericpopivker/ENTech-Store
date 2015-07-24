@@ -3,6 +3,7 @@ using System.Linq;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
+using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.StoreModule.Criterias;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
@@ -16,8 +17,8 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		private readonly IStoreQuery _query;
 		private readonly IMapper _mapper;
 
-		public StoreFindCommand(IRepository<Entities.StoreModule.Store> storeRepository, IStoreQuery query, IMapper mapper)
-			: base(false)
+		public StoreFindCommand(IRepository<Entities.StoreModule.Store> storeRepository, IStoreQuery query, IMapper mapper, IDtoValidatorFactory dtoValidatorFactory)
+			: base(dtoValidatorFactory, false)
 		{
 			_storeRepository = storeRepository;
 			_query = query;
@@ -36,8 +37,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 			return new StoreFindResponse
 			{
-				Items = mappedResult.ToList(),
-				IsSuccess = true
+				Items = mappedResult.ToList()
 			};
 		}
 	}

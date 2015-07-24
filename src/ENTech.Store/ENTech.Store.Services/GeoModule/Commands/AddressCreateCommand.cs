@@ -3,6 +3,7 @@ using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
+using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
 
@@ -13,7 +14,8 @@ namespace ENTech.Store.Services.GeoModule.Commands
 		private readonly IRepository<Address> _addressRepository;
 		private IMapper _mapper;
 
-		public AddressCreateCommand(IRepository<Address> addressRepository, IMapper mapper) : base(false)
+		public AddressCreateCommand(IRepository<Address> addressRepository, IMapper mapper, IDtoValidatorFactory dtoValidatorFactory)
+			: base(dtoValidatorFactory, false)
 		{
 			_addressRepository = addressRepository;
 			_mapper = mapper;
@@ -38,8 +40,7 @@ namespace ENTech.Store.Services.GeoModule.Commands
 
 			return new AddressCreateResponse
 			{
-				AddressId = domainEntity.Id,
-				IsSuccess = true
+				AddressId = domainEntity.Id
 			};
 		}
 	}

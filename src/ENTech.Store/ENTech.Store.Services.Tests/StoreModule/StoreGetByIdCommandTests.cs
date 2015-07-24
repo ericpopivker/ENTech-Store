@@ -1,9 +1,6 @@
 ﻿using System;
 using ENTech.Store.Infrastructure.Database.Repository;
-using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
-using ENTech.Store.Infrastructure.Services.Responses;
-using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
@@ -14,6 +11,7 @@ using ENTech.Store.Services.StoreModule.Responses;
 using ENTech.Store.Services.Tests.Shared;
 using Moq;
 using NUnit.Framework;
+using AddressDto = ENTech.Store.Services.GeoModule.Dtos.AddressDto;
 
 namespace ENTech.Store.Services.Tests.StoreModule
 {
@@ -79,8 +77,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			InternalCommandServiceMock.Setup(x => x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.Is<AddressGetByIdRequest>(y => y.Id == StoreAddressId))).Returns(new AddressGetByIdResponse
 			{
-				IsSuccess = true,
-				Item = new GeoModule.Dtos.AddressDto
+				Item = new AddressDto
 				{
 					Street2 = "Street 2",
 					StateOther = "STA",
@@ -92,11 +89,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				}
 			});
 			
-			InternalCommandServiceMock.Setup(x => x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.Is<AddressGetByIdRequest>(y => y.Id == IncorrectAddressId))).Returns(new AddressGetByIdResponse
-			{
-				IsSuccess = false,
-				Error = new Error()
-			});
+			InternalCommandServiceMock.Setup(x => x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.Is<AddressGetByIdRequest>(y => y.Id == IncorrectAddressId))).Throws<Exception>();
 
 			MapperMock.Setup(x => x.Map<Entities.StoreModule.Store, StoreDto>(It.IsAny<Entities.StoreModule.Store>()))
 				.Returns((Entities.StoreModule.Store store) => new StoreDto
@@ -109,8 +102,8 @@ namespace ENTech.Store.Services.Tests.StoreModule
 					Phone = store.Phone
 				});
 
-			MapperMock.Setup(x => x.Map<GeoModule.Dtos.AddressDto, AddressDto>(It.IsAny<GeoModule.Dtos.AddressDto>()))
-				.Returns((GeoModule.Dtos.AddressDto address) => new AddressDto
+			MapperMock.Setup(x => x.Map<AddressDto, Services.StoreModule.Dtos.AddressDto>(It.IsAny<AddressDto>()))
+				.Returns((AddressDto address) => new Services.StoreModule.Dtos.AddressDto
 				{
 					StateOther = address.StateOther,
 					Street2 = address.Street2,
@@ -120,8 +113,6 @@ namespace ENTech.Store.Services.Tests.StoreModule
 					StateId = address.StateId,
 					CountryId = address.CountryId
 				});
-
-			RequestValidatorErrorMessagesDictionary.RegisterAll();
 		}
 
 		[Test]
@@ -215,18 +206,15 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		[Test]
 		public void Execute_When_called_for_store_that_has_invalid_addressId_Then_returns_internal_server_error()
 		{
-			var result = Command.Execute(new StoreGetByIdRequest
+			Assert.Throws<Exception>(()=> Command.Execute(new StoreGetByIdRequest
 			{
 				Id = StoreWithIncorrectAddressId
-			});
-
-			Assert.IsFalse(result.IsSuccess);
-			Assert.AreEqual(CommonErrorCode.InternalServerError, result.Error.ErrorCode);
+			}));
 		}
 
 		protected override ICommand<StoreGetByIdRequest, StoreGetByIdResponse> CreateCommand()
 		{
-			return new StoreGetByIdCommand(_storeRepositoryMock.Object, MapperMock.Object, InternalCommandServiceMock.Object);
+			return new StoreGetByIdCommand(_storeRepositoryMock.Object, MapperMock.Object, InternalCommandServiceMock.Object, DtoValidatorFactoryMock.Object);
 		}
 	}
 }

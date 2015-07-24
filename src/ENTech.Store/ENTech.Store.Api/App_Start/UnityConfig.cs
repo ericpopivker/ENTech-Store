@@ -47,7 +47,7 @@ namespace ENTech.Store.Api
 				.RegisterType<IDbSet<AddressDbEntity>>(new InjectionFactory(c => DbContextScope.CurrentDbContext.Addresses))	//try reflection	
 				.RegisterType<IDbContext>(new InjectionFactory(c => DbContextScope.CurrentDbContext));			
 
-			config.DependencyResolver = new UnityDependencyResolver(container);
+			//config.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
 }

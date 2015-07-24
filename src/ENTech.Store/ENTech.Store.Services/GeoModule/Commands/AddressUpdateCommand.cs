@@ -2,6 +2,7 @@ using System;
 using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services.Commands;
+using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
 
@@ -11,7 +12,8 @@ namespace ENTech.Store.Services.GeoModule.Commands
 	{
 		private readonly IRepository<Address> _addressRepository;
 
-		public AddressUpdateCommand(IRepository<Address> addressRepository) : base(false)
+		public AddressUpdateCommand(IRepository<Address> addressRepository, IDtoValidatorFactory dtoValidatorFactory)
+			: base(dtoValidatorFactory, false)
 		{
 			_addressRepository = addressRepository;
 		}
@@ -32,10 +34,7 @@ namespace ENTech.Store.Services.GeoModule.Commands
 
 			_addressRepository.Update(address);
 
-			return new AddressUpdateResponse
-			{
-				IsSuccess = true
-			};
+			return new AddressUpdateResponse();
 		}
 	}
 }

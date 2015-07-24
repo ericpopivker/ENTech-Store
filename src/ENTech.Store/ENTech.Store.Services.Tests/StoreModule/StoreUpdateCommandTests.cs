@@ -1,12 +1,14 @@
-﻿using ENTech.Store.Infrastructure.Database.Repository;
-using ENTech.Store.Infrastructure.Services;
+﻿using System;
+using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services.Commands;
+using ENTech.Store.Infrastructure.Services.Errors.ArgumentErrors;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Dtos;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
+using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
@@ -21,6 +23,8 @@ namespace ENTech.Store.Services.Tests.StoreModule
 	{
 		readonly Mock<IRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<IRepository<Entities.StoreModule.Store>>();
 		readonly Mock<IInternalCommandService> _internalCommandServiceMock = new Mock<IInternalCommandService>();
+		readonly Mock <IDtoValidatorFactory> _dtoValidatorFactoryMock = new Mock<IDtoValidatorFactory>();
+		readonly Mock <IStoreValidator> _storeValidatorMock = new Mock<IStoreValidator>();
 
 		private int _existingStoreIdWithoutAddressId = 14;
 		private int _existingStoreIdWithAddressId = 15;
@@ -74,56 +78,50 @@ namespace ENTech.Store.Services.Tests.StoreModule
 						It.Is<AddressCreateRequest>(req => req.Address.CountryId == _validCountryId)))
 				.Returns(new AddressCreateResponse
 				{
-					AddressId = _createdAddressId,
-					IsSuccess = true
+					AddressId = _createdAddressId
 				});
 
 			_internalCommandServiceMock.Setup(
 				x =>
 					x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(
 						It.Is<AddressCreateRequest>(req => req.Address.CountryId == _invalidCountryId)))
-				.Returns(new AddressCreateResponse
-				{
-					IsSuccess = false
-				});
+				.Throws<Exception>();
 
 			_internalCommandServiceMock.Setup(
 				x =>
 					x.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(
 						It.Is<AddressUpdateRequest>(req => req.Address.CountryId == _validCountryId)))
-				.Returns(new AddressUpdateResponse
-				{
-					IsSuccess = true
-				});
+				.Returns(new AddressUpdateResponse());
 
 			_internalCommandServiceMock.Setup(
 				x =>
 					x.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(
 						It.Is<AddressUpdateRequest>(req => req.Address.CountryId == _invalidCountryId)))
-				.Returns(new AddressUpdateResponse
-				{
-					IsSuccess = false
-				});
+				.Throws<Exception>();
 
 			_internalCommandServiceMock.Setup(
 				x =>
 					x.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(
 						It.Is<AddressDeleteRequest>(req => req.AddressId == _originalAddressId)))
-				.Returns(new AddressDeleteResponse
-				{
-					IsSuccess = true
-				});
+				.Returns(new AddressDeleteResponse());
 
 			_internalCommandServiceMock.Setup(
 				x =>
 					x.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(
 						It.Is<AddressDeleteRequest>(req => req.AddressId == _originalAddressIdThatFailsToBeDeleted)))
-				.Returns(new AddressDeleteResponse
-				{
-					IsSuccess = false
-				});
+				.Throws<Exception>();
 
-			RequestValidatorErrorMessagesDictionary.RegisterAll();
+			_storeValidatorMock.Setup(x => x.ValidateId(_nonexistingStoreId))
+				.Returns(ValidateArgumentResult.Invalid(new EntityWithIdDoesNotExist("Store")));
+
+			_storeValidatorMock.Setup(x => x.ValidateId(_existingStoreIdWithAddressId))
+				.Returns(ValidateArgumentResult.Valid());
+
+			_storeValidatorMock.Setup(x => x.ValidateId(_existingStoreIdWithAddressIdThatCannotBeDeleted))
+				.Returns(ValidateArgumentResult.Valid());
+
+			_storeValidatorMock.Setup(x => x.ValidateId(_existingStoreIdWithoutAddressId))
+				.Returns(ValidateArgumentResult.Valid());
 		}
 
 		[Test]
@@ -212,9 +210,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Store = GetStoreUpdateDto(WithAddressDto(_invalidCountryId))
 			};
 
-			var response = Command.Execute(request);
-
-			Assert.AreEqual(CommonErrorCode.InternalServerError , response.Error.ErrorCode);
+			Assert.Throws<Exception>(()=> Command.Execute(request));
 		}
 
 		[Test]
@@ -226,9 +222,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Store = GetStoreUpdateDto(WithAddressDto(_invalidCountryId))
 			};
 
-			var response = Command.Execute(request);
-
-			Assert.AreEqual(CommonErrorCode.InternalServerError , response.Error.ErrorCode);
+			Assert.Throws<Exception>(() => Command.Execute(request));
 		}
 
 		[Test]
@@ -257,9 +251,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Store = GetStoreUpdateDto(null)
 			};
 
-			var response = Command.Execute(request);
-
-			Assert.AreEqual(CommonErrorCode.InternalServerError, response.Error.ErrorCode);
+			Assert.Throws<Exception>(() => Command.Execute(request));
 		}
 
 		[Test]
@@ -285,7 +277,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		}
 
 		[Test]
-		public void Validate_When_called_Then_calls_repository_get_by_id()
+		public void Validate_When_called_Then_calls_storeValidator_validateId()
 		{
 			var request = new StoreUpdateRequest
 			{
@@ -296,7 +288,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			Command.Validate(request);
 
-			_storeRepositoryMock.Verify(x => x.GetById(request.StoreId));
+			_storeValidatorMock.Verify(x=>x.ValidateId(request.StoreId));
 		}
 
 		[Test]
@@ -311,21 +303,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			var validationResult = Command.Validate(request);
 
-			Assert.IsNotEmpty(validationResult);
-		}
-
-		[Test]
-		public void Validate_When_called_and_store_dto_is_null_Then_returns_errors()
-		{
-			var request = new StoreUpdateRequest
-			{
-				StoreId = _existingStoreIdWithAddressId,
-				ApiKey = "apiKey"
-			};
-
-			var validationResult = Command.Validate(request);
-
-			Assert.IsNotEmpty(validationResult);
+			Assert.IsFalse(validationResult.IsValid);
 		}
 
 
@@ -341,7 +319,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			var validationResult = Command.Validate(request);
 
-			Assert.IsEmpty(validationResult);
+			Assert.IsTrue(validationResult.IsValid);
 		}
 
 		private StoreUpdateDto GetStoreUpdateDto(AddressCreateOrUpdateDto address)
@@ -371,7 +349,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreUpdateRequest, StoreUpdateResponse> CreateCommand()
 		{
-			return new StoreUpdateCommand(_internalCommandServiceMock.Object, _storeRepositoryMock.Object);
+			return new StoreUpdateCommand(_storeRepositoryMock.Object, _storeValidatorMock.Object, _internalCommandServiceMock.Object, _dtoValidatorFactoryMock.Object);
 		}
 	}
 }

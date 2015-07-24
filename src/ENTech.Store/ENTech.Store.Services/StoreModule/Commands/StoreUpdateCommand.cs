@@ -1,11 +1,11 @@
 ﻿using ENTech.Store.Infrastructure.Database.Repository;
-using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
-using ENTech.Store.Infrastructure.Services.Responses;
+using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
+using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
@@ -16,29 +16,14 @@ namespace ENTech.Store.Services.StoreModule.Commands
 	{
 		private readonly IInternalCommandService _internalCommandService;
 		private readonly IRepository<Entities.StoreModule.Store> _repository;
+		private readonly IStoreValidator _storeValidator;
 
-		public StoreUpdateCommand(IInternalCommandService internalCommandService, IRepository<Entities.StoreModule.Store> repository)
-			: base(false)
+		public StoreUpdateCommand(IRepository<Entities.StoreModule.Store> repository, IStoreValidator storeValidator,IInternalCommandService internalCommandService, IDtoValidatorFactory dtoValidatorFactory)
+			: base(dtoValidatorFactory, false)
 		{
 			_internalCommandService = internalCommandService;
 			_repository = repository;
-		}
-
-		protected override ArgumentErrorsCollection ValidateInternal(StoreUpdateRequest request)
-		{
-			var result = new ArgumentErrorsCollection();
-
-			var store = _repository.GetById(request.StoreId);
-
-			if (store == null)
-				result["StoreId"] = new ArgumentError
-				{
-					ArgumentName = "StoreId",
-					ErrorCode = CommonErrorCode.ArgumentErrors,
-					ErrorMessage = "Store does not exist"
-				};
-
-			return result;
+			_storeValidator = storeValidator;
 		}
 
 		public override StoreUpdateResponse Execute(StoreUpdateRequest request)
@@ -47,15 +32,12 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 			if (AddressMustBeUpdated(request, store))
 			{
-				var addressUpdateResponse = _internalCommandService.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(new AddressUpdateRequest
+				_internalCommandService.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(new AddressUpdateRequest
 				{
 					AddressId = store.AddressId.Value,
 					Address = request.Store.Address,
 					ApiKey = request.ApiKey
 				});
-
-				if (addressUpdateResponse.IsSuccess == false)
-					return InternalServerError();
 			}
 
 			if (AddressMustBeCreated(request, store))
@@ -66,23 +48,18 @@ namespace ENTech.Store.Services.StoreModule.Commands
 					ApiKey = request.ApiKey
 				});
 
-				if (addressCreateResponse.IsSuccess == false)
-					return InternalServerError();
-
 				store.AddressId = addressCreateResponse.AddressId;
 			}
 
 
 			if (AddressMustBeDeleted(request, store))
 			{
-				var addressDeleteResponse = _internalCommandService.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(new AddressDeleteRequest
+				_internalCommandService.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(new AddressDeleteRequest
 				{
 					AddressId = store.AddressId.Value,
 					ApiKey = request.ApiKey
 				});
 
-				if (addressDeleteResponse.IsSuccess == false)
-					return InternalServerError();
 
 				store.AddressId = null;
 			}
@@ -91,10 +68,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 			_repository.Update(store);
 
-			return new StoreUpdateResponse
-			{
-				IsSuccess = true
-			};
+			return new StoreUpdateResponse();
 		}
 
 		private static bool AddressMustBeDeleted(StoreUpdateRequest request, Entities.StoreModule.Store store)
@@ -119,6 +93,17 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			target.Name = source.Name;
 			target.Phone = source.Phone;
 			target.TimezoneId = source.TimezoneId;
+		}
+
+		protected override void ValidateRequestInternal(StoreUpdateRequest request, ValidateRequestResult<StoreUpdateRequest> validateRequestResult)
+		{
+			if (validateRequestResult.NoErrorsForArgument(req => request.StoreId))
+			{
+				var result = _storeValidator.ValidateId(request.StoreId);
+
+				if (!result.IsValid)
+					validateRequestResult.AddArgumentError(req => req.StoreId, result.ArgumentError);
+			}
 		}
 	}
 }

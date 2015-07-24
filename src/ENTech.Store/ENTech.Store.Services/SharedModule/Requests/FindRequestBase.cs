@@ -14,7 +14,7 @@ namespace ENTech.Store.Services.SharedModule.Requests
 	{
 		public ICollection<TLoadOptionEnum> LoadOptions { get; set; }
 
-		[Required(ErrorMessage = RequestValidatorErrorMessage.Required)]
+		[Required]
 		public TFindCriteriaDto Criteria { get; set; }
 	}
 	

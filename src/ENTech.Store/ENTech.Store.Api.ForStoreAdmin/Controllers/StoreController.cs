@@ -9,7 +9,7 @@ using ENTech.Store.Services.StoreModule.Responses;
 
 namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 {
-	[RoutePrefix("1.0/store-admin-api/stores")]
+	[RoutePrefix("v1/store-admin-api/stores")]
 	public class StoreController : ApiController
 	{
 		private readonly IExternalCommandService<AnonymousSecurityInformation> _anonymousExternalCommandService;

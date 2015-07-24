@@ -3,7 +3,7 @@ using ENTech.Store.Infrastructure.Services.Responses;
 
 namespace ENTech.Store.Services.SharedModule.Responses
 {
-	public class FindResponseBase<TDto> : InternalResponse
+	public class FindResponseBase<TDto> : IResponse
 	{
 		public int TotalPages { get; set; }
 

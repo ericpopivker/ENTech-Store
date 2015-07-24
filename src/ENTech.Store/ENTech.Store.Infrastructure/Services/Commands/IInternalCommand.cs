@@ -8,7 +8,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 		
 	}
 	public interface IInternalCommand<in TInternalRequest, out TInternalResponse> : IInternalCommand
-		where TInternalRequest : class, IInternalRequest
+		where TInternalRequest : class, IRequest
 		where TInternalResponse : class, IResponse
 	{
 

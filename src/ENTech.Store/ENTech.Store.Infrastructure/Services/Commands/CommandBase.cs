@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using ENTech.Store.Infrastructure.Services.Errors;
+using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Infrastructure.Services.Validators;
@@ -6,14 +8,16 @@ using ENTech.Store.Infrastructure.Services.Validators;
 namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public abstract class CommandBase<TRequest, TResponse> : ICommand<TRequest, TResponse>
-		where TRequest : IInternalRequest
-		where TResponse : InternalResponse, new()
+		where TRequest : IRequest
+		where TResponse : IResponse, new()
 	{
 		private readonly bool _requiresTransaction;
+		private readonly IDtoValidatorFactory _dtoValidatorFactory;
 
-		protected CommandBase(bool requiresTransaction)
+		protected CommandBase(IDtoValidatorFactory dtoValidatorFactory, bool requiresTransaction)
 		{
 			_requiresTransaction = requiresTransaction;
+			_dtoValidatorFactory = dtoValidatorFactory; 
 		}
 
 		public abstract TResponse Execute(TRequest request);
@@ -23,22 +27,52 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 			get { return _requiresTransaction; }
 		}
 
-		public ArgumentErrorsCollection Validate(TRequest request)
+		public ValidateCommandResult Validate(TRequest request)
 		{
-			ArgumentErrorsCollection result = new ArgumentErrorsCollection();
+			var validateRequestResult = new ValidateRequestResult<TRequest>();
 
-			DtoValidator.VisitAndValidateProperties(request, result);
-			if (result.Any())
-				return result;
+			ValidateRequest(request, validateRequestResult);
+
+			if (!validateRequestResult.IsValid)
+				return ValidateCommandResult.Invalid(new InvalidArgumentsResponseError(validateRequestResult.ArgumentErrors));
 			
-			return ValidateInternal(request);
+				
+			var validateOperationResult = ValidateOperation(request);
+			if (!validateOperationResult.IsValid)
+				return ValidateCommandResult.Invalid(validateOperationResult.ResponseError);
+			
+			return ValidateCommandResult.Valid();
 		}
 
-		protected virtual ArgumentErrorsCollection ValidateInternal(TRequest request)
+		private void ValidateRequest(TRequest request, ValidateRequestResult<TRequest> validateRequestResult)
 		{
-			return new ArgumentErrorsCollection();
+			var dtoValidator = _dtoValidatorFactory.TryCreate<TRequest>();
+			if (dtoValidator != null)
+		{
+				var dtoValidatorResult = dtoValidator.Validate(request);
+				if (!dtoValidatorResult.IsValid)
+					validateRequestResult.ArgumentErrors.AddRange(dtoValidatorResult.ArgumentErrors);
+			}
+
+			ValidateRequestInternal(request, validateRequestResult);
 		}
 
+		protected virtual void ValidateRequestInternal(TRequest request, ValidateRequestResult<TRequest> validateRequestResult)
+		{
+		}
+			
+		private ValidateOperationResult ValidateOperation(TRequest request)
+		{
+			return ValidateOperationInternal(request);
+		}
+
+		protected virtual ValidateOperationResult ValidateOperationInternal(TRequest request)
+		{
+			return ValidateOperationResult.Valid();
+		}
+
+		
+		
 		public virtual void NotifyExecuted(TRequest request, TResponse response)
 		{
 			//
@@ -46,11 +80,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 
 		protected TResponse InternalServerError()
 		{
-			return new TResponse
-			{
-				IsSuccess = false,
-				Error = new Error(CommonErrorCode.InternalServerError)
-			};
+			throw new Exception();
 		} 
 	}
 }

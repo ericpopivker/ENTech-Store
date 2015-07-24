@@ -209,6 +209,11 @@ namespace ENTech.Store.Infrastructure.Database.EF6
 			_dbContext.SaveChanges();
 		}
 
+		public EntityMetaState GetEntityMetaState(int entityId)
+		{
+			throw new NotImplementedException();
+		}
+
 		private static void HandleLogicallyDeletable(ILogicallyDeletable castEntity)
 		{
 			if (castEntity.IsDeleted)

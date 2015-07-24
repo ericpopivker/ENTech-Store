@@ -1,10 +1,7 @@
-﻿using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
+﻿using System;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
-using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Infrastructure.Services.Commands;
-using ENTech.Store.Infrastructure.Services.Responses;
-using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Dtos;
@@ -23,7 +20,6 @@ namespace ENTech.Store.Services.Tests.StoreModule
 {
 	public class StoreCreateCommandTests : CommandTestsBase<StoreCreateRequest, StoreCreateResponse>
 	{
-		readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
 		readonly Mock<IRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<IRepository<Entities.StoreModule.Store>>();
 		readonly Mock<IInternalCommandService> _internalCommandServiceMock = new Mock<IInternalCommandService>();
 		readonly Mock<IMapper> _mapperMock = new Mock<IMapper>();
@@ -54,25 +50,14 @@ namespace ENTech.Store.Services.Tests.StoreModule
 						It.Is<AddressCreateRequest>(req => req.Address != null && req.Address.CountryId == _validCountryId)))
 				.Returns(new AddressCreateResponse
 				{
-					AddressId = _responseAddressId,
-					IsSuccess = true
+					AddressId = _responseAddressId
 				});
 
 			_internalCommandServiceMock.Setup(
 				x =>
 					x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(
 						It.Is<AddressCreateRequest>(req => req.Address != null && req.Address.CountryId == _invalidCountryId)))
-				.Returns(new AddressCreateResponse
-				{
-					IsSuccess = false,
-					ArgumentErrors =
-						new ArgumentErrorsCollection()
-						{
-							new ArgumentError {ArgumentName = "test error name", ErrorCode = 500, ErrorMessage = "Message"}
-						}
-				});
-
-			RequestValidatorErrorMessagesDictionary.RegisterAll();
+				.Throws<Exception>();
 		}
 
 		[TearDown]
@@ -143,22 +128,8 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		{
 			var request = GetStoreCreateRequest(GetInvalidAddressDto());
 
-			var response = Command.Execute(request);
-
-			Assert.IsFalse(response.IsSuccess);
+			Assert.Throws<Exception>(() => Command.Execute(request));
 		}
-
-		[Test]
-		public void Execute_When_called_with_invalid_address_Then_returns_internal_error_response()
-		{
-			var request = GetStoreCreateRequest(GetInvalidAddressDto());
-
-			var response = Command.Execute(request);
-
-			Assert.AreEqual(CommonErrorCode.InternalServerError, response.Error.ErrorCode);
-		}
-
-
 
 		private static StoreCreateRequest GetStoreCreateRequest(AddressDto addressDto)
 		{
@@ -209,7 +180,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreCreateRequest, StoreCreateResponse> CreateCommand()
 		{
-			return new StoreCreateCommand(_storeRepositoryMock.Object, _internalCommandServiceMock.Object, _mapperMock.Object);
+			return new StoreCreateCommand(_storeRepositoryMock.Object, _internalCommandServiceMock.Object, _mapperMock.Object, DtoValidatorFactoryMock.Object);
 		}
 	}
 }

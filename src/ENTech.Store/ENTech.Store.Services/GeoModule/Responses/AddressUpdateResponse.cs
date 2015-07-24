@@ -2,7 +2,7 @@ using ENTech.Store.Infrastructure.Services.Responses;
 
 namespace ENTech.Store.Services.GeoModule.Responses
 {
-	public class AddressUpdateResponse : InternalResponse
+	public class AddressUpdateResponse : IResponse
 	{
 	}
 }
