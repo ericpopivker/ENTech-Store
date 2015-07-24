@@ -4,6 +4,7 @@ using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
+using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
@@ -18,6 +19,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 	public class StoreGetByIdCommandTests : CommandTestsBase<StoreGetByIdRequest, StoreGetByIdResponse>
 	{
 		private readonly Mock<IRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<IRepository<Entities.StoreModule.Store>>();
+		private readonly Mock<IStoreValidator> _storeValidatorMock = new Mock<IStoreValidator>();
 
 		private const int StoreWithoutAddressId = 423;
 		private const int StoreWithAddressId = 15;
@@ -214,7 +216,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreGetByIdRequest, StoreGetByIdResponse> CreateCommand()
 		{
-			return new StoreGetByIdCommand(_storeRepositoryMock.Object, MapperMock.Object, InternalCommandServiceMock.Object, DtoValidatorFactoryMock.Object);
+			return new StoreGetByIdCommand(_storeRepositoryMock.Object, _storeValidatorMock.Object, MapperMock.Object, InternalCommandServiceMock.Object, DtoValidatorFactoryMock.Object);
 		}
 	}
 }

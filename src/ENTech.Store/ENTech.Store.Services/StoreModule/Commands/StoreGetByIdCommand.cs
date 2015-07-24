@@ -6,6 +6,7 @@ using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.GeoModule.Responses;
+using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
@@ -17,14 +18,16 @@ namespace ENTech.Store.Services.StoreModule.Commands
 	{
 		private readonly IRepository<Entities.StoreModule.Store> _storeRepository;
 		private readonly IMapper _mapper;
+		private readonly IStoreValidator _storeValidator;
 		private readonly IInternalCommandService _internalCommandService;
 
-		public StoreGetByIdCommand(IRepository<Entities.StoreModule.Store> storeRepository, IMapper mapper, IInternalCommandService internalCommandService, IDtoValidatorFactory dtoValidatorFactory)
+		public StoreGetByIdCommand(IRepository<Entities.StoreModule.Store> storeRepository, IStoreValidator storeValidator, IMapper mapper, IInternalCommandService internalCommandService, IDtoValidatorFactory dtoValidatorFactory)
 			: base(dtoValidatorFactory, false)
 		{
 			_storeRepository = storeRepository;
 			_mapper = mapper;
 			_internalCommandService = internalCommandService;
+			_storeValidator = storeValidator;
 		}
 
 		public override StoreGetByIdResponse Execute(StoreGetByIdRequest request)
@@ -51,6 +54,17 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			{
 				Item = dto
 			};
+		}
+
+		protected override void ValidateRequestInternal(StoreGetByIdRequest request, ValidateRequestResult<StoreGetByIdRequest> validateRequestResult)
+		{
+			if (validateRequestResult.NoErrorsForArgument(req => request.Id))
+			{
+				var result = _storeValidator.ValidateId(request.Id);
+
+				if (!result.IsValid)
+					validateRequestResult.AddArgumentError(req => req.Id, result.ArgumentError);
+			}
 		}
 	}
 }
