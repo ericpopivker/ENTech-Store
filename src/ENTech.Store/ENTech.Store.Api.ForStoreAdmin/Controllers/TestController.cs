@@ -2,21 +2,12 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Web.Http;
-using System.Web.Http.Description;
 using ENTech.Store.Infrastructure.Services.Errors;
-using ENTech.Store.Infrastructure.Services.Errors.ArgumentErrors;
 using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Infrastructure.Services.Responses.Statuses;
 using ENTech.Store.Infrastructure.Services.Validators;
-using ENTech.Store.Services.CommandService.Definition;
-using ENTech.Store.Services.Misc;
-using ENTech.Store.Services.ProductModule.Commands;
-using ENTech.Store.Services.ProductModule.Requests;
-using ENTech.Store.Services.ProductModule.Responses;
-
 
 //Interesting
 //http://www.asp.net/web-api/overview/getting-started-with-aspnet-web-api/action-results

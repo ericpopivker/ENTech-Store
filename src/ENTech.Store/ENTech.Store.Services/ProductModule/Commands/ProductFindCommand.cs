@@ -1,30 +1,21 @@
-﻿using System.Linq;
-using ENTech.Store.Entities.UnitOfWork;
+﻿using System;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;
-using ENTech.Store.Services.ProductModule.Queries;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
 
 namespace ENTech.Store.Services.ProductModule.Commands
 {
-	public class ProductFindCommand : DbContextCommandBase<ProductFindRequest, ProductFindResponse>
+	public class ProductFindCommand : CommandBase<ProductFindRequest, ProductFindResponse>
 	{
-		public ProductFindCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory)
-			: base(unitOfWork.DbContext, dtoValidatorFactory, false)
+		public ProductFindCommand(IDtoValidatorFactory dtoValidatorFactory)
+			: base(dtoValidatorFactory, false)
 		{
 		}
 
 		public override ProductFindResponse Execute(ProductFindRequest request)
 		{
-			var query = new ProductFindQuery();
-			var result = query.Execute(DbContext, new ProductFindQuery.Criteria
-			{
-				Name = request.Name,
-				StoreId = request.StoreId
-			}).ToList();
-
-			return new ProductFindResponse {Items = result};
+			throw new NotImplementedException();
 		}
 	}
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ENTech.Store.Infrastructure.Services;
 using ENTech.Store.Services.ProductModule.Dtos;
 using ENTech.Store.Services.ProductModule.Requests;
@@ -33,8 +29,6 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Builders
 				{
 					Name = _name
 				}
-				, ApiKey = "SomeApiKey"
-			
 			};
 
 			return request;

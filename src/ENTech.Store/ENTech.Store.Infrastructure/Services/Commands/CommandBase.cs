@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq.Expressions;
+using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
@@ -9,7 +9,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public abstract class CommandBase<TRequest, TResponse> : ICommand<TRequest, TResponse>
 		where TRequest : IRequest
-		where TResponse :IResponse
+		where TResponse : IResponse, new()
 	{
 		private readonly bool _requiresTransaction;
 		private readonly IDtoValidatorFactory _dtoValidatorFactory;
@@ -48,7 +48,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 		{
 			var dtoValidator = _dtoValidatorFactory.TryCreate<TRequest>();
 			if (dtoValidator != null)
-			{
+		{
 				var dtoValidatorResult = dtoValidator.Validate(request);
 				if (!dtoValidatorResult.IsValid)
 					validateRequestResult.ArgumentErrors.AddRange(dtoValidatorResult.ArgumentErrors);
@@ -60,7 +60,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 		protected virtual void ValidateRequestInternal(TRequest request, ValidateRequestResult<TRequest> validateRequestResult)
 		{
 		}
-
+			
 		private ValidateOperationResult ValidateOperation(TRequest request)
 		{
 			return ValidateOperationInternal(request);
@@ -69,7 +69,7 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 		protected virtual ValidateOperationResult ValidateOperationInternal(TRequest request)
 		{
 			return ValidateOperationResult.Valid();
-		}		
+		}
 
 		
 		
@@ -77,5 +77,10 @@ namespace ENTech.Store.Infrastructure.Services.Commands
 		{
 			//
 		}
+
+		protected TResponse InternalServerError()
+		{
+			throw new Exception();
+		} 
 	}
 }

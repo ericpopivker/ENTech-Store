@@ -13,10 +13,4 @@ namespace ENTech.Store.Infrastructure.Services.Responses
 		public DateTime WasRunAt { get; set; }
 		public int TotalRowCount { get; set; }
 	}
-
-	public class AdditionalColumn
-	{
-		public int Id { get; set; }
-		public string Label { get; set; }
-	}
 }

@@ -66,6 +66,10 @@
       <Project>{26b48b70-7cf1-4be9-9d14-ce616b4cf7aa}</Project>
       <Name>ENTech.Store.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj">
+      <Project>{1152AA7A-F788-4291-8B0D-C1117D1C7A08}</Project>
+      <Name>ENTech.Store.Infrastructure.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj">
       <Project>{7d581130-b9a8-4e44-9562-67e41697a123}</Project>
       <Name>ENTech.Store.Infrastructure</Name>

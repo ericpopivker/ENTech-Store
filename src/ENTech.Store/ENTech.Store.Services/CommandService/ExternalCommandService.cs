@@ -1,40 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using ENTech.Store.Entities;
-using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure;
-using ENTech.Store.Infrastructure.Extensions;
+using ENTech.Store.Infrastructure.Database.EF6;
+using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Services.Commands;
-using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
+using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Infrastructure.Services.Responses.Statuses;
-using ENTech.Store.Services.AuthenticationModule.Commands;
 using ENTech.Store.Services.AuthenticationModule.Dtos;
-using ENTech.Store.Services.AuthenticationModule.Responses;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
 
 namespace ENTech.Store.Services.CommandService
 {
-	public abstract class ExternalCommandService<TSecurity> :
+	public class ExternalCommandService :
 		CommandServiceBase,
-		IExternalCommandService<TSecurity>
-			where TSecurity : ISecurityInformation
+		IExternalCommandService
 	{
 		private readonly IInternalCommandService _internalCommandService;
 
 		protected IInternalCommandService InternalCommandService { get { return _internalCommandService; } }
 
-		protected ExternalCommandService(ICommandFactory commandFactory)
+		public ExternalCommandService(ICommandFactory commandFactory)
 			: base(commandFactory)
 		{
 			_internalCommandService = new InternalCommandService(commandFactory);
 		}
 
 		public IResponseStatus<TResponse>  Execute<TRequest, TResponse, TCommand>(TRequest request)
-			where TRequest : SecureRequestBase<TSecurity>
+			where TRequest : IRequest
 			where TResponse : IResponse, new()
 			where TCommand : ICommand<TRequest, TResponse>
 		{
@@ -73,12 +68,12 @@ namespace ENTech.Store.Services.CommandService
 
 					if (responseStatus is OkResponseStatus<TResponse>)
 					{
-						unitOfWork.SaveChanges();
+					unitOfWork.SaveChanges();
 
-						if (command.RequiresTransaction)
-						{
-							unitOfWork.CompleteTransaction();
-						}
+					if (command.RequiresTransaction)
+					{					
+						unitOfWork.CompleteTransaction();
+					}
 
 						AfterExecute(request, ((OkResponseStatus<TResponse>) responseStatus).Response, command);
 					}
@@ -109,7 +104,7 @@ namespace ENTech.Store.Services.CommandService
 			}
 			finally
 			{
-				if (unitOfWork != null)
+				if (unitOfWork != null && unitOfWork.IsDisposed == false)
 					unitOfWork.Dispose();
 
 				stopwatch.Stop();
@@ -118,34 +113,33 @@ namespace ENTech.Store.Services.CommandService
 			}
 		}
 
-		protected AuthenticateResult Authenticate(IUnitOfWork unitOfWork, SecureRequestBase<TSecurity> request)
+		protected AuthenticateResult Authenticate(IUnitOfWork unitOfWork, IRequest request)
 		{
-			var result = _internalCommandService
-				.Execute
-				<SecureRequestBase<TSecurity>, AuthenticateApiKeyResponse,
-					AuthenticateApiKeyCommand<SecureRequestBase<TSecurity>>>(request);
+			//var result = _internalCommandService
+			//	.Execute
+			//	<SecureRequestBase<TSecurity>, AuthenticateApiKeyResponse,
+			//		AuthenticateApiKeyCommand<SecureRequestBase<TSecurity>>>(request);
 
-			if (result.IsAuthenticated)
-			{
-				var partner = result.Partner;
-				var internalAuthenticateResult = AuthenticateInternal(unitOfWork, request);
-				return new AuthenticateResult
-				{
-					IsSuccess = internalAuthenticateResult.IsSuccess,
-					ErrorMessage = internalAuthenticateResult.ErrorMessage,
-					Partner = internalAuthenticateResult.IsSuccess ? partner : null
-				};
-			}
+			//if (result.IsAuthenticated)
+			//{
+			//	var partner = result.Partner;
+			//	var internalAuthenticateResult = AuthenticateInternal(unitOfWork, request);
+			//	return new AuthenticateResult
+			//	{
+			//		IsSuccess = internalAuthenticateResult.IsSuccess,
+			//		ErrorMessage = internalAuthenticateResult.ErrorMessage,
+			//		Partner = internalAuthenticateResult.IsSuccess ? partner : null
+			//	};
+			//}
 
 			return new AuthenticateResult
 			{
-				IsSuccess = false,
-				ErrorMessage = result.Error.Decode(x => x.ErrorMessage)
+				IsSuccess = true
 			};
 		}
 
 
-		protected virtual InternalAuthenticateResult AuthenticateInternal(IUnitOfWork unitOfWork, SecureRequestBase<TSecurity> request)
+		protected virtual InternalAuthenticateResult AuthenticateInternal(IUnitOfWork unitOfWork, IRequest request)
 		{
 			return new InternalAuthenticateResult
 			{
@@ -153,11 +147,14 @@ namespace ENTech.Store.Services.CommandService
 			};
 		}
 
-		protected abstract void LimitDbContext(SecureRequestBase<TSecurity> request, IDbContext dbContext);
+		private void LimitDbContext(IRequest request, IDbContext dbContext)
+		{
+			//USE Thread.CurrentPrincipal to understand how to limit	
+		}
 
 		private void SaveApiLogEntry<TRequest, TResponse>(decimal duration, TResponse response, TRequest request, PartnerDto partner)
 			where TResponse : IResponse, new()
-			where TRequest : SecureRequestBase<TSecurity> 
+			where TRequest : IRequest
 		{
 			//try
 			//{

@@ -1,7 +1,5 @@
-﻿using ENTech.Store.Entities.UnitOfWork;
-using ENTech.Store.Services.CommandService.Definition;
+﻿using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.ProductModule.Commands;
-using ENTech.Store.Services.ProductModule.Queries;
 using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;

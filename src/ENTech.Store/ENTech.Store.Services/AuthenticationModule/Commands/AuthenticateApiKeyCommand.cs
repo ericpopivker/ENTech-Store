@@ -1,27 +1,30 @@
-﻿using System.Linq;
-using AutoMapper;
-using ENTech.Store.Entities.UnitOfWork;
-using ENTech.Store.Infrastructure.Services.Errors;
-using ENTech.Store.Infrastructure.Services.Requests;
-using ENTech.Store.Infrastructure.Services.Responses;
+﻿using ENTech.Store.Entities.PartnerModule;
+using ENTech.Store.Infrastructure.Database.Repository;
+using ENTech.Store.Infrastructure.Mapping;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.AuthenticationModule.Dtos;
-using ENTech.Store.Services.AuthenticationModule.Errors;
 using ENTech.Store.Services.AuthenticationModule.Errors.ResponseErrors;
+using ENTech.Store.Services.AuthenticationModule.Requests;
 using ENTech.Store.Services.AuthenticationModule.Responses;
-using ENTech.Store.Services.SharedModule.Commands;
 
 namespace ENTech.Store.Services.AuthenticationModule.Commands
 {
-	public class AuthenticateApiKeyCommand<TRequest> : DbContextCommandBase<TRequest, AuthenticateApiKeyResponse> 
-		where TRequest : IRequest
+	public class AuthenticateApiKeyCommand : CommandBase<AuthenticateApiKeyRequest, AuthenticateApiKeyResponse> 
 	{
-		public AuthenticateApiKeyCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory)
-			: base(unitOfWork.DbContext, dtoValidatorFactory, false)
+		private readonly IRepository<Partner> _partnerRepository;
+		private readonly IPartnerQuery _partnerQuery;
+		private readonly IMapper _mapper;
+
+		public AuthenticateApiKeyCommand(IRepository<Partner> partnerRepository, IMapper mapper, IPartnerQuery partnerQuery, IDtoValidatorFactory dtoValidatorFactory)
+			: base(dtoValidatorFactory, false)
 		{
+			_partnerRepository = partnerRepository;
+			_mapper = mapper;
+			_partnerQuery = partnerQuery;
 		}
 
-		public override AuthenticateApiKeyResponse Execute(TRequest request)
+		public override AuthenticateApiKeyResponse Execute(AuthenticateApiKeyRequest request)
 		{
 			var apiKey = request.ApiKey;
 			if (string.IsNullOrEmpty(apiKey))
@@ -33,18 +36,21 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 				};
 			}
 
-			var partner =  DbContext.Partners.FirstOrDefault(x => x.Key == apiKey);
-			if (partner == null)
+			var partnerId = _partnerQuery.GetByApiKey(apiKey);
+
+			if (partnerId.HasValue == false)
 				return new AuthenticateApiKeyResponse
 				{
 					IsAuthenticated = false,
 					Error = new ApiKeyInvalidResponseError()
 				};
 
+			var partner = _partnerRepository.GetById(partnerId.Value);
+
 			return new AuthenticateApiKeyResponse
 			{
-				IsAuthenticated = true,
-				Partner = Mapper.Map<PartnerDto>(partner)
+				Partner = _mapper.Map<Partner, PartnerDto>(partner),
+				IsAuthenticated = true
 			};
 		}
 	}

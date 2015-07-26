@@ -1,13 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using ENTech.Store.Entities.UnitOfWork;
 using ENTech.Store.Infrastructure;
-using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.ProductModule.Commands;
 using ENTech.Store.Services.ProductModule.Errors.ArgumentErrors;
 using ENTech.Store.Services.ProductModule.Errors.ResponseErrors;
-using ENTech.Store.Services.ProductModule.Queries;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;

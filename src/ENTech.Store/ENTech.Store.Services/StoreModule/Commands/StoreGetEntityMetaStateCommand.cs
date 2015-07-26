@@ -1,19 +1,17 @@
-﻿using ENTech.Store.Entities.UnitOfWork;
-using ENTech.Store.Infrastructure.Services.Repositories;
+﻿using ENTech.Store.Infrastructure.Database.Repository;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;
-using ENTech.Store.Services.SharedModule.Commands;
-using ENTech.Store.Services.StoreModule.Queries;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 
 namespace ENTech.Store.Services.StoreModule.Commands
 {
-	public class StoreGetEntityMetaStateCommand : DbContextCommandBase<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse>
+	public class StoreGetEntityMetaStateCommand : CommandBase<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse>
 	{
-		private IRepository<Entities.StoreModule.Store> _storeRepository;
+		private readonly IRepository<Entities.StoreModule.Store> _storeRepository;
 
-		public StoreGetEntityMetaStateCommand(IUnitOfWork unitOfWork, IDtoValidatorFactory dtoValidatorFactory, IRepository<Entities.StoreModule.Store> storeRepository)
-			: base(unitOfWork.DbContext, dtoValidatorFactory, false)
+		public StoreGetEntityMetaStateCommand(IDtoValidatorFactory dtoValidatorFactory, IRepository<Entities.StoreModule.Store> storeRepository)
+			: base(dtoValidatorFactory, false)
 		{
 			_storeRepository = storeRepository;
 		}
@@ -21,7 +19,10 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		public override StoreGetEntityMetaStateResponse Execute(StoreGetEntityMetaStateRequest request)
 		{
 			var entityMetaState = _storeRepository.GetEntityMetaState(request.Id);
-			return new StoreGetEntityMetaStateResponse {EntityMetaState = entityMetaState};
+			return new StoreGetEntityMetaStateResponse
+			{
+				EntityMetaState = entityMetaState
+			};
 		}
 	}
 }

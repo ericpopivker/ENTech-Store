@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ENTech.Store.Infrastructure.Cache;
+using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Entities;
-using ENTech.Store.Infrastructure.Services.Repositories;
-using ENTech.Store.Infrastructure.Services.Validators;
 using Moq;
 using NUnit.Framework;
 
@@ -15,7 +10,7 @@ namespace ENTech.Store.Infrastructure.UnitTests.Services.Repositories
 	[TestFixture]
 	public class CachedRepositoryTest
 	{
-		public class EntityStub : IEntity, IAuditable
+		public class EntityStub : IDomainEntity, IAuditable
 		{
 			public int Id { get; set; }
 		

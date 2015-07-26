@@ -1,8 +1,8 @@
-﻿using ENTech.Store.Services.Misc;
+﻿using ENTech.Store.Infrastructure.Services.Requests;
 
 namespace ENTech.Store.Services.ProductModule.Requests
 {
-	public class ProductDeleteRequest : SecureRequestBase<BusinessAdminSecurityInformation>
+	public class ProductDeleteRequest : IRequest
 	{
 		public int Id { get; set; }
 	}

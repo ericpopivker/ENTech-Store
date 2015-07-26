@@ -7,7 +7,7 @@ using ENTech.Store.Services.CommandService.Definition;
 
 namespace ENTech.Store.Services.CommandService
 {
-	internal class InternalCommandService :
+	public class InternalCommandService :
 		CommandServiceBase,
 		IInternalCommandService
 	{
@@ -25,6 +25,7 @@ namespace ENTech.Store.Services.CommandService
 			var command = CommandFactory.Create<TCommand>();
 
 			var responseStatus = TryExecute<TRequest, TResponse, TCommand>(request, command);
+
 			if (responseStatus is ErrorResponseStatus<TResponse>)
 				throw new InvalidOperationException(); //serialize Errors to Json
 

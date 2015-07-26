@@ -1,27 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using ENTech.Store.Infrastructure.Services.Validators;
-using ENTech.Store.Services.Misc;
+using ENTech.Store.Infrastructure.Services.Requests;
 
 namespace ENTech.Store.Services.SharedModule.Requests
 {
-	public abstract class GetByIdRequestBase : GetByIdRequestBase<AnonymousSecurityInformation>
-	{
-	}
-
-	public abstract class GetByIdRequestBase<TSecurity> : SecureRequestBase<TSecurity> 
-		where TSecurity : ISecurityInformation
+	public abstract class GetByIdRequestBase : IRequest
 	{
 		public int Id { get; set; }
 	}
 
 
 
-	public abstract class GetByIdRequestBase<TLoadOptionEnum, TSecurity> : GetByIdRequestBase<TSecurity>
+	public abstract class GetByIdRequestBase<TLoadOptionEnum> : GetByIdRequestBase
 		where TLoadOptionEnum : struct
-		where TSecurity : ISecurityInformation
 	{
 		public ICollection<TLoadOptionEnum> LoadOptions { get; set; }
-
 	}
 }

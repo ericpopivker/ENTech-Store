@@ -63,24 +63,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationModule\Commands\AuthenticateApiKeyCommand.cs" />
+    <Compile Include="AuthenticationModule\Requests\AuthenticateApiKeyRequest.cs" />
+    <Compile Include="AuthenticationModule\IPartnerQuery.cs" />
     <Compile Include="AuthenticationModule\Dtos\PartnerDto.cs" />
+    <Compile Include="AuthenticationModule\MapProfiles\ToPartnerDtoMapProfile.cs" />
+    <Compile Include="AuthenticationModule\MapProfiles\ToPartnerMapProfile.cs" />
+    <Compile Include="AuthenticationModule\PartnerQuery.cs" />
     <Compile Include="AuthenticationModule\Errors\AuthenticationResponseErrorCode.cs" />
     <Compile Include="AuthenticationModule\Errors\ResponseErrors\ApiKeyInvalidResponseError.cs" />
     <Compile Include="AuthenticationModule\Errors\ResponseErrors\ApiKeyRequiredResponseError.cs" />
     <Compile Include="AuthenticationModule\Responses\AuthenticateApiKeyResponse.cs" />
     <Compile Include="CommandService\CommandFactory.cs" />
     <Compile Include="CommandService\CommandServiceBase.cs" />
-    <Compile Include="CommandService\Concrete\BusinessAdminExternalCommandService.cs" />
-    <Compile Include="CommandService\Concrete\PublicExternalCommandService.cs" />
     <Compile Include="CommandService\Definition\IExternalCommandService.cs" />
     <Compile Include="CommandService\Definition\IInternalCommandService.cs" />
     <Compile Include="CommandService\ExternalCommandService.cs" />
     <Compile Include="CommandService\ICommandFactory.cs" />
     <Compile Include="CommandService\InternalCommandService.cs" />
+    <Compile Include="GeoModule\Commands\AddressDeleteCommand.cs" />
+    <Compile Include="GeoModule\Commands\AddressGetEntityMetaStateCommand.cs" />
+    <Compile Include="GeoModule\Requests\AddressGetEntityMetaStateRequest.cs" />
+    <Compile Include="GeoModule\Responses\AddressGetEntityMetaStateResponse.cs" />
+    <Compile Include="GeoModule\EntityValidators\IAddressValidator.cs" />
+    <Compile Include="GeoModule\EntityValidators\AddressValidator.cs" />
+    <Compile Include="GeoModule\Dtos\AddressDto.cs" />
+    <Compile Include="GeoModule\Commands\AddressGetByIdCommand.cs" />
+    <Compile Include="GeoModule\MapProfiles\ToAddressDtoMapProfile.cs" />
+    <Compile Include="GeoModule\MapProfiles\ToAddressMapProfile.cs" />
+    <Compile Include="GeoModule\Requests\AddressGetByIdRequest.cs" />
+    <Compile Include="GeoModule\Responses\AddressGetByIdResponse.cs" />
+    <Compile Include="GeoModule\MapProfiles\ToAddressDbEntityMapProfile.cs" />
+    <Compile Include="GeoModule\Requests\AddressDeleteRequest.cs" />
+    <Compile Include="GeoModule\Responses\AddressDeleteResponse.cs" />
+    <Compile Include="GeoModule\Commands\AddressUpdateCommand.cs" />
+    <Compile Include="GeoModule\Requests\AddressUpdateRequest.cs" />
+    <Compile Include="GeoModule\Responses\AddressUpdateResponse.cs" />
+    <Compile Include="GeoModule\Dtos\AddressCreateOrUpdateDto.cs" />
     <Compile Include="Misc\AnonymousSecurityInformation.cs" />
     <Compile Include="Misc\AuthenticateResult.cs" />
     <Compile Include="Misc\CommandServiceBase.cs" />
-    <Compile Include="Misc\SecureRequestBase.cs" />
     <Compile Include="Misc\SecurityInformation.cs" />
     <Compile Include="ProductModule\Builders\BuilderBase.cs" />
     <Compile Include="ProductModule\Errors\ArgumentErrors\ProductNameMustBeUniqueArgumentError.cs" />
@@ -90,7 +111,6 @@
     <Compile Include="ProductModule\Commands\ProductFindCommand.cs" />
     <Compile Include="ProductModule\Dtos\ProductFindCriteriaDto.cs" />
     <Compile Include="ProductModule\Errors\ProductArgumentErrorCode.cs" />
-    <Compile Include="ProductModule\Queries\ProductFindQuery.cs" />
     <Compile Include="ProductModule\Requests\ProductFindRequest.cs" />
     <Compile Include="ProductModule\Responses\ProductFindResponse.cs" />
     <Compile Include="ProductModule\Commands\ProductGetByIdCommand.cs" />
@@ -117,7 +137,6 @@
     <Compile Include="ProductModule\Validators\EntityValidators\StoreValidator.cs" />
     <Compile Include="ProductModule\Validators\EntityValidators\ProductValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SharedModule\Commands\DbContextCommandBase.cs" />
     <Compile Include="SharedModule\Dtos\FindCriteriaDtoBase.cs" />
     <Compile Include="SharedModule\Dtos\LookupDto.cs" />
     <Compile Include="SharedModule\Dtos\SortFieldDto.cs" />
@@ -126,14 +145,26 @@
     <Compile Include="SharedModule\Requests\FindRequestBase.cs" />
     <Compile Include="SharedModule\Requests\GetByIdRequestBase.cs" />
     <Compile Include="SharedModule\Responses\FindResponseBase.cs" />
+    <Compile Include="GeoModule\Commands\AddressCreateCommand.cs" />
+    <Compile Include="GeoModule\Requests\AddressCreateRequest.cs" />
+    <Compile Include="GeoModule\Responses\AddressCreateResponse.cs" />
+    <Compile Include="StoreModule\Commands\StoreDeleteCommand.cs" />
+    <Compile Include="StoreModule\MapProfiles\ToAddressCreateOrUpdateDtoMapProfile.cs" />
+    <Compile Include="StoreModule\MapProfiles\ToAddressDtoMapProfile.cs" />
+    <Compile Include="StoreModule\MapProfiles\ToStoreDbEntityMapProfile.cs" />
+    <Compile Include="StoreModule\MapProfiles\ToStoreDtoMapProfile.cs" />
+    <Compile Include="StoreModule\MapProfiles\ToStoreMapProfile.cs" />
+    <Compile Include="StoreModule\Requests\StoreDeleteRequest.cs" />
+    <Compile Include="StoreModule\Responses\StoreDeleteResponse.cs" />
     <Compile Include="StartupConfig.cs" />
     <Compile Include="StoreModule\Commands\StoreGetEntityMetaStateCommand.cs" />
     <Compile Include="StoreModule\Commands\StoreUpdateCommand.cs" />
+    <Compile Include="StoreModule\Criterias\StoreFindCriteria.cs" />
+    <Compile Include="StoreModule\Dtos\AddressDto.cs" />
     <Compile Include="StoreModule\Dtos\StoreSettingsDto.cs" />
     <Compile Include="StoreModule\Dtos\StoreUpdateDto.cs" />
-    <Compile Include="StoreModule\Queries\StoreFindQuery.cs" />
-    <Compile Include="StoreModule\Queries\StoreGetByIdQuery.cs" />
     <Compile Include="StoreModule\Requests\StoreGetEntityMetaStateRequest.cs" />
+    <Compile Include="StoreModule\IStoreQuery.cs" />
     <Compile Include="StoreModule\Requests\StoreUpdateRequest.cs" />
     <Compile Include="StoreModule\Responses\StoreGetEntityMetaStateResponse.cs" />
     <Compile Include="StoreModule\Responses\StoreUpdateResponse.cs" />
@@ -153,9 +184,21 @@
     <Compile Include="StoreModule\Responses\StoreCreateResponse.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ENTech.Store.DbEntities\ENTech.Store.DbEntities.csproj">
+      <Project>{B2738CFF-4567-4537-9CC9-69CE92E95DCA}</Project>
+      <Name>ENTech.Store.DbEntities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
       <Project>{26b48b70-7cf1-4be9-9d14-ce616b4cf7aa}</Project>
       <Name>ENTech.Store.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTech.Store.Infrastructure.Database.EF6\ENTech.Store.Infrastructure.Database.EF6.csproj">
+      <Project>{93C02513-AFFB-43A0-AF4B-B5468987CC9E}</Project>
+      <Name>ENTech.Store.Infrastructure.Database.EF6</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj">
+      <Project>{1152AA7A-F788-4291-8B0D-C1117D1C7A08}</Project>
+      <Name>ENTech.Store.Infrastructure.Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj">
       <Project>{7d581130-b9a8-4e44-9562-67e41697a123}</Project>
@@ -167,8 +210,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AuthenticationModule\MapProfiles\" />
-    <Folder Include="AuthenticationModule\ModuleLogic\" />
+    <Folder Include="SharedModule\Commands\" />
     <Folder Include="StoreModule\Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

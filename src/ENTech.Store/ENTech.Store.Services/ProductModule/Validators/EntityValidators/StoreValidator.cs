@@ -1,5 +1,5 @@
-﻿using ENTech.Store.Infrastructure.Services.Errors.ArgumentErrors;
-using ENTech.Store.Infrastructure.Services.Repositories;
+﻿using ENTech.Store.Infrastructure.Database.Repository;
+using ENTech.Store.Infrastructure.Services.Errors.ArgumentErrors;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.StoreModule.Commands;
@@ -20,7 +20,7 @@ namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 
 		public ValidateArgumentResult ValidateId(int storeId)
 		{
-			var storeGetEntityStateRequest = new StoreGetEntityMetaStateRequest{Id=storeId};
+			var storeGetEntityStateRequest = new StoreGetEntityMetaStateRequest{ Id = storeId };
 			var response = _internalCommandService.Execute<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse, StoreGetEntityMetaStateCommand>(storeGetEntityStateRequest);
 
 			if (response.EntityMetaState == EntityMetaState.NotFound)

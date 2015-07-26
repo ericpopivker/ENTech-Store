@@ -1,14 +1,10 @@
-﻿using ENTech.Store.Entities.UnitOfWork;
+﻿using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services.Errors.ArgumentErrors;
-using ENTech.Store.Infrastructure.Services.Repositories;
 using ENTech.Store.Services.CommandService.Definition;
-using ENTech.Store.Services.ProductModule.Commands;
-using ENTech.Store.Services.ProductModule.Queries;
 using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
-using ENTech.Store.Services.UnitTests.StoreModule.Builders;
 using Moq;
 using NUnit.Framework;
 

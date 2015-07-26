@@ -1,5 +1,4 @@
-﻿using ENTech.Store.Infrastructure.Services.Errors;
-using ENTech.Store.Infrastructure.Services.Requests;
+﻿using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Infrastructure.Services.Validators;
 

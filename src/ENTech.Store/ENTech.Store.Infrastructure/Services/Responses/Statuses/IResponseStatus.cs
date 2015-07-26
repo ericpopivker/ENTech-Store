@@ -1,4 +1,4 @@
-namespace ENTech.Store.Infrastructure.Services.Responses
+namespace ENTech.Store.Infrastructure.Services.Responses.Statuses
 {
 	public interface IResponseStatus<TResponse> where TResponse : IResponse
 	{
