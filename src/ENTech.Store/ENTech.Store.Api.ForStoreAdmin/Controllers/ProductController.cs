@@ -2,7 +2,6 @@
 using System.Web.Http;
 using System.Web.Http.Description;
 using ENTech.Store.Services.CommandService.Definition;
-using ENTech.Store.Services.Misc;
 using ENTech.Store.Services.ProductModule.Commands;
 using ENTech.Store.Services.ProductModule.Requests;
 using ENTech.Store.Services.ProductModule.Responses;
@@ -12,9 +11,9 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 	[RoutePrefix("v1/store-admin-api/products")]
 	public class ProductController : ApiController
 	{
-		private readonly IExternalCommandService<BusinessAdminSecurityInformation> _businessAdminExternalCommandService;
+		private readonly IExternalCommandService _businessAdminExternalCommandService;
 
-		public ProductController(IExternalCommandService<BusinessAdminSecurityInformation> businessAdminExternalCommandService)
+		public ProductController(IExternalCommandService businessAdminExternalCommandService)
 		{
 			_businessAdminExternalCommandService = businessAdminExternalCommandService;
 		}

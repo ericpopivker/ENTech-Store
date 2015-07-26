@@ -11,15 +11,13 @@ using ENTech.Store.Services.AuthenticationModule.Commands;
 using ENTech.Store.Services.AuthenticationModule.Requests;
 using ENTech.Store.Services.AuthenticationModule.Responses;
 using ENTech.Store.Services.CommandService;
-using ENTech.Store.Services.CommandService.Concrete;
 using ENTech.Store.Services.CommandService.Definition;
-using ENTech.Store.Services.Misc;
 
 namespace ENTech.Store.Infrastructure.WebApi
 {
 	public abstract class ApiKeyAuthorizeAttribute : AuthorizeAttribute
 	{
-		private IExternalCommandService<AnonymousSecurityInformation> _externalCommandService = new PublicExternalCommandService(new CommandFactory());
+		private readonly IExternalCommandService _externalCommandService = new ExternalCommandService(new CommandFactory());
 
 		public override void OnAuthorization(HttpActionContext actionContext)
 		{

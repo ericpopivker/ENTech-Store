@@ -75,8 +75,6 @@
     <Compile Include="AuthenticationModule\Responses\AuthenticateApiKeyResponse.cs" />
     <Compile Include="CommandService\CommandFactory.cs" />
     <Compile Include="CommandService\CommandServiceBase.cs" />
-    <Compile Include="CommandService\Concrete\BusinessAdminExternalCommandService.cs" />
-    <Compile Include="CommandService\Concrete\PublicExternalCommandService.cs" />
     <Compile Include="CommandService\Definition\IExternalCommandService.cs" />
     <Compile Include="CommandService\Definition\IInternalCommandService.cs" />
     <Compile Include="CommandService\ExternalCommandService.cs" />
@@ -104,7 +102,6 @@
     <Compile Include="Misc\AnonymousSecurityInformation.cs" />
     <Compile Include="Misc\AuthenticateResult.cs" />
     <Compile Include="Misc\CommandServiceBase.cs" />
-    <Compile Include="Misc\SecureRequestBase.cs" />
     <Compile Include="Misc\SecurityInformation.cs" />
     <Compile Include="ProductModule\Builders\BuilderBase.cs" />
     <Compile Include="ProductModule\Errors\ArgumentErrors\ProductNameMustBeUniqueArgumentError.cs" />

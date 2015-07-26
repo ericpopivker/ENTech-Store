@@ -1,9 +1,9 @@
+using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Services.GeoModule.Dtos;
-using ENTech.Store.Services.Misc;
 
 namespace ENTech.Store.Services.GeoModule.Requests
 {
-	public class AddressCreateRequest : SecureRequestBase<AnonymousSecurityInformation>
+	public class AddressCreateRequest : IRequest
 	{
 		public AddressCreateOrUpdateDto Address { get; set; }
 	}

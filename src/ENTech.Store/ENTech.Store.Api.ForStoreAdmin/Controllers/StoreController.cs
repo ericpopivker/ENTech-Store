@@ -3,7 +3,6 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using ENTech.Store.Infrastructure.WebApi;
 using ENTech.Store.Services.CommandService.Definition;
-using ENTech.Store.Services.Misc;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
@@ -14,11 +13,11 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 	[PublicAuthorize]
 	public class StoreController : ApiController
 	{
-		private readonly IExternalCommandService<AnonymousSecurityInformation> _anonymousExternalCommandService;
-		private readonly IExternalCommandService<BusinessAdminSecurityInformation> _businessAdminExternalCommandService;
+		private readonly IExternalCommandService _anonymousExternalCommandService;
+		private readonly IExternalCommandService _businessAdminExternalCommandService;
 
-		public StoreController(IExternalCommandService<AnonymousSecurityInformation> anonymousExternalCommandService, 
-			IExternalCommandService<BusinessAdminSecurityInformation> businessAdminExternalCommandService)
+		public StoreController(IExternalCommandService anonymousExternalCommandService, 
+			IExternalCommandService businessAdminExternalCommandService)
 		{
 			_anonymousExternalCommandService = anonymousExternalCommandService;
 			_businessAdminExternalCommandService = businessAdminExternalCommandService;

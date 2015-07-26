@@ -41,7 +41,6 @@ namespace ENTech.Store.Services.StoreModule.Commands
 				var addressGetByIdResponse =
 					_internalCommandService.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(new AddressGetByIdRequest
 					{
-						ApiKey = request.ApiKey,
 						Id = entity.AddressId.Value
 					});
 

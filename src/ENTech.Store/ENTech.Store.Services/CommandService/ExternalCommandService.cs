@@ -3,36 +3,33 @@ using System.Diagnostics;
 using ENTech.Store.Infrastructure;
 using ENTech.Store.Infrastructure.Database.EF6;
 using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
-using ENTech.Store.Infrastructure.Extensions;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
+using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
 using ENTech.Store.Infrastructure.Services.Responses.Statuses;
-using ENTech.Store.Services.AuthenticationModule.Commands;
 using ENTech.Store.Services.AuthenticationModule.Dtos;
-using ENTech.Store.Services.AuthenticationModule.Responses;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
 
 namespace ENTech.Store.Services.CommandService
 {
-	public abstract class ExternalCommandService<TSecurity> :
+	public class ExternalCommandService :
 		CommandServiceBase,
-		IExternalCommandService<TSecurity>
-			where TSecurity : ISecurityInformation
+		IExternalCommandService
 	{
 		private readonly IInternalCommandService _internalCommandService;
 
 		protected IInternalCommandService InternalCommandService { get { return _internalCommandService; } }
 
-		protected ExternalCommandService(ICommandFactory commandFactory)
+		public ExternalCommandService(ICommandFactory commandFactory)
 			: base(commandFactory)
 		{
 			_internalCommandService = new InternalCommandService(commandFactory);
 		}
 
 		public IResponseStatus<TResponse>  Execute<TRequest, TResponse, TCommand>(TRequest request)
-			where TRequest : SecureRequestBase<TSecurity> 
+			where TRequest : IRequest
 			where TResponse : IResponse, new()
 			where TCommand : ICommand<TRequest, TResponse>
 		{
@@ -116,7 +113,7 @@ namespace ENTech.Store.Services.CommandService
 			}
 		}
 
-		protected AuthenticateResult Authenticate(IUnitOfWork unitOfWork, SecureRequestBase<TSecurity> request)
+		protected AuthenticateResult Authenticate(IUnitOfWork unitOfWork, IRequest request)
 		{
 			//var result = _internalCommandService
 			//	.Execute
@@ -142,7 +139,7 @@ namespace ENTech.Store.Services.CommandService
 		}
 
 
-		protected virtual InternalAuthenticateResult AuthenticateInternal(IUnitOfWork unitOfWork, SecureRequestBase<TSecurity> request)
+		protected virtual InternalAuthenticateResult AuthenticateInternal(IUnitOfWork unitOfWork, IRequest request)
 		{
 			return new InternalAuthenticateResult
 			{
@@ -150,11 +147,14 @@ namespace ENTech.Store.Services.CommandService
 			};
 		}
 
-		protected abstract void LimitDbContext(SecureRequestBase<TSecurity> request, IDbContext dbContext);
+		private void LimitDbContext(IRequest request, IDbContext dbContext)
+		{
+			//USE Thread.CurrentPrincipal to understand how to limit	
+		}
 
 		private void SaveApiLogEntry<TRequest, TResponse>(decimal duration, TResponse response, TRequest request, PartnerDto partner)
 			where TResponse : IResponse, new()
-			where TRequest : SecureRequestBase<TSecurity> 
+			where TRequest : IRequest
 		{
 			//try
 			//{

@@ -1,6 +1,3 @@
-using System.Data.Entity;
-using System.Linq;
-using System.Reflection;
 using System.Web.Http;
 using ENTech.Store.DbEntities.GeoModule;
 using ENTech.Store.DbEntities.PartnerModule;
@@ -19,10 +16,8 @@ using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.AuthenticationModule;
 using ENTech.Store.Services.CommandService;
-using ENTech.Store.Services.CommandService.Concrete;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.GeoModule.EntityValidators;
-using ENTech.Store.Services.Misc;
 using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using Microsoft.Practices.Unity;
 using Unity.WebApi;
@@ -38,8 +33,7 @@ namespace ENTech.Store.Api
 	        container.RegisterType<ICommandFactory, CommandFactory>()
 				.RegisterType<IUnitOfWork, UnitOfWork>()
 				.RegisterType<IDbContextFactory, DbContextFactory>()
-		        .RegisterType<IExternalCommandService<AnonymousSecurityInformation>, PublicExternalCommandService>()
-				.RegisterType<IExternalCommandService<BusinessAdminSecurityInformation>, BusinessAdminExternalCommandService>()
+		        .RegisterType<IExternalCommandService, ExternalCommandService>()
 				.RegisterType<IInternalCommandService, InternalCommandService>()
 				.RegisterType<IMapper, Mapper>()
 				.RegisterType<IDtoValidatorFactory, DtoValidatorFactory>()

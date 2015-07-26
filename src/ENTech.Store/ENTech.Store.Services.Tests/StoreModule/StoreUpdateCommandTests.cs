@@ -282,7 +282,6 @@ namespace ENTech.Store.Services.Tests.StoreModule
 			var request = new StoreUpdateRequest
 			{
 				StoreId = _existingStoreIdWithAddressId,
-				ApiKey = "apiKey",
 				Store = GetStoreUpdateDto(WithAddressDto(_validCountryId))
 			};
 
@@ -297,7 +296,6 @@ namespace ENTech.Store.Services.Tests.StoreModule
 			var request = new StoreUpdateRequest
 			{
 				StoreId = _nonexistingStoreId,
-				ApiKey = "apiKey",
 				Store = GetStoreUpdateDto(WithAddressDto(_validCountryId))
 			};
 
@@ -313,8 +311,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 			var request = new StoreUpdateRequest()
 			{
 				StoreId = _existingStoreIdWithAddressId,
-				Store = GetStoreUpdateDto(WithAddressDto(_validCountryId)),
-				ApiKey = "apiKey"
+				Store = GetStoreUpdateDto(WithAddressDto(_validCountryId))
 			};
 
 			var validationResult = Command.Validate(request);

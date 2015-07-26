@@ -35,8 +35,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 				_internalCommandService.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(new AddressUpdateRequest
 				{
 					AddressId = store.AddressId.Value,
-					Address = request.Store.Address,
-					ApiKey = request.ApiKey
+					Address = request.Store.Address
 				});
 			}
 
@@ -44,8 +43,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			{
 				var addressCreateResponse = _internalCommandService.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(new AddressCreateRequest
 				{
-					Address = request.Store.Address,
-					ApiKey = request.ApiKey
+					Address = request.Store.Address
 				});
 
 				store.AddressId = addressCreateResponse.AddressId;
@@ -56,8 +54,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 			{
 				_internalCommandService.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(new AddressDeleteRequest
 				{
-					AddressId = store.AddressId.Value,
-					ApiKey = request.ApiKey
+					AddressId = store.AddressId.Value
 				});
 
 

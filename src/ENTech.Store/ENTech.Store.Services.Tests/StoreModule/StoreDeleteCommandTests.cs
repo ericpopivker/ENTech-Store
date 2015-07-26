@@ -74,8 +74,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		{
 			var request = new StoreDeleteRequest
 			{
-				StoreId = _existingStoreId,
-				ApiKey = "apiKey"
+				StoreId = _existingStoreId
 			};
 
 			Command.Validate(request);
@@ -88,8 +87,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		{
 			var request = new StoreDeleteRequest
 			{
-				StoreId = _nonexistingStoreId,
-				ApiKey = "apiKey"
+				StoreId = _nonexistingStoreId
 			};
 
 			var validationResult = Command.Validate(request);
@@ -103,8 +101,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		{
 			var request = new StoreDeleteRequest
 			{
-				StoreId = _existingStoreId,
-				ApiKey = "apiKey"
+				StoreId = _existingStoreId
 			};
 
 			var validationResult = Command.Validate(request);

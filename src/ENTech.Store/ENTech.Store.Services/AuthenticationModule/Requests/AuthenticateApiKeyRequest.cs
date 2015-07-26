@@ -1,8 +1,9 @@
-﻿using ENTech.Store.Services.Misc;
+﻿using ENTech.Store.Infrastructure.Services.Requests;
 
 namespace ENTech.Store.Services.AuthenticationModule.Requests
 {
-	public class AuthenticateApiKeyRequest : SecureRequestBase<AnonymousSecurityInformation>
+	public class AuthenticateApiKeyRequest : IRequest
 	{
+		public string ApiKey { get; set; }
 	}
 }
