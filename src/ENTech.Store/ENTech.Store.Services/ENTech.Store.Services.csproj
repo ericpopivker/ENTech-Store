@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationModule\Commands\AuthenticateApiKeyCommand.cs" />
+    <Compile Include="AuthenticationModule\Requests\AuthenticateApiKeyRequest.cs" />
     <Compile Include="AuthenticationModule\IPartnerQuery.cs" />
     <Compile Include="AuthenticationModule\Dtos\PartnerDto.cs" />
     <Compile Include="AuthenticationModule\MapProfiles\ToPartnerDtoMapProfile.cs" />

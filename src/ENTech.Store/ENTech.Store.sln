@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{403028
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.WebApi", "ENTech.Store.Infrastructure.WebApi\ENTech.Store.Infrastructure.WebApi.csproj", "{A779C7A3-77D7-4466-B83E-81C758EAFFF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,10 @@ Global
 		{BEDF753D-D1A3-487A-AE1B-0DCF28B1CD9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEDF753D-D1A3-487A-AE1B-0DCF28B1CD9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEDF753D-D1A3-487A-AE1B-0DCF28B1CD9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A779C7A3-77D7-4466-B83E-81C758EAFFF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A779C7A3-77D7-4466-B83E-81C758EAFFF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A779C7A3-77D7-4466-B83E-81C758EAFFF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A779C7A3-77D7-4466-B83E-81C758EAFFF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

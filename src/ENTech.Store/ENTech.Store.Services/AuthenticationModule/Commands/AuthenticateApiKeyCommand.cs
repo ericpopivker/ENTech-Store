@@ -2,15 +2,15 @@
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
-using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.AuthenticationModule.Dtos;
 using ENTech.Store.Services.AuthenticationModule.Errors.ResponseErrors;
+using ENTech.Store.Services.AuthenticationModule.Requests;
 using ENTech.Store.Services.AuthenticationModule.Responses;
 
 namespace ENTech.Store.Services.AuthenticationModule.Commands
 {
-	public class AuthenticateApiKeyCommand<TRequest> : CommandBase<TRequest, AuthenticateApiKeyResponse> where TRequest : IRequest
+	public class AuthenticateApiKeyCommand : CommandBase<AuthenticateApiKeyRequest, AuthenticateApiKeyResponse> 
 	{
 		private readonly IRepository<Partner> _partnerRepository;
 		private readonly IPartnerQuery _partnerQuery;
@@ -24,7 +24,7 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 			_partnerQuery = partnerQuery;
 		}
 
-		public override AuthenticateApiKeyResponse Execute(TRequest request)
+		public override AuthenticateApiKeyResponse Execute(AuthenticateApiKeyRequest request)
 		{
 			var apiKey = request.ApiKey;
 			if (string.IsNullOrEmpty(apiKey))

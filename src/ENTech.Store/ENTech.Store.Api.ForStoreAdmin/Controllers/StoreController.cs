@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using ENTech.Store.Infrastructure.WebApi;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Misc;
 using ENTech.Store.Services.StoreModule.Commands;
@@ -10,6 +11,7 @@ using ENTech.Store.Services.StoreModule.Responses;
 namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 {
 	[RoutePrefix("v1/store-admin-api/stores")]
+	[PublicAuthorize]
 	public class StoreController : ApiController
 	{
 		private readonly IExternalCommandService<AnonymousSecurityInformation> _anonymousExternalCommandService;

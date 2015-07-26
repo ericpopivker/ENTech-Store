@@ -118,27 +118,26 @@ namespace ENTech.Store.Services.CommandService
 
 		protected AuthenticateResult Authenticate(IUnitOfWork unitOfWork, SecureRequestBase<TSecurity> request)
 		{
-			var result = _internalCommandService
-				.Execute
-				<SecureRequestBase<TSecurity>, AuthenticateApiKeyResponse,
-					AuthenticateApiKeyCommand<SecureRequestBase<TSecurity>>>(request);
+			//var result = _internalCommandService
+			//	.Execute
+			//	<SecureRequestBase<TSecurity>, AuthenticateApiKeyResponse,
+			//		AuthenticateApiKeyCommand<SecureRequestBase<TSecurity>>>(request);
 
-			if (result.IsAuthenticated)
-			{
-				var partner = result.Partner;
-				var internalAuthenticateResult = AuthenticateInternal(unitOfWork, request);
-				return new AuthenticateResult
-				{
-					IsSuccess = internalAuthenticateResult.IsSuccess,
-					ErrorMessage = internalAuthenticateResult.ErrorMessage,
-					Partner = internalAuthenticateResult.IsSuccess ? partner : null
-				};
-			}
+			//if (result.IsAuthenticated)
+			//{
+			//	var partner = result.Partner;
+			//	var internalAuthenticateResult = AuthenticateInternal(unitOfWork, request);
+			//	return new AuthenticateResult
+			//	{
+			//		IsSuccess = internalAuthenticateResult.IsSuccess,
+			//		ErrorMessage = internalAuthenticateResult.ErrorMessage,
+			//		Partner = internalAuthenticateResult.IsSuccess ? partner : null
+			//	};
+			//}
 
 			return new AuthenticateResult
 			{
-				IsSuccess = false,
-				ErrorMessage = result.Error.Decode(x => x.ErrorMessage)
+				IsSuccess = true
 			};
 		}
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ENTech.Store.DbEntities.PartnerModule;
 using ENTech.Store.Infrastructure.Database.EF6;
-using ENTech.Store.Infrastructure.Extensions;
 
 namespace ENTech.Store.Services.AuthenticationModule
 {
@@ -20,8 +19,10 @@ namespace ENTech.Store.Services.AuthenticationModule
 
 		public int? GetByApiKey(string apiKey)
 		{
-			return DbSet.First(x => x.Key == apiKey)
-				.Decode(x => x.Id);
+			var partner =  DbSet.FirstOrDefault(x => x.Key == apiKey);
+			if (partner == null)
+				return null;
+			return partner.Id;
 		}
 	}
 }
