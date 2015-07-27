@@ -46,10 +46,10 @@ namespace ENTech.Store.Services.CommandService
 					unitOfWork.BeginTransaction();
 				}
 
-				LimitDbContext<TResponse>(request, unitOfWork.DbContext);
+				LimitDbContext(request, unitOfWork.DbContext);
 				try
 				{
-					responseStatus = TryExecute<TResponse>(request, command);
+					responseStatus = TryExecute(request, command);
 
 					if (responseStatus is OkResponseStatus<TResponse>)
 					{
