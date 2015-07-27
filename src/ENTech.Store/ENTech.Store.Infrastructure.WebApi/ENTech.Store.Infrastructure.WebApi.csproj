@@ -64,7 +64,7 @@
     <Compile Include="PartnerIdentity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApiKeyAuthorizeAttribute.cs" />
-    <Compile Include="PublicAuthorizeAttribue.cs" />
+    <Compile Include="Implementation\PublicAuthorizeAttribue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

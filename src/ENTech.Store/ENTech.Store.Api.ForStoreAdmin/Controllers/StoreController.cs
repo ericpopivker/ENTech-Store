@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using ENTech.Store.Infrastructure.WebApi;
+using ENTech.Store.Infrastructure.WebApi.Implementation;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;

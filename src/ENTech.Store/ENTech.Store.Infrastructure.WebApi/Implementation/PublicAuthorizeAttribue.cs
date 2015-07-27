@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ENTech.Store.Infrastructure.WebApi
+namespace ENTech.Store.Infrastructure.WebApi.Implementation
 {
 	public class PublicAuthorizeAttribute : ApiKeyAuthorizeAttribute
 	{
