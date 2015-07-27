@@ -2,9 +2,7 @@
 using ENTech.Store.Infrastructure.Services.Errors.ArgumentErrors;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
-using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Requests;
-using ENTech.Store.Services.StoreModule.Responses;
 
 namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 {
@@ -21,7 +19,7 @@ namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 		public ValidateArgumentResult ValidateId(int storeId)
 		{
 			var storeGetEntityStateRequest = new StoreGetEntityMetaStateRequest{ Id = storeId };
-			var response = _internalCommandService.Execute<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse, StoreGetEntityMetaStateCommand>(storeGetEntityStateRequest);
+			var response = _internalCommandService.Execute(storeGetEntityStateRequest);
 
 			if (response.EntityMetaState == EntityMetaState.NotFound)
 			{

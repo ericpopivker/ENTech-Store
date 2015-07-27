@@ -22,7 +22,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[ResponseType(typeof(ProductCreateResponse))]
 		public HttpResponseMessage Create([FromBody]ProductCreateRequest request)
 		{
-			var response = _businessAdminExternalCommandService.Execute<ProductCreateRequest, ProductCreateResponse, ProductCreateCommand>(request);
+			var response = _businessAdminExternalCommandService.Execute(request);
 			return Request.CreateResponse(response);
 		}
 
@@ -32,7 +32,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[Route("{Id:int}")]
 		public HttpResponseMessage Update(int id, [FromBody]ProductUpdateRequest request)
 		{
-			var response = _businessAdminExternalCommandService.Execute<ProductUpdateRequest, ProductUpdateResponse, ProductUpdateCommand>(request);
+			var response = _businessAdminExternalCommandService.Execute(request);
 			return Request.CreateResponse(response);
 		}
 
@@ -41,7 +41,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[Route("{Id:int}/delete")]
 		public HttpResponseMessage Delete([FromBody]ProductDeleteRequest request)
 		{
-			var response = _businessAdminExternalCommandService.Execute<ProductDeleteRequest, ProductDeleteResponse, ProductDeleteCommand>(request);
+			var response = _businessAdminExternalCommandService.Execute(request);
 			return Request.CreateResponse(response);
 		}
 
@@ -50,7 +50,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[Route("{Id:int}")]
 		public HttpResponseMessage GetById([FromUri]ProductGetByIdRequest request)
 		{
-			var response = _businessAdminExternalCommandService.Execute<ProductGetByIdRequest, ProductGetByIdResponse, ProductGetByIdCommand>(request);
+			var response = _businessAdminExternalCommandService.Execute(request);
 			return Request.CreateResponse(response);
 		}
 
@@ -59,7 +59,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[Route("")]
 		public HttpResponseMessage Find([FromUri]ProductFindRequest request)
 		{
-			var response = _businessAdminExternalCommandService.Execute<ProductFindRequest, ProductFindResponse, ProductFindCommand>(request);
+			var response = _businessAdminExternalCommandService.Execute(request);
 			return Request.CreateResponse(response);
 		}
 

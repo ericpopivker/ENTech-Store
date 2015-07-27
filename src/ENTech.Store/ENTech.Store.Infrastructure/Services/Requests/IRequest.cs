@@ -1,6 +1,9 @@
-﻿namespace ENTech.Store.Infrastructure.Services.Requests
+﻿using ENTech.Store.Infrastructure.Services.Responses;
+
+namespace ENTech.Store.Infrastructure.Services.Requests
 {
-	public interface IRequest
+	public interface IRequest<TResponse>
+		where TResponse : IResponse
 	{
 	}
 }

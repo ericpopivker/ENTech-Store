@@ -74,7 +74,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			_internalCommandServiceMock.Setup(
 				x =>
-					x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(
+					x.Execute(
 						It.Is<AddressCreateRequest>(req => req.Address.CountryId == _validCountryId)))
 				.Returns(new AddressCreateResponse
 				{
@@ -83,31 +83,31 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			_internalCommandServiceMock.Setup(
 				x =>
-					x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(
+					x.Execute(
 						It.Is<AddressCreateRequest>(req => req.Address.CountryId == _invalidCountryId)))
 				.Throws<Exception>();
 
 			_internalCommandServiceMock.Setup(
 				x =>
-					x.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(
+					x.Execute(
 						It.Is<AddressUpdateRequest>(req => req.Address.CountryId == _validCountryId)))
 				.Returns(new AddressUpdateResponse());
 
 			_internalCommandServiceMock.Setup(
 				x =>
-					x.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(
+					x.Execute(
 						It.Is<AddressUpdateRequest>(req => req.Address.CountryId == _invalidCountryId)))
 				.Throws<Exception>();
 
 			_internalCommandServiceMock.Setup(
 				x =>
-					x.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(
+					x.Execute(
 						It.Is<AddressDeleteRequest>(req => req.AddressId == _originalAddressId)))
 				.Returns(new AddressDeleteResponse());
 
 			_internalCommandServiceMock.Setup(
 				x =>
-					x.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(
+					x.Execute(
 						It.Is<AddressDeleteRequest>(req => req.AddressId == _originalAddressIdThatFailsToBeDeleted)))
 				.Throws<Exception>();
 
@@ -165,7 +165,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			_internalCommandServiceMock.Verify(
 				x =>
-					x.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(
+					x.Execute(
 						It.Is<AddressUpdateRequest>(r => r.AddressId == _originalAddressId && r.Address == request.Store.Address)));
 		}
 
@@ -182,7 +182,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			_internalCommandServiceMock.Verify(
 				x =>
-					x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(
+					x.Execute(
 						It.Is<AddressCreateRequest>(r => r.Address == request.Store.Address)));
 		}
 
@@ -238,7 +238,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			_internalCommandServiceMock.Verify(
 				x =>
-					x.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(
+					x.Execute(
 						It.Is<AddressDeleteRequest>(r => r.AddressId == _originalAddressId)));
 		}
 

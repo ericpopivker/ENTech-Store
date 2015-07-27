@@ -1,5 +1,4 @@
 using System;
-using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
@@ -23,28 +22,24 @@ namespace ENTech.Store.Services.CommandService
 			_commandFactory = commandFactory;
 		}
 
-		protected void AfterExecute<TRequest, TResponse, TCommand>(TRequest request, TResponse response, TCommand command)
-			where TRequest : IRequest
+		protected void AfterExecute<TResponse>(IRequest<TResponse> request, TResponse response, CommandFacade<TResponse> commandFacade)
 			where TResponse : IResponse, new()
-			where TCommand : ICommand<TRequest, TResponse>
 		{
-			command.NotifyExecuted(request, response);
+			commandFacade.NotifyExecuted(request, response);
 		}
 
-		protected IResponseStatus<TResponse> TryExecute<TRequest, TResponse, TCommand>(TRequest request, TCommand command)
-			where TRequest : IRequest
+		protected IResponseStatus<TResponse> TryExecute<TResponse>(IRequest<TResponse> request, CommandFacade<TResponse> commandFacade)
 			where TResponse : IResponse, new()
-			where TCommand : ICommand<TRequest, TResponse>
 		{
 			var response = new TResponse();
 			
-			var validateResult = command.Validate(request);
+			var validateResult = commandFacade.Validate(request);
 
 			if (validateResult.IsValid)
 			{
 				try
 				{
-					response = command.Execute(request);
+					response = commandFacade.Execute(request);
 				}
 				catch (Exception e)
 				{

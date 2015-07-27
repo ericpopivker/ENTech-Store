@@ -77,7 +77,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 					AddressId = StoreAddressId
 				});
 
-			InternalCommandServiceMock.Setup(x => x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.Is<AddressGetByIdRequest>(y => y.Id == StoreAddressId))).Returns(new AddressGetByIdResponse
+			InternalCommandServiceMock.Setup(x => x.Execute(It.Is<AddressGetByIdRequest>(y => y.Id == StoreAddressId))).Returns(new AddressGetByIdResponse
 			{
 				Item = new AddressDto
 				{
@@ -91,7 +91,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				}
 			});
 			
-			InternalCommandServiceMock.Setup(x => x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.Is<AddressGetByIdRequest>(y => y.Id == IncorrectAddressId))).Throws<Exception>();
+			InternalCommandServiceMock.Setup(x => x.Execute(It.Is<AddressGetByIdRequest>(y => y.Id == IncorrectAddressId))).Throws<Exception>();
 
 			MapperMock.Setup(x => x.Map<Entities.StoreModule.Store, StoreDto>(It.IsAny<Entities.StoreModule.Store>()))
 				.Returns((Entities.StoreModule.Store store) => new StoreDto
@@ -180,7 +180,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Id = StoreWithoutAddressId
 			});
 
-			InternalCommandServiceMock.Verify(x=>x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.IsAny<AddressGetByIdRequest>()), Times.Never);
+			InternalCommandServiceMock.Verify(x=>x.Execute(It.IsAny<AddressGetByIdRequest>()), Times.Never);
 		}
 
 		[Test]
@@ -191,7 +191,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				Id = StoreWithAddressId
 			});
 
-			InternalCommandServiceMock.Verify(x=>x.Execute<AddressGetByIdRequest, AddressGetByIdResponse, AddressGetByIdCommand>(It.Is<AddressGetByIdRequest>(y=>y.Id == StoreAddressId)), Times.Once);
+			InternalCommandServiceMock.Verify(x=>x.Execute(It.Is<AddressGetByIdRequest>(y=>y.Id == StoreAddressId)), Times.Once);
 		}
 
 		[Test]

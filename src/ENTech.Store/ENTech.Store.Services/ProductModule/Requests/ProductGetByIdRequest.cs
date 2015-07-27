@@ -1,8 +1,9 @@
-﻿using ENTech.Store.Services.SharedModule.Requests;
+﻿using ENTech.Store.Services.ProductModule.Responses;
+using ENTech.Store.Services.SharedModule.Requests;
 
 namespace ENTech.Store.Services.ProductModule.Requests
 {
-	public class ProductGetByIdRequest : GetByIdRequestBase
+	public class ProductGetByIdRequest : GetByIdRequestBase<ProductGetByIdResponse>
 	{
 	}
 }

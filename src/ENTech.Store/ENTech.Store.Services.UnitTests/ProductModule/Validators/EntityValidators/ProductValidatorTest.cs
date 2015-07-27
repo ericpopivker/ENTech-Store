@@ -70,7 +70,7 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 		public void IsOverMaxProductsLimit_When_under_max_products_limit_Then_valid()
 		{
 			_internalCommandService.Setup(
-				ics => ics.Execute<StoreGetByIdRequest, StoreGetByIdResponse, StoreGetByIdCommand>(It.IsAny<StoreGetByIdRequest>()))
+				ics => ics.Execute(It.IsAny<StoreGetByIdRequest>()))
 				.Returns(new StoreGetByIdResponseBuilder().WithMaxProducts(10).Build());
 
 			_productQuery.Setup(
@@ -87,7 +87,7 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 		public void IsOverMaxProductsLimit_When_over_max_products_limit_Then_invalid()
 		{
 			_internalCommandService.Setup(
-				ics => ics.Execute<StoreGetByIdRequest, StoreGetByIdResponse, StoreGetByIdCommand>(It.IsAny<StoreGetByIdRequest>()))
+				ics => ics.Execute(It.IsAny<StoreGetByIdRequest>()))
 				.Returns(new StoreGetByIdResponseBuilder().WithMaxProducts(10).Build());
 
 			_productQuery.Setup(

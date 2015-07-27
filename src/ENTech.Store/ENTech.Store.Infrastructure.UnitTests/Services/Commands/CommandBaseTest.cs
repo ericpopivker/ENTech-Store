@@ -51,7 +51,7 @@ namespace ENTech.Store.Infrastructure.UnitTests.Services.Commands
 
 
 
-		public class RequestStub : IRequest
+		public class RequestStub : IRequest<ResponseStub>
 		{
 			public string UserToken { get; set; }
 

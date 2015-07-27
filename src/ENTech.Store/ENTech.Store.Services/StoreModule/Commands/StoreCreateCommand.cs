@@ -37,7 +37,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 				Address = _mapper.Map<AddressDto, AddressCreateOrUpdateDto>(storeDto.Address)
 			};
 
-			var addressCreateResponse = _internalCommandService.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(addressCreateRequest);
+			var addressCreateResponse = _internalCommandService.Execute(addressCreateRequest);
 
 
 			var entity = new Entities.StoreModule.Store

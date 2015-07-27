@@ -5,7 +5,7 @@ using ENTech.Store.Infrastructure.Services.Validators;
 namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public interface ICommand<in TRequest, TResponse> : IInternalCommand
-		where TRequest : IRequest
+		where TRequest : IRequest<TResponse>
 		where TResponse : IResponse
 	{
 		TResponse Execute(TRequest request);

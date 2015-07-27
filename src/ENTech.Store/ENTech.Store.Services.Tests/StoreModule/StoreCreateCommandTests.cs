@@ -46,7 +46,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			_internalCommandServiceMock.Setup(
 				x =>
-					x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(
+					x.Execute(
 						It.Is<AddressCreateRequest>(req => req.Address != null && req.Address.CountryId == _validCountryId)))
 				.Returns(new AddressCreateResponse
 				{
@@ -55,7 +55,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			_internalCommandServiceMock.Setup(
 				x =>
-					x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(
+					x.Execute(
 						It.Is<AddressCreateRequest>(req => req.Address != null && req.Address.CountryId == _invalidCountryId)))
 				.Throws<Exception>();
 		}
@@ -102,7 +102,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 			Command.Execute(request);
 
-			_internalCommandServiceMock.Verify(x=>x.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(It.IsAny<AddressCreateRequest>()), Times.Once);
+			_internalCommandServiceMock.Verify(x=>x.Execute(It.IsAny<AddressCreateRequest>()), Times.Once);
 		}
 
 		[Test]

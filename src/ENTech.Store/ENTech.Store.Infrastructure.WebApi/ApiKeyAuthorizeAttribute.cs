@@ -45,7 +45,7 @@ namespace ENTech.Store.Infrastructure.WebApi
 
 			string apiKey = authorizationParameters["ApiKey"];
 			
-			var authenticateResponse = _externalCommandService.Execute<AuthenticateApiKeyRequest, AuthenticateApiKeyResponse, AuthenticateApiKeyCommand>(new AuthenticateApiKeyRequest
+			var authenticateResponse = _externalCommandService.Execute(new AuthenticateApiKeyRequest
 			{
 				ApiKey = apiKey
 			});

@@ -2,9 +2,7 @@
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.CommandService.Definition;
-using ENTech.Store.Services.GeoModule.Commands;
 using ENTech.Store.Services.GeoModule.Requests;
-using ENTech.Store.Services.GeoModule.Responses;
 using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
@@ -32,7 +30,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 			if (AddressMustBeUpdated(request, store))
 			{
-				_internalCommandService.Execute<AddressUpdateRequest, AddressUpdateResponse, AddressUpdateCommand>(new AddressUpdateRequest
+				_internalCommandService.Execute(new AddressUpdateRequest
 				{
 					AddressId = store.AddressId.Value,
 					Address = request.Store.Address
@@ -41,7 +39,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 			if (AddressMustBeCreated(request, store))
 			{
-				var addressCreateResponse = _internalCommandService.Execute<AddressCreateRequest, AddressCreateResponse, AddressCreateCommand>(new AddressCreateRequest
+				var addressCreateResponse = _internalCommandService.Execute(new AddressCreateRequest
 				{
 					Address = request.Store.Address
 				});
@@ -52,7 +50,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 
 			if (AddressMustBeDeleted(request, store))
 			{
-				_internalCommandService.Execute<AddressDeleteRequest, AddressDeleteResponse, AddressDeleteCommand>(new AddressDeleteRequest
+				_internalCommandService.Execute(new AddressDeleteRequest
 				{
 					AddressId = store.AddressId.Value
 				});

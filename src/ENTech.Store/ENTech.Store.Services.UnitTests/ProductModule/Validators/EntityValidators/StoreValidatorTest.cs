@@ -30,13 +30,13 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 		[Test]
 		public void ValidateId_When_called_Then_calls_StoreGetEntityMetaStateCommand()
 		{
-			_internalCommandService.Setup(ics => ics.Execute<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse, StoreGetEntityMetaStateCommand>(It.IsAny<StoreGetEntityMetaStateRequest>()))
+			_internalCommandService.Setup(ics => ics.Execute(It.IsAny<StoreGetEntityMetaStateRequest>()))
 										.Returns(new StoreGetEntityMetaStateResponse{EntityMetaState = EntityMetaState.Exists});
 
 			_storeValidator.ValidateId(StoreIdFake);
 
 
-			_internalCommandService.Verify(ics => ics.Execute<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse, StoreGetEntityMetaStateCommand>(It.Is<StoreGetEntityMetaStateRequest>(r => r.Id == StoreIdFake)), Times.Once);
+			_internalCommandService.Verify(ics => ics.Execute(It.Is<StoreGetEntityMetaStateRequest>(r => r.Id == StoreIdFake)), Times.Once);
 		}
 
 
@@ -44,7 +44,7 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 		[Test]
 		public void ValidateId_When_exists_Then_returns_valid()
 		{
-			_internalCommandService.Setup(ics => ics.Execute<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse, StoreGetEntityMetaStateCommand>(It.IsAny<StoreGetEntityMetaStateRequest>()))
+			_internalCommandService.Setup(ics => ics.Execute(It.IsAny<StoreGetEntityMetaStateRequest>()))
 										.Returns(new StoreGetEntityMetaStateResponse { EntityMetaState = EntityMetaState.Exists });
 
 			var result = _storeValidator.ValidateId(StoreIdFake);
@@ -55,7 +55,7 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 		[Test]
 		public void ValidateId_When_not_found_Then_returns_EntityWithIdDoesNotExistError()
 		{
-			_internalCommandService.Setup(ics => ics.Execute<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse, StoreGetEntityMetaStateCommand>(It.IsAny<StoreGetEntityMetaStateRequest>()))
+			_internalCommandService.Setup(ics => ics.Execute(It.IsAny<StoreGetEntityMetaStateRequest>()))
 										.Returns(new StoreGetEntityMetaStateResponse { EntityMetaState = EntityMetaState.NotFound });
 
 			var result = _storeValidator.ValidateId(StoreIdFake);
@@ -69,7 +69,7 @@ namespace ENTech.Store.Services.UnitTests.ProductModule.Validators.EntityValidat
 		[Test]
 		public void ValidateId_When_entity_deleted_Then_returns_EntityWithIdIsDeletedError()
 		{
-			_internalCommandService.Setup(ics => ics.Execute<StoreGetEntityMetaStateRequest, StoreGetEntityMetaStateResponse, StoreGetEntityMetaStateCommand>(It.IsAny<StoreGetEntityMetaStateRequest>()))
+			_internalCommandService.Setup(ics => ics.Execute(It.IsAny<StoreGetEntityMetaStateRequest>()))
 										.Returns(new StoreGetEntityMetaStateResponse { EntityMetaState = EntityMetaState.Deleted });
 
 			var result = _storeValidator.ValidateId(StoreIdFake);

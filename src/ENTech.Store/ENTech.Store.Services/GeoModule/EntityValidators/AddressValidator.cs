@@ -21,7 +21,7 @@ namespace ENTech.Store.Services.GeoModule.EntityValidators
 		public ValidateArgumentResult ValidateId(int addressId)
 		{
 			var storeGetEntityStateRequest = new AddressGetEntityMetaStateRequest { Id = addressId };
-			var response = _internalCommandService.Execute<AddressGetEntityMetaStateRequest, AddressGetEntityMetaStateResponse, AddressGetEntityMetaStateCommand>(storeGetEntityStateRequest);
+			var response = _internalCommandService.Execute(storeGetEntityStateRequest);
 
 			if (response.EntityMetaState == EntityMetaState.NotFound)
 			{

@@ -43,7 +43,7 @@ namespace ENTech.Store.Services.ProductModule.Validators.EntityValidators
 		{
 			StoreGetByIdRequest storeGetByIdRequest = new StoreGetByIdRequest();
 			storeGetByIdRequest.LoadOptions = new Collection<StoreLoadOption> { StoreLoadOption.Settings };
-			var response = _internalCommandService.Execute<StoreGetByIdRequest, StoreGetByIdResponse, StoreGetByIdCommand>(storeGetByIdRequest);
+			var response = _internalCommandService.Execute(storeGetByIdRequest);
 
 			var storeSettings = response.Item.Settings;
 			var totalProducts = _productQuery.GetTotalByStoreId(storeId);

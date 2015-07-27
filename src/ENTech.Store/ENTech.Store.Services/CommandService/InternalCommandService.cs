@@ -17,14 +17,12 @@ namespace ENTech.Store.Services.CommandService
 			
 		}
 		
-		public TResponse Execute<TRequest, TResponse, TCommand>(TRequest request) 
-			where TRequest : IRequest
+		public TResponse Execute<TResponse>(IRequest<TResponse> request) 
 			where TResponse : IResponse, new() 
-			where TCommand : ICommand<TRequest, TResponse>
 		{
-			var command = CommandFactory.Create<TCommand>();
+			var command = CommandFactory.Create(request);
 
-			var responseStatus = TryExecute<TRequest, TResponse, TCommand>(request, command);
+			var responseStatus = TryExecute(request, command);
 
 			if (responseStatus is ErrorResponseStatus<TResponse>)
 				throw new InvalidOperationException(); //serialize Errors to Json

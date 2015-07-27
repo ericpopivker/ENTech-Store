@@ -1,5 +1,4 @@
 ﻿using System;
-using ENTech.Store.Infrastructure.Services.Errors;
 using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
@@ -8,7 +7,7 @@ using ENTech.Store.Infrastructure.Services.Validators;
 namespace ENTech.Store.Infrastructure.Services.Commands
 {
 	public abstract class CommandBase<TRequest, TResponse> : ICommand<TRequest, TResponse>
-		where TRequest : IRequest
+		where TRequest : IRequest<TResponse>
 		where TResponse : IResponse, new()
 	{
 		private readonly bool _requiresTransaction;

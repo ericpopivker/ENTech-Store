@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Web.Http;
 using ENTech.Store.DbEntities.GeoModule;
 using ENTech.Store.DbEntities.PartnerModule;
@@ -13,6 +14,7 @@ using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Entities;
 using ENTech.Store.Infrastructure.Mapping;
+using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.AuthenticationModule;
 using ENTech.Store.Services.CommandService;
@@ -30,10 +32,10 @@ namespace ENTech.Store.Api
         {
 			var container = IoC.Container;
 
-	        container.RegisterType<ICommandFactory, CommandFactory>()
+			container.RegisterType<ICommandFactory, CommandFactory>()
 				.RegisterType<IUnitOfWork, UnitOfWork>()
 				.RegisterType<IDbContextFactory, DbContextFactory>()
-		        .RegisterType<IExternalCommandService, ExternalCommandService>()
+				.RegisterType<IExternalCommandService, ExternalCommandService>()
 				.RegisterType<IInternalCommandService, InternalCommandService>()
 				.RegisterType<IMapper, Mapper>()
 				.RegisterType<IDtoValidatorFactory, DtoValidatorFactory>()
@@ -42,12 +44,16 @@ namespace ENTech.Store.Api
 				.RegisterType<IStoreValidator, StoreValidator>()
 				.RegisterType<IAddressValidator, AddressValidator>()
 				.RegisterType<IProductValidator, ProductValidator>()
-
 				.RegisterEntityForRepository<Entities.StoreModule.Store, StoreDbEntity>()
 				.RegisterEntityForRepository<Partner, PartnerDbEntity>()
 				.RegisterEntityForRepository<Address, AddressDbEntity>()
 				.RegisterEntityForRepository<Product, ProductDbEntity>()
-				.RegisterType<IDbContext>(new InjectionFactory(c => DbContextScope.CurrentDbContext));			
+				.RegisterType<IDbContext>(new InjectionFactory(c => DbContextScope.CurrentDbContext))
+
+				.RegisterTypes(
+					AllClasses.FromLoadedAssemblies().
+						Where(type => typeof (IInternalCommand).IsAssignableFrom(type)),
+					type => type.GetInterfaces().Where(x => x.Name == "ICommand`2")); //TODO: cleanup, HACKISH
 
 			config.DependencyResolver = new UnityDependencyResolver(container);
         }

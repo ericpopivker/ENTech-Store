@@ -73,6 +73,7 @@
     <Compile Include="AuthenticationModule\Errors\ResponseErrors\ApiKeyInvalidResponseError.cs" />
     <Compile Include="AuthenticationModule\Errors\ResponseErrors\ApiKeyRequiredResponseError.cs" />
     <Compile Include="AuthenticationModule\Responses\AuthenticateApiKeyResponse.cs" />
+    <Compile Include="CommandService\CommandFacade.cs" />
     <Compile Include="CommandService\CommandFactory.cs" />
     <Compile Include="CommandService\CommandServiceBase.cs" />
     <Compile Include="CommandService\Definition\IExternalCommandService.cs" />

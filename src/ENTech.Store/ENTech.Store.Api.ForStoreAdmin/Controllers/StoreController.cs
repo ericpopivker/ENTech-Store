@@ -28,7 +28,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[Route("create")]
 		public HttpResponseMessage Create([FromBody]StoreCreateRequest request)
 		{
-			var response = _anonymousExternalCommandService.Execute<StoreCreateRequest, StoreCreateResponse, StoreCreateCommand>(request);
+			var response = _anonymousExternalCommandService.Execute(request);
 			return Request.CreateResponse(response);
 		}
 
@@ -37,7 +37,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[ResponseType(typeof(StoreGetByIdResponse))]
 		public HttpResponseMessage GetById([FromUri] StoreGetByIdRequest request)
 		{
-			var response = _businessAdminExternalCommandService.Execute<StoreGetByIdRequest, StoreGetByIdResponse, StoreGetByIdCommand>(request);
+			var response = _businessAdminExternalCommandService.Execute(request);
 			return Request.CreateResponse(response);
 		}
 
@@ -47,7 +47,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		public HttpResponseMessage Update([FromBody] StoreUpdateRequest request, int id)
 		{
 			request.StoreId = id;
-			var response = _businessAdminExternalCommandService.Execute<StoreUpdateRequest, StoreUpdateResponse, StoreUpdateCommand>(request);
+			var response = _businessAdminExternalCommandService.Execute(request);
 			return Request.CreateResponse(response);
 		}
 
@@ -56,7 +56,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[ResponseType(typeof(StoreFindResponse))]
 		public HttpResponseMessage Find([FromUri]StoreFindRequest request)
 		{
-			var response = _businessAdminExternalCommandService.Execute<StoreFindRequest, StoreFindResponse, StoreFindCommand>(request);
+			var response = _businessAdminExternalCommandService.Execute(request);
 			return Request.CreateResponse(response);
 		}
 

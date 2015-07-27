@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace ENTech.Store.Services.Tests.Shared
 {
 	public abstract class CommandTestsBase<TRequest, TResponse>
-		where TRequest : IRequest
+		where TRequest : IRequest<TResponse>
 		where TResponse : IResponse
 	{
 		private readonly Mock<IMapper> _mapperMock = new Mock<IMapper>();
