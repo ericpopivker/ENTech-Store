@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
@@ -65,6 +66,14 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		{
 			_storeRepositoryMock.ResetCalls();
 			_internalCommandServiceMock.ResetCalls();
+		}
+
+		[Test]
+		public void Blabla()
+		{
+			var command = Command.GetType();
+			var interfaces = command.GetInterfaces();
+			var commandInterface = interfaces.FirstOrDefault();
 		}
 
 		[Test]

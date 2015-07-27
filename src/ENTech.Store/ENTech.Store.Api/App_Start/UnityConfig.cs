@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Web.Http;
+using ENTech.Store.Api.Extensions;
 using ENTech.Store.DbEntities.GeoModule;
 using ENTech.Store.DbEntities.PartnerModule;
 using ENTech.Store.DbEntities.StoreModule;
@@ -9,10 +10,6 @@ using ENTech.Store.Entities.StoreModule;
 using ENTech.Store.Infrastructure;
 using ENTech.Store.Infrastructure.Database.EF6;
 using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
-using ENTech.Store.Infrastructure.Database.EF6.Utility;
-using ENTech.Store.Infrastructure.Database.Entities;
-using ENTech.Store.Infrastructure.Database.Repository;
-using ENTech.Store.Infrastructure.Entities;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;
@@ -32,43 +29,44 @@ namespace ENTech.Store.Api
         {
 			var container = IoC.Container;
 
-			container.RegisterType<ICommandFactory, CommandFactory>()
+			container
+				//DB infrastructure
+				.RegisterType<ICommandFactory, CommandFactory>()
 				.RegisterType<IUnitOfWork, UnitOfWork>()
 				.RegisterType<IDbContextFactory, DbContextFactory>()
+				.RegisterType<IDbEntityMapper, DbEntityMapper>()
 				.RegisterType<IExternalCommandService, ExternalCommandService>()
 				.RegisterType<IInternalCommandService, InternalCommandService>()
+
+				//common infrastructure
 				.RegisterType<IMapper, Mapper>()
 				.RegisterType<IDtoValidatorFactory, DtoValidatorFactory>()
-				.RegisterType<IDbEntityMapper, DbEntityMapper>()
-				.RegisterType<IPartnerQuery, PartnerQuery>()
+
+				//validators
 				.RegisterType<IStoreValidator, StoreValidator>()
 				.RegisterType<IAddressValidator, AddressValidator>()
 				.RegisterType<IProductValidator, ProductValidator>()
+
+				//queries
+				.RegisterType<IPartnerQuery, PartnerQuery>()
+
+				//repositories
 				.RegisterEntityForRepository<Entities.StoreModule.Store, StoreDbEntity>()
 				.RegisterEntityForRepository<Partner, PartnerDbEntity>()
 				.RegisterEntityForRepository<Address, AddressDbEntity>()
 				.RegisterEntityForRepository<Product, ProductDbEntity>()
 				.RegisterType<IDbContext>(new InjectionFactory(c => DbContextScope.CurrentDbContext))
 
+				//commands
 				.RegisterTypes(
 					AllClasses.FromLoadedAssemblies().
 						Where(type => typeof (IInternalCommand).IsAssignableFrom(type)),
-					type => type.GetInterfaces().Where(x => x.Name == "ICommand`2")); //TODO: cleanup, HACKISH
+					type => type.GetInterfaces()
+						.Where(x => x.Name == typeof(ICommand<,>).Name 
+							&& x.Namespace == typeof(ICommand<,>).Namespace)); //TODO: cleanup, HACKISH
+
 
 			config.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
-
-
-	public static class UnityExtensions
-	{
-		public static IUnityContainer RegisterEntityForRepository<TEntity, TDbEntity>(this IUnityContainer unityContainer) where TEntity : class, IDomainEntity where TDbEntity : class, IDbEntity
-		{
-			unityContainer
-				.RegisterType<IRepository<TEntity>, Repository<TEntity, TDbEntity>>()
-				.RegisterType<IDbEntityStateKeeper<TEntity, TDbEntity>, DbEntityStateKeeper<TEntity, TDbEntity>>();
-
-			return unityContainer;
-		}
-	}
 }

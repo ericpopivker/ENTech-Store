@@ -31,7 +31,6 @@ namespace ENTech.Store.Services.CommandService
 		protected IResponseStatus<TResponse> TryExecute<TResponse>(IRequest<TResponse> request, CommandFacade<TResponse> commandFacade)
 			where TResponse : IResponse, new()
 		{
-			var response = new TResponse();
 			
 			var validateResult = commandFacade.Validate(request);
 
@@ -39,7 +38,8 @@ namespace ENTech.Store.Services.CommandService
 			{
 				try
 				{
-					response = commandFacade.Execute(request);
+					var response = commandFacade.Execute(request);
+					return new OkResponseStatus<TResponse>(response);
 				}
 				catch (Exception e)
 				{
@@ -49,14 +49,8 @@ namespace ENTech.Store.Services.CommandService
 					return new ErrorResponseStatus<TResponse>(error);
 				}
 			}
-			else
-			{
-				return new ErrorResponseStatus<TResponse>(validateResult.ResponseError);
-			}
 
-			return new OkResponseStatus<TResponse>(response);
+			return new ErrorResponseStatus<TResponse>(validateResult.ResponseError);
 		}
-
-		
 	}
 }
