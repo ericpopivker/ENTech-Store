@@ -8,7 +8,7 @@ namespace ENTech.Store.Database.Tests
 {
 	public class DbEntityStateKeeperTests
 	{
-		private IDbEntityStateKeeper<StubDomainEntity, StubDbEntity> _dbEntityStateKeeper = new DbEntityStateKeeper<StubDomainEntity, StubDbEntity>();
+		private readonly IDbEntityStateKeeper<StubDomainEntity, StubDbEntity> _dbEntityStateKeeper = new DbEntityStateKeeper<StubDomainEntity, StubDbEntity>();
 
 		[TearDown]
 		public void TearDown()
