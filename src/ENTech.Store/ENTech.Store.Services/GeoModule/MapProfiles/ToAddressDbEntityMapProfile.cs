@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ENTech.Store.DbEntities.GeoModule;
+using ENTech.Store.Database.GeoModule;
 using ENTech.Store.Entities.GeoModule;
 
 namespace ENTech.Store.Services.GeoModule.MapProfiles

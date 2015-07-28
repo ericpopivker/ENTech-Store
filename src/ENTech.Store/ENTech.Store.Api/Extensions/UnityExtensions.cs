@@ -1,5 +1,5 @@
-using ENTech.Store.Infrastructure.Database.EF6;
-using ENTech.Store.Infrastructure.Database.EF6.Utility;
+using ENTech.Store.Database;
+using ENTech.Store.Database.Utility;
 using ENTech.Store.Infrastructure.Database.Entities;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Entities;

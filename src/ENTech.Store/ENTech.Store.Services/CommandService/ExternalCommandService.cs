@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using ENTech.Store.Database;
 using ENTech.Store.Infrastructure;
-using ENTech.Store.Infrastructure.Database.EF6;
-using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
+using ENTech.Store.Infrastructure.Database.UnitOfWork;
 using ENTech.Store.Infrastructure.Services.Errors.ResponseErrors;
 using ENTech.Store.Infrastructure.Services.Requests;
 using ENTech.Store.Infrastructure.Services.Responses;
@@ -16,13 +16,15 @@ namespace ENTech.Store.Services.CommandService
 		CommandServiceBase,
 		IExternalCommandService
 	{
+		private readonly IDbContext _dbContext;
 		private readonly IInternalCommandService _internalCommandService;
 
 		protected IInternalCommandService InternalCommandService { get { return _internalCommandService; } }
 
-		public ExternalCommandService(ICommandFactory commandFactory)
+		public ExternalCommandService(ICommandFactory commandFactory, IDbContext dbContext)
 			: base(commandFactory)
 		{
+			_dbContext = dbContext;
 			_internalCommandService = new InternalCommandService(commandFactory);
 		}
 
@@ -46,7 +48,7 @@ namespace ENTech.Store.Services.CommandService
 					unitOfWork.BeginTransaction();
 				}
 
-				LimitDbContext(request, unitOfWork.DbContext);
+				LimitDbContext(request, _dbContext);
 				try
 				{
 					responseStatus = TryExecute(request, command);

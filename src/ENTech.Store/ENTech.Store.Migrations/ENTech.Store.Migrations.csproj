@@ -71,10 +71,6 @@
       <Project>{26b48b70-7cf1-4be9-9d14-ce616b4cf7aa}</Project>
       <Name>ENTech.Store.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ENTech.Store.Infrastructure.Database.EF6\ENTech.Store.Infrastructure.Database.EF6.csproj">
-      <Project>{93c02513-affb-43a0-af4b-b5468987cc9e}</Project>
-      <Name>ENTech.Store.Infrastructure.Database.EF6</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj">
       <Project>{1152aa7a-f788-4291-8b0d-c1117d1c7a08}</Project>
       <Name>ENTech.Store.Infrastructure.Database</Name>

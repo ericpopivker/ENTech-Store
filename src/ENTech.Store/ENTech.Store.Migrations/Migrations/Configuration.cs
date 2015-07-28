@@ -1,5 +1,5 @@
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
-using ENTech.Store.Infrastructure.Database.EF6;
 
 namespace ENTech.Store.Migrations.Migrations
 {

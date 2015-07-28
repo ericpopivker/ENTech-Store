@@ -1,6 +1,6 @@
 ﻿using ENTech.Store.Entities.StoreModule;
-using ENTech.Store.Infrastructure.Database.EF6.UnitOfWork;
 using ENTech.Store.Infrastructure.Database.Repository;
+using ENTech.Store.Infrastructure.Database.UnitOfWork;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.ProductModule.Dtos;

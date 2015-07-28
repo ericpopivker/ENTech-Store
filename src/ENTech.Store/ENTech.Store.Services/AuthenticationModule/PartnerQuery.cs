@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ENTech.Store.DbEntities.PartnerModule;
-using ENTech.Store.Infrastructure.Database.EF6;
+using ENTech.Store.Database;
+using ENTech.Store.Database.PartnerModule;
 
 namespace ENTech.Store.Services.AuthenticationModule
 {

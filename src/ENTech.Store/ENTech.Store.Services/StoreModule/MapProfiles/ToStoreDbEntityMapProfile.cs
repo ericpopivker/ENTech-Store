@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ENTech.Store.DbEntities.StoreModule;
+using ENTech.Store.Database.StoreModule;
 
 namespace ENTech.Store.Services.StoreModule.MapProfiles
 {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ENTech.Store.DbEntities.PartnerModule;
+using ENTech.Store.Database.PartnerModule;
 using ENTech.Store.Entities.PartnerModule;
 
 namespace ENTech.Store.Services.AuthenticationModule.MapProfiles

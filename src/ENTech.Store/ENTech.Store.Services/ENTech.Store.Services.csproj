@@ -183,17 +183,13 @@
     <Compile Include="StoreModule\Responses\StoreCreateResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ENTech.Store.DbEntities\ENTech.Store.DbEntities.csproj">
+    <ProjectReference Include="..\ENTech.Store.Database\ENTech.Store.Database.csproj">
       <Project>{B2738CFF-4567-4537-9CC9-69CE92E95DCA}</Project>
-      <Name>ENTech.Store.DbEntities</Name>
+      <Name>ENTech.Store.Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Entities\ENTech.Store.Entities.csproj">
       <Project>{26b48b70-7cf1-4be9-9d14-ce616b4cf7aa}</Project>
       <Name>ENTech.Store.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ENTech.Store.Infrastructure.Database.EF6\ENTech.Store.Infrastructure.Database.EF6.csproj">
-      <Project>{93C02513-AFFB-43A0-AF4B-B5468987CC9E}</Project>
-      <Name>ENTech.Store.Infrastructure.Database.EF6</Name>
     </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj">
       <Project>{1152AA7A-F788-4291-8B0D-C1117D1C7A08}</Project>

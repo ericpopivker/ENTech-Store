@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using ENTech.Store.Infrastructure.Database.EF6;
 using ENTech.Store.Infrastructure.Database.Repository;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Dtos;
-using ENTech.Store.Infrastructure.Services.Validators;
 using ENTech.Store.Services.StoreModule;
 using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Criterias;

@@ -19,12 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Services.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.Database", "ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj", "{1152AA7A-F788-4291-8B0D-C1117D1C7A08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.Database.EF6", "ENTech.Store.Infrastructure.Database.EF6\ENTech.Store.Infrastructure.Database.EF6.csproj", "{93C02513-AFFB-43A0-AF4B-B5468987CC9E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.Database.EF6.Tests", "ENTech.Store.Infrastructure.Database.EF6.Tests\ENTech.Store.Infrastructure.Database.EF6.Tests.csproj", "{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.DbEntities", "ENTech.Store.DbEntities\ENTech.Store.DbEntities.csproj", "{B2738CFF-4567-4537-9CC9-69CE92E95DCA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Services.UnitTests", "ENTech.Store.Services.UnitTests\ENTech.Store.Services.UnitTests.csproj", "{53A2293D-6CCC-40CF-BFEF-81AEE95E4104}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.UnitTests", "ENTech.Store.Infrastructure.UnitTests\ENTech.Store.Infrastructure.UnitTests.csproj", "{F90491F4-7D50-471D-91AF-AF5FAA6C3CAE}"
@@ -39,6 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{403028
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Infrastructure.WebApi", "ENTech.Store.Infrastructure.WebApi\ENTech.Store.Infrastructure.WebApi.csproj", "{A779C7A3-77D7-4466-B83E-81C758EAFFF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Database", "ENTech.Store.Database\ENTech.Store.Database.csproj", "{B2738CFF-4567-4537-9CC9-69CE92E95DCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENTech.Store.Database.Tests", "ENTech.Store.Database.Tests\ENTech.Store.Database.Tests.csproj", "{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,18 +76,6 @@ Global
 		{1152AA7A-F788-4291-8B0D-C1117D1C7A08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1152AA7A-F788-4291-8B0D-C1117D1C7A08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1152AA7A-F788-4291-8B0D-C1117D1C7A08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93C02513-AFFB-43A0-AF4B-B5468987CC9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93C02513-AFFB-43A0-AF4B-B5468987CC9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93C02513-AFFB-43A0-AF4B-B5468987CC9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93C02513-AFFB-43A0-AF4B-B5468987CC9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2738CFF-4567-4537-9CC9-69CE92E95DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2738CFF-4567-4537-9CC9-69CE92E95DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2738CFF-4567-4537-9CC9-69CE92E95DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2738CFF-4567-4537-9CC9-69CE92E95DCA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{53A2293D-6CCC-40CF-BFEF-81AEE95E4104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{53A2293D-6CCC-40CF-BFEF-81AEE95E4104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53A2293D-6CCC-40CF-BFEF-81AEE95E4104}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -106,6 +92,14 @@ Global
 		{A779C7A3-77D7-4466-B83E-81C758EAFFF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A779C7A3-77D7-4466-B83E-81C758EAFFF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A779C7A3-77D7-4466-B83E-81C758EAFFF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2738CFF-4567-4537-9CC9-69CE92E95DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2738CFF-4567-4537-9CC9-69CE92E95DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2738CFF-4567-4537-9CC9-69CE92E95DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2738CFF-4567-4537-9CC9-69CE92E95DCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D846A21A-0556-4139-9E3A-2ADCFA50F0B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,8 +6,8 @@ using System.Security.Principal;
 using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using ENTech.Store.Database.UnitOfWork;
 using ENTech.Store.Infrastructure.Services.Responses.Statuses;
-using ENTech.Store.Services.AuthenticationModule.Commands;
 using ENTech.Store.Services.AuthenticationModule.Requests;
 using ENTech.Store.Services.AuthenticationModule.Responses;
 using ENTech.Store.Services.CommandService;
@@ -17,7 +17,7 @@ namespace ENTech.Store.Infrastructure.WebApi
 {
 	public abstract class ApiKeyAuthorizeAttribute : AuthorizeAttribute
 	{
-		private readonly IExternalCommandService _externalCommandService = new ExternalCommandService(new CommandFactory());
+		private readonly IExternalCommandService _externalCommandService = new ExternalCommandService(new CommandFactory(), DbContextScope.CurrentDbContext);
 
 		public override void OnAuthorization(HttpActionContext actionContext)
 		{

@@ -71,6 +71,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ENTech.Store.Database\ENTech.Store.Database.csproj">
+      <Project>{B2738CFF-4567-4537-9CC9-69CE92E95DCA}</Project>
+      <Name>ENTech.Store.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj">
+      <Project>{1152aa7a-f788-4291-8b0d-c1117d1c7a08}</Project>
+      <Name>ENTech.Store.Infrastructure.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj">
       <Project>{7D581130-B9A8-4E44-9562-67E41697A123}</Project>
       <Name>ENTech.Store.Infrastructure</Name>
