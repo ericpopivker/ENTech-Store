@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expand\DtoExpanderTests.cs" />
     <Compile Include="Helpers\PropertyHelperTest.cs" />
     <Compile Include="Services\Commands\CommandBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

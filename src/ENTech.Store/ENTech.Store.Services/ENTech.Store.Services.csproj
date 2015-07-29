@@ -81,15 +81,7 @@
     <Compile Include="CommandService\ExternalCommandService.cs" />
     <Compile Include="CommandService\ICommandFactory.cs" />
     <Compile Include="CommandService\InternalCommandService.cs" />
-    <Compile Include="Expandable\DtoExpander.cs" />
-    <Compile Include="Expandable\DtoExpandStrategyFactory.cs" />
-    <Compile Include="Expandable\ExpandOption.cs" />
-    <Compile Include="Expandable\IDtoExpander.cs" />
-    <Compile Include="Expandable\IDtoExpandStrategy.cs" />
-    <Compile Include="Expandable\IDtoExpandStrategyFactory.cs" />
-    <Compile Include="Expandable\IDtoLoader.cs" />
-    <Compile Include="Expandable\IDtoLoaderFactory.cs" />
-    <Compile Include="Expandable\IExpandableDto.cs" />
+    <Compile Include="Expandable\DtoServiceLoader.cs" />
     <Compile Include="GeoModule\Commands\AddressDeleteCommand.cs" />
     <Compile Include="GeoModule\Commands\AddressGetEntityMetaStateCommand.cs" />
     <Compile Include="GeoModule\Requests\AddressGetEntityMetaStateRequest.cs" />

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using ENTech.Store.Services.Expandable;
+using ENTech.Store.Infrastructure.Expandable;
 using Moq;
 using NUnit.Framework;
 
-namespace ENTech.Store.Services.Tests.Expand
+namespace ENTech.Store.Infrastructure.UnitTests.Expand
 {
 	public class DtoExpanderTests
 	{

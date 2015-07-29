@@ -1,4 +1,4 @@
-namespace ENTech.Store.Services.Expandable
+namespace ENTech.Store.Infrastructure.Expandable
 {
 	public interface IDtoLoaderFactory
 	{

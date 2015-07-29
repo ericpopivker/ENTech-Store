@@ -90,6 +90,15 @@
     <Compile Include="Entities\ILogicallyDeletable.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Expandable\DtoExpander.cs" />
+    <Compile Include="Expandable\DtoExpandStrategyFactory.cs" />
+    <Compile Include="Expandable\ExpandOption.cs" />
+    <Compile Include="Expandable\IDtoExpander.cs" />
+    <Compile Include="Expandable\IDtoExpandStrategy.cs" />
+    <Compile Include="Expandable\IDtoExpandStrategyFactory.cs" />
+    <Compile Include="Expandable\IDtoLoader.cs" />
+    <Compile Include="Expandable\IDtoLoaderFactory.cs" />
+    <Compile Include="Expandable\IExpandableDto.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Helpers\PropertyHelper.cs" />

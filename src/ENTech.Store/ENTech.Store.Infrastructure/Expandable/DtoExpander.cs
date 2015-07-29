@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ENTech.Store.Services.Expandable
+namespace ENTech.Store.Infrastructure.Expandable
 {
 	public class DtoExpander : IDtoExpander
 	{

@@ -1,6 +1,6 @@
 using System;
 
-namespace ENTech.Store.Services.Expandable
+namespace ENTech.Store.Infrastructure.Expandable
 {
 	public class DtoExpandStrategyFactory : IDtoExpandStrategyFactory
 	{
