@@ -7,10 +7,9 @@ using NUnit.Framework;
 namespace ENTech.Store.Infrastructure.IntegrationTests.Cache
 {
 	[TestFixture]
-	public class RedisCachePerformanceTest : CachePerformanceTestBase
+	public class DictionaryCachePerformanceTest : CachePerformanceTestBase
 	{
-
-		public RedisCachePerformanceTest() : base(new RedisCache())
+		public DictionaryCachePerformanceTest() : base(new DictionaryCache())
 		{
 		}
 	}

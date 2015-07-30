@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using ENTech.Store.Infrastructure.Cache;
-using MiniProfiler.Windows;
+using ENTech.Store.Infrastructure.Services;
 using NUnit.Framework;
+using ProtoBuf;
 
 namespace ENTech.Store.Infrastructure.IntegrationTests.Cache
 {
 	[TestFixture]
-	public class RedisCachePerformanceTest : CachePerformanceTestBase
+	public class DictionaryCacheTest : CacheTestBase
 	{
 
-		public RedisCachePerformanceTest() : base(new RedisCache())
+		public DictionaryCacheTest() : base(new DictionaryCache())
 		{
+
 		}
 	}
 }

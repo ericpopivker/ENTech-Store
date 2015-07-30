@@ -54,7 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\CachePerformanceTestBase.cs" />
+    <Compile Include="Cache\CacheTestBase.cs" />
+    <Compile Include="Cache\DictionaryCachePerformanceTest.cs" />
     <Compile Include="Cache\RedisCachePerformanceTest.cs" />
+    <Compile Include="Cache\DictionaryCacheTest.cs" />
     <Compile Include="Cache\RedisCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetUpFixture.cs" />
