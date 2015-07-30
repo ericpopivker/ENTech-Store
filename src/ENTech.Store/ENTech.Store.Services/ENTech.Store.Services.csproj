@@ -139,8 +139,6 @@
     <Compile Include="SharedModule\Dtos\FindCriteriaDtoBase.cs" />
     <Compile Include="SharedModule\Dtos\LookupDto.cs" />
     <Compile Include="SharedModule\Dtos\SortFieldDto.cs" />
-    <Compile Include="SharedModule\ModuleLogic\TokenData.cs" />
-    <Compile Include="SharedModule\ModuleLogic\TokenUtilService.cs" />
     <Compile Include="SharedModule\Requests\FindRequestBase.cs" />
     <Compile Include="SharedModule\Requests\GetByIdRequestBase.cs" />
     <Compile Include="SharedModule\Responses\FindResponseBase.cs" />
@@ -206,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SharedModule\Commands\" />
+    <Folder Include="SharedModule\ModuleLogic\" />
     <Folder Include="StoreModule\Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

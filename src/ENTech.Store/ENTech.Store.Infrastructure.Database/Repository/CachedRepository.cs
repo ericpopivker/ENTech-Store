@@ -29,23 +29,28 @@ namespace ENTech.Store.Infrastructure.Database.Repository
 			throw new NotImplementedException();
 		}
 
-		public void Delete(IEnumerable<TEntity> entities)
-		{
-			throw new NotImplementedException();
-		}
 
 		public void Update(TEntity entity)
 		{
 			_dbRepository.Update(entity);
 
-			InvalidateEntityInCache(entity.Id);
+			InvalidateEntityInCache(entity);
 		}
 
 		public void Update(IEnumerable<TEntity> entities)
 		{
+			_dbRepository.Update(entities);
+
+			InvalidateEntityInCache(entities);
+		}
+
+
+		public void Delete(IEnumerable<TEntity> entities)
+		{
 			throw new NotImplementedException();
 		}
 
+		
 		public TEntity GetById(int entityId)
 		{
 			var entityCacheKey = GetEntityCacheKey(entityId);

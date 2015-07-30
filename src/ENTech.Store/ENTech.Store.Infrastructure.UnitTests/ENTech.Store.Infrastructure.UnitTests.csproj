@@ -55,7 +55,6 @@
     <Compile Include="Helpers\PropertyHelperTest.cs" />
     <Compile Include="Services\Commands\CommandBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Repositories\CachedRepositoryTest.cs" />
     <Compile Include="Services\Validators\DtoValidatorTest.cs" />
     <Compile Include="Services\Validators\DtoValidatorVisitorTest.cs" />
     <Compile Include="SetUpFixture.cs" />

@@ -7,10 +7,11 @@ namespace ENTech.Store.Infrastructure.Database.Repository
 	public interface IRepository<T> where T : IDomainEntity 
 	{
 		void Add(T entity);
-		void Add(IEnumerable<T> entity);
+		void Add(IEnumerable<T> entities);
 
-		T GetById(int entityId);
-		IEnumerable<T> FindByIds(IEnumerable<int> entityIds);
+		void Update(T entity);
+		void Update(IEnumerable<T> entities);
+
 
 		/// <summary>
 		/// Delete entity. Deletes entity from DB or marks entity as deleted for ILogicallyDeletable entities.
@@ -26,9 +27,10 @@ namespace ENTech.Store.Infrastructure.Database.Repository
 		/// <param name="entities">Collection of entities to delete.</param>
 		void Delete(IEnumerable<T> entities);
 
-		void Update(T entity);
 
-		void Update(IEnumerable<T> entities);
+		T GetById(int entityId);
+		IEnumerable<T> FindByIds(IEnumerable<int> entityIds);
+
 
 		EntityMetaState GetEntityMetaState(int entityId);
 	}
