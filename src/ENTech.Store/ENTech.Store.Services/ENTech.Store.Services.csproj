@@ -82,16 +82,10 @@
     <Compile Include="CommandService\ICommandFactory.cs" />
     <Compile Include="CommandService\InternalCommandService.cs" />
     <Compile Include="Expandable\DtoExpander.cs" />
-    <Compile Include="Expandable\DtoExpandStrategyFactory.cs" />
-    <Compile Include="Expandable\CommandDtoLoader.cs" />
     <Compile Include="Expandable\ExpandOption.cs" />
     <Compile Include="Expandable\ExpandProfile.cs" />
     <Compile Include="Expandable\IDtoExpander.cs" />
     <Compile Include="Expandable\IDtoExpanderEngine.cs" />
-    <Compile Include="Expandable\IDtoExpandStrategy.cs" />
-    <Compile Include="Expandable\IDtoExpandStrategyFactory.cs" />
-    <Compile Include="Expandable\IDtoLoader.cs" />
-    <Compile Include="Expandable\IDtoLoaderFactory.cs" />
     <Compile Include="Expandable\IExpandableDto.cs" />
     <Compile Include="GeoModule\Commands\AddressDeleteCommand.cs" />
     <Compile Include="GeoModule\Commands\AddressGetEntityMetaStateCommand.cs" />
@@ -157,8 +151,6 @@
     <Compile Include="SharedModule\Dtos\FindCriteriaDtoBase.cs" />
     <Compile Include="SharedModule\Dtos\LookupDto.cs" />
     <Compile Include="SharedModule\Dtos\SortFieldDto.cs" />
-    <Compile Include="SharedModule\ModuleLogic\TokenData.cs" />
-    <Compile Include="SharedModule\ModuleLogic\TokenUtilService.cs" />
     <Compile Include="SharedModule\Requests\FindByIdsRequestBase.cs" />
     <Compile Include="SharedModule\Requests\FindRequestBase.cs" />
     <Compile Include="SharedModule\Requests\GetByIdRequestBase.cs" />
@@ -166,20 +158,17 @@
     <Compile Include="GeoModule\Commands\AddressCreateCommand.cs" />
     <Compile Include="GeoModule\Requests\AddressCreateRequest.cs" />
     <Compile Include="GeoModule\Responses\AddressCreateResponse.cs" />
+    <Compile Include="StoreModule\Commands\ProductCategoryGetByIdCommand.cs" />
     <Compile Include="StoreModule\Commands\StoreDeleteCommand.cs" />
     <Compile Include="StoreModule\Dtos\AddressDto.cs" />
     <Compile Include="StoreModule\Expand\Configurations\StoreExpandableDtoExpandProfile.cs" />
     <Compile Include="StoreModule\Expand\Dtos\StoreExpandableDto.cs" />
-    <Compile Include="StoreModule\Expand\Loaders\AddressCommandDtoLoader.cs" />
-    <Compile Include="StoreModule\Expand\Loaders\ProductCommandDtoLoader.cs" />
-    <Compile Include="StoreModule\Expand\Loaders\StoreCommandDtoLoader.cs" />
+    <Compile Include="StoreModule\Expand\MapProfiles\ToProductExpandableDtoProfile.cs" />
     <Compile Include="StoreModule\Expand\MapProfiles\ToStoreExpandableDtoProfile.cs" />
-    <Compile Include="StoreModule\Expand\Options\ExpandAddress.cs" />
-    <Compile Include="StoreModule\Expand\Options\ExpandProducts.cs" />
-    <Compile Include="StoreModule\Expand\Strategies\StoreAddressExpandStrategy.cs" />
-    <Compile Include="StoreModule\Expand\Strategies\StoreProductsExpandStrategy.cs" />
     <Compile Include="StoreModule\MapProfiles\ToAddressCreateOrUpdateDtoMapProfile.cs" />
     <Compile Include="StoreModule\MapProfiles\ToAddressDtoMapProfile.cs" />
+    <Compile Include="StoreModule\MapProfiles\ToProductCategoryDtoMapProfile.cs" />
+    <Compile Include="StoreModule\MapProfiles\ToProductCategoryMapProfile.cs" />
     <Compile Include="StoreModule\MapProfiles\ToStoreDbEntityMapProfile.cs" />
     <Compile Include="StoreModule\MapProfiles\ToStoreDtoMapProfile.cs" />
     <Compile Include="StoreModule\MapProfiles\ToStoreMapProfile.cs" />
@@ -237,7 +226,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SharedModule\Commands\" />
-    <Folder Include="SharedModule\ModuleLogic\" />
     <Folder Include="StoreModule\Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

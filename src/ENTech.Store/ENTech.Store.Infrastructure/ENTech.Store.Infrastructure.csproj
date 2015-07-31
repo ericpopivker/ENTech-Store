@@ -92,7 +92,6 @@
     <Compile Include="Cache\IDistributedCache.cs" />
     <Compile Include="Cache\LockRetryPolicy.cs" />
     <Compile Include="Cache\ProtobufSerializer.cs" />
-    <Compile Include="Cache\RedisCache.cs" />
     <Compile Include="Context\CallContextStorage.cs" />
     <Compile Include="Context\IContextStorage.cs" />
     <Compile Include="Crypt\CryptEngine.cs" />

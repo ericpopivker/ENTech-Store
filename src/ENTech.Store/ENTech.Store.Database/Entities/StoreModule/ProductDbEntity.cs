@@ -36,5 +36,7 @@ namespace ENTech.Store.Database.Entities.StoreModule
 		public StoreDbEntity Store { get; set; }
 
 		public ICollection<OrderItemDbEntity> OrderItems { get; set; }
+
+		public ProductCategoryDbEntity Category { get; set; }
 	}
 }

@@ -64,6 +64,7 @@
     <Compile Include="Entities\OrderModule\Configurations\OrderPaymentConfiguration.cs" />
     <Compile Include="Entities\OrderModule\Configurations\OrderShippingConfiguration.cs" />
     <Compile Include="Entities\PartnerModule\Configurations\PartnerConfiguration.cs" />
+    <Compile Include="Entities\StoreModule\Configurations\ProductCategoryDbEntityConfiguration.cs" />
     <Compile Include="Entities\StoreModule\Configurations\ProductConfiguration.cs" />
     <Compile Include="Entities\StoreModule\Configurations\StoreConfiguration.cs" />
     <Compile Include="Conventions\ForeignKeyNamingConvention.cs" />
@@ -72,6 +73,8 @@
     <Compile Include="Entities\CustomerModule\CustomerDbEntity.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="DbContextFactory.cs" />
+    <Compile Include="Entities\StoreModule\ProductCategoryDbEntity.cs" />
+    <Compile Include="Entities\StoreModule\ProductRepository.cs" />
     <Compile Include="Entities\StoreModule\StoreRepository.cs" />
     <Compile Include="FakeDbContext.cs" />
     <Compile Include="Entities\GeoModule\AddressDbEntity.cs" />

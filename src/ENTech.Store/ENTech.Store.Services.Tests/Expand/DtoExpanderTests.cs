@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Policy;
 using ENTech.Store.Infrastructure.Mapping;
@@ -62,7 +63,7 @@ namespace ENTech.Store.Services.Tests.Expand
 			_externalCommandServiceMock.Setup(x => x.Execute(It.IsAny<ProductCategoryStubFindByIdsRequest>()))
 				.Returns(new OkResponseStatus<ProductCategoryStubFindByIdsResponse>(new ProductCategoryStubFindByIdsResponse()
 				{
-					Items = new []{new ProductCategoryStubDto()
+					Items = new Collection<ProductCategoryStubDto>{new ProductCategoryStubDto()
 					{
 						Id = 1,
 						Text = "Loaded"
@@ -117,11 +118,10 @@ namespace ENTech.Store.Services.Tests.Expand
 					};
 				});
 
-			_mapperMock.Setup(x => x.MapCollection(typeof (ProductCategoryStubDto), typeof (ProductGroupExpandableStubDto), It.IsAny<IEnumerable<object>>()))
-				.Returns((Type sourceType, Type targetType, IEnumerable<object> result) =>
+			_mapperMock.Setup(x => x.MapCollection<ProductCategoryStubDto, ProductGroupExpandableStubDto>(It.IsAny<IEnumerable<ProductCategoryStubDto>>()))
+				.Returns((IEnumerable<ProductCategoryStubDto> result) =>
 				{
-					var cast = result.Cast<ProductCategoryStubDto>();
-					return cast.Select(x => (object) new ProductGroupExpandableStubDto
+					return result.Select(x => new ProductGroupExpandableStubDto
 					{
 						Id = x.Id,
 						Text = x.Text

@@ -6,7 +6,6 @@ using ENTech.Store.Infrastructure.WebApi.Implementation;
 using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.Expandable;
 using ENTech.Store.Services.StoreModule.Expand.Dtos;
-using ENTech.Store.Services.StoreModule.Expand.Options;
 using ENTech.Store.Services.StoreModule.Requests;
 using ENTech.Store.Services.StoreModule.Responses;
 
@@ -66,7 +65,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.Controllers
 		[Route("{Id:int}/expand")]
 		public HttpResponseMessage GetById(int Id)
 		{
-			var result = _dtoExpander.LoadAndExpand(Id, new List<ExpandOption<StoreExpandableDto>> {new ExpandProducts()});
+			var result = _dtoExpander.LoadAndExpand(Id, new List<ExpandOption<StoreExpandableDto>>());
 			return Request.CreateResponse(result);
 		}
 	}

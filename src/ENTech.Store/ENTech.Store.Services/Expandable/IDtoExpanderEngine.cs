@@ -16,6 +16,9 @@ namespace ENTech.Store.Services.Expandable
 			if (expandableDtoType == typeof (StoreExpandableDto))
 				return new StoreExpandableDtoExpandProfile().GetConfiguration();
 
+			if (expandableDtoType == typeof(ProductExpandableDto))
+				return new ProductExpandableDtoExpandProfile().GetConfiguration();
+
 			throw new NotImplementedException();
 		}
 	}

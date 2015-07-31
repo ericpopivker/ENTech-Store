@@ -55,6 +55,8 @@ namespace ENTech.Store.Database
 		public IFilterableDbSet<AddressDbEntity> Addresses { get; private set; }
 		public IFilterableDbSet<CountryDbEntity> Countries { get; private set; }
 		public IFilterableDbSet<StateDbEntity> States { get; private set; }
+		public IFilterableDbSet<ProductCategoryDbEntity> ProductCategories { get; private set; }
+
 		public IDbSet<T> GetDbSet<T>() where T : class, IDbEntity
 		{
 			return new FakeDbSet<T>();

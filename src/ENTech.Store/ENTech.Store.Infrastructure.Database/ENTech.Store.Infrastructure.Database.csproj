@@ -49,9 +49,6 @@
     <Compile Include="QueryExecuter\IQuery.cs" />
     <Compile Include="Repository\Decorators\CacheKey.cs" />
     <Compile Include="Repository\Decorators\CacheRepositoryDecoratorBase.cs" />
-    <Compile Include="Repository\Decorators\L1CacheRepositoryDecorator.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Repository\Decorators\L3CacheRepositoryDecorator.cs" />
     <Compile Include="Repository\EntityMetaState.cs" />
     <Compile Include="Repository\IRepository.cs" />

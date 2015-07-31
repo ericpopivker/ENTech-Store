@@ -1,6 +1,7 @@
 ﻿using ENTech.Store.Services.Expandable;
 using ENTech.Store.Services.GeoModule.Requests;
 using ENTech.Store.Services.ProductModule.Requests;
+using ENTech.Store.Services.StoreModule.Commands;
 using ENTech.Store.Services.StoreModule.Expand.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
 
@@ -23,6 +24,19 @@ namespace ENTech.Store.Services.StoreModule.Expand.Configurations
 				.FromIdentityProperty(x => x.ProductIds)
 				.IfSingle<ProductGetByIdRequest>()
 				.IfMultiple<ProductFindByIdsRequest>();
+		}
+	}
+	public class ProductExpandableDtoExpandProfile : ExpandProfile<ProductExpandableDto>
+	{
+		protected override void Configure()
+		{
+			LoadRoot()
+				.IfSingle<ProductGetByIdRequest>()
+				.IfMultiple<ProductFindByIdsRequest>();
+
+			ExpandProperty(x => x.Category)
+				.FromIdentityProperty(x => x.CategoryId)
+				.IfSingle<ProductCategoryGetByIdRequest>();
 		}
 	}
 }

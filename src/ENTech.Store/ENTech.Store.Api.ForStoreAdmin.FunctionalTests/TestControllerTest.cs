@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using ENTech.Store.Services.StoreModule.Expand.Dtos;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RestSharp;
@@ -68,10 +65,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.FunctionalTests
 			IRestResponse restResponse = client.Execute(request);
 			var rawContent = restResponse.Content; // raw content as string
 
-			var response = JsonConvert.DeserializeObject<BadRequestErrorResponse>(rawContent);
-
-			Assert.AreEqual(HttpStatusCode.BadRequest, restResponse.StatusCode);
-			Assert.IsTrue(response.ArgumentErrors.Count == 2);
+			var response = JsonConvert.DeserializeObject<StoreExpandableDto>(rawContent);
 		}
 
 

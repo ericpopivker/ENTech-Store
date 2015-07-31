@@ -58,23 +58,17 @@ namespace ENTech.Store.Api
 				.RegisterEntityForRepository<Entities.StoreModule.Store, StoreDbEntity>()
 				.RegisterEntityForRepository<Partner, PartnerDbEntity>()
 				.RegisterEntityForRepository<Address, AddressDbEntity>()
-				.RegisterEntityForRepository<Product, ProductDbEntity>()
+				.RegisterEntityForRepository<ProductCategory, ProductCategoryDbEntity>()
 				
 				.RegisterType<IRepository<Entities.StoreModule.Store>, StoreRepository>()
 				.RegisterType<IDbEntityStateKeeper<Entities.StoreModule.Store, StoreDbEntity>, DbEntityStateKeeper<Entities.StoreModule.Store, StoreDbEntity>>()
+				
+				.RegisterType<IRepository<Product>, ProductRepository>()
+				.RegisterType<IDbEntityStateKeeper<Product, ProductDbEntity>, DbEntityStateKeeper<Product, ProductDbEntity>>()
 				.RegisterType<IDbContext>(new InjectionFactory(c => DbContextScope.CurrentDbContext))
 
 				.RegisterType<IDtoExpander, DtoExpander>()
 				.RegisterType<IDtoExpanderEngine, DtoExpanderEngine>()
-				.RegisterType<IDtoExpandStrategyFactory, DtoExpandStrategyFactory>()
-				.RegisterType<IDtoLoaderFactory, DtoLoaderFactory>()
-
-				.RegisterTypes(
-					AllClasses.FromLoadedAssemblies().
-						Where(type => type.GetInterfaces().Any(x => x.Name == typeof(IDtoLoader<>).Name)),
-					type => type.GetInterfaces()
-						.Where(x => x.Name == typeof(IDtoLoader<>).Name 
-							&& x.Namespace == typeof(IDtoLoader<>).Namespace))
 
 				//commands
 				.RegisterTypes(

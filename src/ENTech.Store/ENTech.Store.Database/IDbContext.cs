@@ -34,6 +34,8 @@ namespace ENTech.Store.Database
 
 		IFilterableDbSet<StateDbEntity> States { get; }
 
+		IFilterableDbSet<ProductCategoryDbEntity> ProductCategories { get; }
+			
 		IDbSet<T> GetDbSet<T>() where T : class, IDbEntity;
 
 		IDbContext LimitByStore(int storeId);

@@ -48,6 +48,7 @@ namespace ENTech.Store.Services.Expandable
 				{
 					GetByIdRequestType = _rootFluentConfiguration.GetByIdRequestType,
 					FindByIdsRequestType = _rootFluentConfiguration.FindByIdsRequestType,
+					RootType = typeof(T)
 				},
 				PropertyConfigurations = _propertyConfigurations.Select(x => new ExpandPropertyConfiguration
 				{
@@ -130,18 +131,22 @@ namespace ENTech.Store.Services.Expandable
 		public IEnumerable<ExpandPropertyConfiguration> PropertyConfigurations { get; set; }
 	}
 
-	public class ExpandPropertyConfiguration
+	public class ExpandPropertyConfiguration : LoadableConfiguration
 	{
 		public PropertyMetaData TargetProperty { get; set; }
 		public PropertyMetaData SourceProperty { get; set; }
-		public Type GetByIdRequestType { get; internal set; }
-		public Type FindByIdsRequestType { get; internal set; }
 	}
 
-	public class ExpandRootConfiguration
+	public class ExpandRootConfiguration : LoadableConfiguration
+	{
+		public Type RootType { get; set; }
+	}
+
+	public class LoadableConfiguration
 	{
 		public Type GetByIdRequestType { get; internal set; }
 		public Type FindByIdsRequestType { get; internal set; }
+		
 	}
 
 	public class PropertyMetaData

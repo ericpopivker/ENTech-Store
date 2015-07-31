@@ -29,6 +29,7 @@ namespace ENTech.Store.Database
 
 		private IFilterableDbSet<PartnerDbEntity> _partners;
 		private IFilterableDbSet<ProductDbEntity> _products;
+		private IFilterableDbSet<ProductCategoryDbEntity> _productCategories;
 
 		private DbContextTransaction _transaction;
 
@@ -46,6 +47,8 @@ namespace ENTech.Store.Database
 			_addresses = new Lazy<IFilterableDbSet<AddressDbEntity>>(() => new FilterableDbSet<AddressDbEntity>(this)).Value;
 
 			_products = new Lazy<IFilterableDbSet<ProductDbEntity>>(() => new FilterableDbSet<ProductDbEntity>(this)).Value;
+
+			_productCategories = new Lazy<IFilterableDbSet<ProductCategoryDbEntity>>(() => new FilterableDbSet<ProductCategoryDbEntity>(this)).Value;
 		}
 
 		public bool ValidateEntity<TEntity>(TEntity entity) where TEntity : class, IDbEntity
@@ -167,6 +170,12 @@ namespace ENTech.Store.Database
 		{
 			get { return _states; }
 		}
+
+		public IFilterableDbSet<ProductCategoryDbEntity> ProductCategories
+		{
+			get { return _productCategories; }
+		}
+
 		public IDbSet<T> GetDbSet<T>() where T : class, IDbEntity
 		{
 			return Set<T>();
