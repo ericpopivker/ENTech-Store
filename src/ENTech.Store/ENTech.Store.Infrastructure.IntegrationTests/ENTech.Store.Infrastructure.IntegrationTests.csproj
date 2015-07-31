@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F90491F4-7D50-471D-91AF-AF5FAA6C3CAE}</ProjectGuid>
+    <ProjectGuid>{3810B796-1365-4DCC-89BB-D425043D4E4B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ENTech.Store.Infrastructure.UnitTests</RootNamespace>
-    <AssemblyName>ENTech.Store.Infrastructure.UnitTests</AssemblyName>
+    <RootNamespace>ENTech.Store.Infrastructure.IntegrationTests</RootNamespace>
+    <AssemblyName>ENTech.Store.Infrastructure.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,15 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
+    <Reference Include="MiniProfiler">
+      <HintPath>..\packages\MiniProfiler.3.1.1.140\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
+    <Reference Include="MiniProfiler.Windows">
+      <HintPath>..\lib\MiniProfiler.Windows.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,28 +54,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\PropertyHelperTest.cs" />
-    <Compile Include="Services\Commands\CommandBaseTest.cs" />
+    <Compile Include="Cache\CachePerformanceTestBase.cs" />
+    <Compile Include="Cache\CacheTestBase.cs" />
+    <Compile Include="Cache\DictionaryCachePerformanceTest.cs" />
+    <Compile Include="Cache\RedisCachePerformanceTest.cs" />
+    <Compile Include="Cache\DictionaryCacheTest.cs" />
+    <Compile Include="Cache\RedisCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Validators\DtoValidatorTest.cs" />
-    <Compile Include="Services\Validators\DtoValidatorVisitorTest.cs" />
     <Compile Include="SetUpFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ENTech.Store.Infrastructure.Database\ENTech.Store.Infrastructure.Database.csproj">
-      <Project>{1152AA7A-F788-4291-8B0D-C1117D1C7A08}</Project>
-      <Name>ENTech.Store.Infrastructure.Database</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj">
       <Project>{7d581130-b9a8-4e44-9562-67e41697a123}</Project>
       <Name>ENTech.Store.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ENTech.Store.Services\ENTech.Store.Services.csproj">
-      <Project>{9E5FE2B8-A8F3-4AB7-AF38-127D1894A978}</Project>
-      <Name>ENTech.Store.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -237,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SharedModule\Commands\" />
+    <Folder Include="SharedModule\ModuleLogic\" />
     <Folder Include="StoreModule\Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

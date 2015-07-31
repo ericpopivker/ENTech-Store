@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using StackExchange.Profiling;
+using StackExchange.Redis.Extensions.Core;
 
 namespace ENTech.Store.Infrastructure.Cache
 {
@@ -11,45 +15,70 @@ namespace ENTech.Store.Infrastructure.Cache
 			get { return "DictionaryCache_"; }
 		}
 
-		private ConcurrentDictionary<string, object> _cacheData;
+		private ConcurrentDictionary<string, byte[]> _dictionary;
+		private static ISerializer _serializer = new ProtobufSerializer();
 
 		public DictionaryCache()
 		{
-			_cacheData = new ConcurrentDictionary<string, object>();
+			_dictionary = new ConcurrentDictionary<string, byte[]>();
 		}
 
 		#region ICache implementation
 
-		public void Set(string key, object value, CacheOpts opts = null)
+		public void Set<T>(string key, T value, CacheOpts opts = null) where T : class
 		{
-			_cacheData.AddOrUpdate(key, value, (ky, val) => value);
+			using (MiniProfiler.Current.Step("DictionaryCache_Set_" + key))
+			{
+				var serializedValue = _serializer.Serialize(value);
+				_dictionary.AddOrUpdate(key, serializedValue, (ky, val) => serializedValue);
+			}
+		}
+
+		public void Set<T>(IList<Tuple<string, T>> tuples) where T : class
+		{
+			using (MiniProfiler.Current.Step("DictionaryCache_Set_" + tuples.Count + "_Tuples"))
+			{
+				foreach (var tuple in tuples)
+					Set(tuple.Item1, tuple.Item2);
+			}
+
 		}
 
 		public bool Exists(string key)
 		{
-			return _cacheData.ContainsKey(key);
+			return _dictionary.ContainsKey(key);
 		}
 
-		public T Get<T>(string key)
+		public T Get<T>(string key) where T : class
 		{
-			//will throw exception if cannot find
-			return (T)_cacheData[key];
+			using (MiniProfiler.Current.Step("DictionaryCache_Get_" + key))
+			{
+				byte[] serializedValue = _dictionary[key];
+				T value = _serializer.Deserialize<T>(serializedValue);
+
+				return value;
+			}
 		}
 
-		public bool TryGet<T>(string key, ref T value)
+		public bool TryGet<T>(string key, ref T value) where T : class
 		{
-			object objValue = null;
-			var res = _cacheData.TryGetValue(key, out objValue);
-			if (res)
-				value = (T)objValue;
+			using (MiniProfiler.Current.Step("DictionaryCache_TryGet_" + key))
+			{
+				byte[] serializedValue = null;
+				var res = _dictionary.TryGetValue(key, out serializedValue);
 
-			return res;
+				if (res)
+					value = _serializer.Deserialize<T>(serializedValue);
+
+				return res;
+			}
 		}
+
 
 		public void Remove(string key)
 		{
-			object value = null;
-			if (!_cacheData.TryRemove(key, out value))
+			byte[] value;
+			if (!_dictionary.TryRemove(key, out value))
 			{
 				//potentially we can throw exception here but I think it's not necessary
 			}
@@ -57,25 +86,42 @@ namespace ENTech.Store.Infrastructure.Cache
 
 		public bool TryRemove(string key)
 		{
-			object value = null;
-			return _cacheData.TryRemove(key, out value);
+			byte[] value = null;
+			return _dictionary.TryRemove(key, out value);
 		}
 
-		//Merge shouldn't be used for Dictionary Cache
-		public void Merge<T>(string key, T instance, CacheOpts opts = null)
+		public void Remove(IEnumerable<string> keys)
 		{
-			throw new NotImplementedException();
+			foreach (string key in keys)
+				TryRemove(key);
 		}
 
-		//TryMerge shouldn't be used for Dictionary Cache
-		public bool TryMerge<T>(string key, T instance, CacheOpts opts = null)
-		{
-			throw new NotImplementedException();
-		}
 
 		public void RemoveAll()
 		{
-			_cacheData.Clear();
+			_dictionary.Clear();
+		}
+
+		public IDictionary<string, T> FindByKeys<T>(IEnumerable<string> keys) where T : class
+		{
+			using (MiniProfiler.StepStatic("DictionaryCache_FindByKeys_" + keys.Count() + "_Keys"))
+			{
+				var values = new Dictionary<string, T>();
+				foreach (string key in keys)
+				{
+					T value = null;
+					if (TryGet(key, ref value))
+						values.Add(key, value);
+					else
+						values.Add(key, null);
+				}
+				return values;
+			}
+		}
+
+		public IDictionary<string, T> FindByKeyPrefix<T>(string keyPrefix) where T : class
+		{
+			throw new NotImplementedException();
 		}
 
 		public System.Collections.Generic.IEnumerable<object> GetAll(string keyPrepend)

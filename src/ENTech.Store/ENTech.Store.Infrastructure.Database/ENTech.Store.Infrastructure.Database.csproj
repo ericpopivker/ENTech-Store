@@ -47,7 +47,12 @@
     <Compile Include="QueryExecuter\FindCriteriaBase.cs" />
     <Compile Include="Entities\IDbEntity.cs" />
     <Compile Include="QueryExecuter\IQuery.cs" />
-    <Compile Include="Repository\CachedRepository.cs" />
+    <Compile Include="Repository\Decorators\CacheKey.cs" />
+    <Compile Include="Repository\Decorators\CacheRepositoryDecoratorBase.cs" />
+    <Compile Include="Repository\Decorators\L1CacheRepositoryDecorator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\Decorators\L3CacheRepositoryDecorator.cs" />
     <Compile Include="Repository\EntityMetaState.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

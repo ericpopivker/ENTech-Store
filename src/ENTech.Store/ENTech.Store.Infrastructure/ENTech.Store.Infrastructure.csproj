@@ -57,6 +57,18 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
+    <Reference Include="MiniProfiler">
+      <HintPath>..\packages\MiniProfiler.3.1.1.140\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\packages\StackExchange.Redis.1.0.481\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis.Extensions.Core">
+      <HintPath>..\packages\StackExchange.Redis.Extensions.Core.1.1.12.0\lib\net45\StackExchange.Redis.Extensions.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -76,8 +88,11 @@
     <Compile Include="Cache\CacheOpts.cs" />
     <Compile Include="Cache\DictionaryCache.cs" />
     <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Cache\IConcurrencyHandle.cs" />
+    <Compile Include="Cache\IDistributedCache.cs" />
     <Compile Include="Cache\LockRetryPolicy.cs" />
-    <Compile Include="Cache\MsCache.cs" />
+    <Compile Include="Cache\ProtobufSerializer.cs" />
+    <Compile Include="Cache\RedisCache.cs" />
     <Compile Include="Context\CallContextStorage.cs" />
     <Compile Include="Context\IContextStorage.cs" />
     <Compile Include="Crypt\CryptEngine.cs" />
