@@ -72,6 +72,7 @@
     <Compile Include="Entities\CustomerModule\CustomerDbEntity.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="DbContextFactory.cs" />
+    <Compile Include="Entities\StoreModule\StoreRepository.cs" />
     <Compile Include="FakeDbContext.cs" />
     <Compile Include="Entities\GeoModule\AddressDbEntity.cs" />
     <Compile Include="Entities\GeoModule\CountryDbEntity.cs" />

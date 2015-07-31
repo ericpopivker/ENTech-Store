@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using ENTech.Store.Database.GeoModule;
-using ENTech.Store.Database.OrderModule;
-using ENTech.Store.Database.StoreModule;
+using ENTech.Store.Database.Entities.GeoModule;
+using ENTech.Store.Database.Entities.OrderModule;
+using ENTech.Store.Database.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Database.Entities;
 
-namespace ENTech.Store.Database.CustomerModule
+namespace ENTech.Store.Database.Entities.CustomerModule
 {
 	public class CustomerDbEntity : IDbEntity
 	{

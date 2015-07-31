@@ -1,6 +1,6 @@
 ﻿using ENTech.Store.Infrastructure.Database.Entities;
 
-namespace ENTech.Store.Database.GeoModule
+namespace ENTech.Store.Database.Entities.GeoModule
 {
 	public class StateDbEntity : IDbEntity
 	{

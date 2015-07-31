@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ENTech.Store.Database.OrderModule;
+using ENTech.Store.Database.Entities.OrderModule;
 using ENTech.Store.Infrastructure.Database.Entities;
 
-namespace ENTech.Store.Database.StoreModule
+namespace ENTech.Store.Database.Entities.StoreModule
 {
 	public class ProductDbEntity : IDbEntity
 	{

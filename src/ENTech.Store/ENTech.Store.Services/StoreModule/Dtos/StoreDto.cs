@@ -1,4 +1,4 @@
-﻿using ENTech.Store.Entities.StoreModule;
+﻿using System.Collections.Generic;
 
 namespace ENTech.Store.Services.StoreModule.Dtos
 {
@@ -9,7 +9,9 @@ namespace ENTech.Store.Services.StoreModule.Dtos
 		public string Logo { get; set; }
 		public string Phone { get; set; }
 		public string Email { get; set; }
-		public AddressDto Address { get; set; }
+		public int? AddressId { get; set; }
 		public StoreSettingsDto Settings { get; set; }
+
+		public IEnumerable<int> ProductIds { get; set; }
 	}
 }

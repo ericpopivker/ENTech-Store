@@ -1,7 +1,7 @@
-﻿using ENTech.Store.Database.GeoModule;
+﻿using ENTech.Store.Database.Entities.GeoModule;
 using ENTech.Store.Infrastructure.Database.Entities;
 
-namespace ENTech.Store.Database.OrderModule
+namespace ENTech.Store.Database.Entities.OrderModule
 {
 	public class OrderShippingDbEntity : IDbEntity
 	{

@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Expand\DtoExpanderTests.cs" />
     <Compile Include="Helpers\PropertyHelperTest.cs" />
     <Compile Include="Services\Commands\CommandBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +71,10 @@
     <ProjectReference Include="..\ENTech.Store.Infrastructure\ENTech.Store.Infrastructure.csproj">
       <Project>{7d581130-b9a8-4e44-9562-67e41697a123}</Project>
       <Name>ENTech.Store.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTech.Store.Services\ENTech.Store.Services.csproj">
+      <Project>{9E5FE2B8-A8F3-4AB7-AF38-127D1894A978}</Project>
+      <Name>ENTech.Store.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,4 +6,9 @@ namespace ENTech.Store.Services.ProductModule.Responses
 	public class ProductGetByIdResponse : GetByIdResponse<ProductDto>
 	{
 	}
+
+	public class ProductFindByIdsResponse : FindResponse<ProductDto>
+	{
+		
+	}
 }

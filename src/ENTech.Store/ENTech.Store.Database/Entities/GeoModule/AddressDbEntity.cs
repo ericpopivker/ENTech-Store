@@ -1,8 +1,8 @@
-﻿using ENTech.Store.Database.OrderModule;
-using ENTech.Store.Database.StoreModule;
+﻿using ENTech.Store.Database.Entities.OrderModule;
+using ENTech.Store.Database.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Database.Entities;
 
-namespace ENTech.Store.Database.GeoModule
+namespace ENTech.Store.Database.Entities.GeoModule
 {
 	public class AddressDbEntity : IDbEntity
 	{

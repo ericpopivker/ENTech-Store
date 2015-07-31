@@ -10,8 +10,6 @@ namespace ENTech.Store.Services.SharedModule.Requests
 		public int Id { get; set; }
 	}
 
-
-
 	public abstract class GetByIdRequestBase<TResponse, TLoadOptionEnum> : GetByIdRequestBase<TResponse>
 		where TResponse : IResponse
 		where TLoadOptionEnum : struct

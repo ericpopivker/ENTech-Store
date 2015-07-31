@@ -1,7 +1,7 @@
 ﻿using System;
 using ENTech.Store.Infrastructure.Database.Entities;
 
-namespace ENTech.Store.Database.PartnerModule
+namespace ENTech.Store.Database.Entities.PartnerModule
 {
 	public class PartnerDbEntity : IDbEntity
 	{

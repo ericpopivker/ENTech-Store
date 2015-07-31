@@ -1,6 +1,6 @@
 using System.Data.Entity.ModelConfiguration;
 
-namespace ENTech.Store.Database.CustomerModule.Configurations
+namespace ENTech.Store.Database.Entities.CustomerModule.Configurations
 {
 	internal sealed class CustomerConfiguration : EntityTypeConfiguration<CustomerDbEntity>
 	{

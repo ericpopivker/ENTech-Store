@@ -1,6 +1,6 @@
 using System.Data.Entity.ModelConfiguration;
 
-namespace ENTech.Store.Database.GeoModule.Configurations
+namespace ENTech.Store.Database.Entities.GeoModule.Configurations
 {
 	internal sealed class CountryConfiguration : EntityTypeConfiguration<CountryDbEntity>
 	{

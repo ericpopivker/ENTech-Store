@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using ENTech.Store.Database.CustomerModule;
-using ENTech.Store.Database.StoreModule;
+using ENTech.Store.Database.Entities.CustomerModule;
+using ENTech.Store.Database.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Database.Entities;
 
-namespace ENTech.Store.Database.OrderModule
+namespace ENTech.Store.Database.Entities.OrderModule
 {
 	public class OrderDbEntity : IDbEntity
 	{

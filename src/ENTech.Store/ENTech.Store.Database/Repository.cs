@@ -75,7 +75,9 @@ namespace ENTech.Store.Database
 
 		public TEntity GetById(int entityId)
 		{
-			var dbEntity = _dbSet.FirstOrDefault(x => x.Id == entityId);
+			var queryWithIncludes = ApplyIncludes(_dbSet);
+
+			var dbEntity = queryWithIncludes.FirstOrDefault(x => x.Id == entityId);
 
 			var entity = _dbEntityMapper.MapToEntity<TDbEntity, TEntity>(dbEntity);
 
@@ -86,7 +88,9 @@ namespace ENTech.Store.Database
 
 		public IEnumerable<TEntity> FindByIds(IEnumerable<int> entityIds)
 		{
-			var dbEntities = _dbSet.Where(x => entityIds.Contains(x.Id));
+			var queryWithIncludes = ApplyIncludes(_dbSet);
+
+			var dbEntities = queryWithIncludes.Where(x => entityIds.Contains(x.Id));
 
 			var resultIds = dbEntities.Select(x => x.Id);
 			if (entityIds.Except(resultIds).Any())
@@ -219,6 +223,11 @@ namespace ENTech.Store.Database
 				return EntityMetaState.Deleted;
 
 			return EntityMetaState.Exists;
+		}
+
+		protected virtual IQueryable<TDbEntity> ApplyIncludes(IDbSet<TDbEntity> dbSet)
+		{
+			return dbSet;
 		}
 
 		private static void HandleLogicallyDeletable(ILogicallyDeletable castEntity)

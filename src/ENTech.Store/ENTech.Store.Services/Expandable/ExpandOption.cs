@@ -1,4 +1,4 @@
-namespace ENTech.Store.Infrastructure.Expandable
+namespace ENTech.Store.Services.Expandable
 {
 	public abstract class ExpandOption<T>
 	{

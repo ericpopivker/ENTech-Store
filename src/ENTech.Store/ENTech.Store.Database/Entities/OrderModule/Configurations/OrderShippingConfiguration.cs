@@ -1,6 +1,6 @@
 using System.Data.Entity.ModelConfiguration;
 
-namespace ENTech.Store.Database.OrderModule.Configurations
+namespace ENTech.Store.Database.Entities.OrderModule.Configurations
 {
 	internal sealed class OrderShippingConfiguration : EntityTypeConfiguration<OrderShippingDbEntity>
 	{

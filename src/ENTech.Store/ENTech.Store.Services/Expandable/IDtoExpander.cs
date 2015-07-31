@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ENTech.Store.Infrastructure.Expandable
+namespace ENTech.Store.Services.Expandable
 {
 	public interface IDtoExpander
 	{

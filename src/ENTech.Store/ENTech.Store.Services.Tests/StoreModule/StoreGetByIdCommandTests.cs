@@ -97,7 +97,6 @@ namespace ENTech.Store.Services.Tests.StoreModule
 				.Returns((Entities.StoreModule.Store store) => new StoreDto
 				{
 					Id = store.Id,
-					Address = null,
 					Name = store.Name,
 					Logo = store.Logo,
 					Email = store.Email,
@@ -162,50 +161,6 @@ namespace ENTech.Store.Services.Tests.StoreModule
 		}
 
 		[Test]
-		public void Execute_When_called_for_store_without_address_Then_returns_storeDto_with_null_address()
-		{
-			var result = Command.Execute(new StoreGetByIdRequest
-			{
-				Id = StoreWithoutAddressId
-			});
-
-			Assert.IsNull(result.Item.Address);
-		}
-
-		[Test]
-		public void Execute_When_called_for_store_without_address_Then_does_not_call_internal_command_service_execute_for_addressGetByIdCommand()
-		{
-			Command.Execute(new StoreGetByIdRequest
-			{
-				Id = StoreWithoutAddressId
-			});
-
-			InternalCommandServiceMock.Verify(x=>x.Execute(It.IsAny<AddressGetByIdRequest>()), Times.Never);
-		}
-
-		[Test]
-		public void Execute_When_called_for_store_with_address_Then_does_not_call_internal_command_service_execute_for_addressGetByIdCommand()
-		{
-			Command.Execute(new StoreGetByIdRequest
-			{
-				Id = StoreWithAddressId
-			});
-
-			InternalCommandServiceMock.Verify(x=>x.Execute(It.Is<AddressGetByIdRequest>(y=>y.Id == StoreAddressId)), Times.Once);
-		}
-
-		[Test]
-		public void Execute_When_called_for_store_that_has_address_Then_calls_addressGetByIdCommand()
-		{
-			var result = Command.Execute(new StoreGetByIdRequest
-			{
-				Id = StoreWithAddressId
-			});
-
-			Assert.IsNotNull(result.Item.Address);
-		}
-
-		[Test]
 		public void Execute_When_called_for_store_that_has_invalid_addressId_Then_returns_internal_server_error()
 		{
 			Assert.Throws<Exception>(()=> Command.Execute(new StoreGetByIdRequest
@@ -216,7 +171,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 
 		protected override ICommand<StoreGetByIdRequest, StoreGetByIdResponse> CreateCommand()
 		{
-			return new StoreGetByIdCommand(_storeRepositoryMock.Object, _storeValidatorMock.Object, MapperMock.Object, InternalCommandServiceMock.Object, DtoValidatorFactoryMock.Object);
+			return new StoreGetByIdCommand(_storeRepositoryMock.Object, _storeValidatorMock.Object, MapperMock.Object, DtoValidatorFactoryMock.Object);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 using System.Data.Entity.ModelConfiguration;
 
-namespace ENTech.Store.Database.StoreModule.Configurations
+namespace ENTech.Store.Database.Entities.StoreModule.Configurations
 {
 	internal sealed class ProductConfiguration : EntityTypeConfiguration<ProductDbEntity>
 	{

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data.Entity;
-using ENTech.Store.Database.CustomerModule;
-using ENTech.Store.Database.GeoModule;
-using ENTech.Store.Database.PartnerModule;
-using ENTech.Store.Database.StoreModule;
+using ENTech.Store.Database.Entities.CustomerModule;
+using ENTech.Store.Database.Entities.GeoModule;
+using ENTech.Store.Database.Entities.PartnerModule;
+using ENTech.Store.Database.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Database.Entities;
 
 namespace ENTech.Store.Database

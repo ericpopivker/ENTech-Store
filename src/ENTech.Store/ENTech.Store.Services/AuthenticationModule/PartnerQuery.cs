@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ENTech.Store.Database;
-using ENTech.Store.Database.PartnerModule;
+using ENTech.Store.Database.Entities.PartnerModule;
 
 namespace ENTech.Store.Services.AuthenticationModule
 {

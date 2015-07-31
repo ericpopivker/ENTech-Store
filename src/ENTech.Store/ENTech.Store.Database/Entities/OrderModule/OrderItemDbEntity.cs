@@ -1,7 +1,7 @@
-﻿using ENTech.Store.Database.StoreModule;
+﻿using ENTech.Store.Database.Entities.StoreModule;
 using ENTech.Store.Infrastructure.Database.Entities;
 
-namespace ENTech.Store.Database.OrderModule
+namespace ENTech.Store.Database.Entities.OrderModule
 {
 	public class OrderItemDbEntity : IDbEntity
 	{
