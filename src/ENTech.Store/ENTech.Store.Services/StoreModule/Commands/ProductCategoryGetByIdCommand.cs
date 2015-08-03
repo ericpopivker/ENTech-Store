@@ -14,7 +14,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		private readonly IRepository<ProductCategory> _productCategoryRepository;
 		private readonly IMapper _mapper;
 
-		public ProductCategoryGetByIdCommand(IRepository<ProductCategory> productCategoryRepository, IMapper mapper, IDtoValidatorFactory dtoValidatorFactory)
+		public ProductCategoryGetByIdCommand(ICachedRepository<ProductCategory> productCategoryRepository, IMapper mapper, IDtoValidatorFactory dtoValidatorFactory)
 			: base(dtoValidatorFactory, false)
 		{
 			_productCategoryRepository = productCategoryRepository;

@@ -16,7 +16,7 @@ namespace ENTech.Store.Services.GeoModule.Commands
 		private readonly IMapper _mapper;
 		private readonly IAddressValidator _addressValidator;
 
-		public AddressGetByIdCommand(IRepository<Address> addressRepository,  IAddressValidator addressValidator, IMapper mapper, IDtoValidatorFactory dtoValidatorFactory)
+		public AddressGetByIdCommand(IRepository<Address> addressRepository, IAddressValidator addressValidator, IMapper mapper, IDtoValidatorFactory dtoValidatorFactory)
 			: base(dtoValidatorFactory, false)
 		{
 			_addressRepository = addressRepository;

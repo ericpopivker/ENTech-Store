@@ -1,7 +1,9 @@
 ﻿using ENTech.Store.Infrastructure.Entities;
+using ProtoBuf;
 
 namespace ENTech.Store.Entities.GeoModule
 {
+	[ProtoContract]
 	public class Address : IDomainEntity
 	{
 		public int Id { get; set; }

@@ -18,7 +18,7 @@ namespace ENTech.Store.Services.Tests.StoreModule
 {
 	public class StoreGetByIdCommandTests : CommandTestsBase<StoreGetByIdRequest, StoreGetByIdResponse>
 	{
-		private readonly Mock<IRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<IRepository<Entities.StoreModule.Store>>();
+		private readonly Mock<ICachedRepository<Entities.StoreModule.Store>> _storeRepositoryMock = new Mock<ICachedRepository<Entities.StoreModule.Store>>();
 		private readonly Mock<IStoreValidator> _storeValidatorMock = new Mock<IStoreValidator>();
 
 		private const int StoreWithoutAddressId = 423;

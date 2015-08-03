@@ -34,7 +34,7 @@ namespace ENTech.Store.Api.ForStoreAdmin.FunctionalTests
 				var start = System.DateTime.UtcNow;
 				try
 				{
-					var request = new RestRequest("v1/store-admin-api/stores/4/expand", Method.GET);
+					var request = new RestRequest("v1/store-admin-api/stores/1/expand", Method.GET);
 					request.AddParameter("ReturnHttpStatusCode", 200); // adds to POST or URL querystring based on Method
 					request.AddHeader("Authorization", "Basic ApiKey=s3cr3tk3y UserToken=123");
 					// execute the request

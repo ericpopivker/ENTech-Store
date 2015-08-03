@@ -17,7 +17,7 @@ namespace ENTech.Store.Infrastructure.Database.Repository.Decorators
 
 		public static string ForEntity<TEntity>(int entityId)
 		{
-			string key = String.Format("{0}_{1}", typeof(TEntity).FullName, entityId);
+			string key = String.Format("{0}_{1}", typeof(TEntity).Name, entityId);
 			return key;
 		}
 	}

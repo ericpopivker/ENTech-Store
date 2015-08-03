@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using ENTech.Store.Database.Entities.OrderModule;
 using ENTech.Store.Infrastructure.Database.Entities;
+using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Database.Entities.StoreModule
 {
-	public class ProductDbEntity : IDbEntity
+	public class ProductDbEntity : IDbEntity, IAuditable
 	{
 		public int Id { get; set; }
 

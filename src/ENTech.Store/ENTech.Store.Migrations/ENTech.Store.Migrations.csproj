@@ -66,6 +66,10 @@
     <Compile Include="Migrations\201507311413295_Add_ProductCategory.Designer.cs">
       <DependentUpon>201507311413295_Add_ProductCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507311551298_Make_Product_And_ProductCategory_Auditable.cs" />
+    <Compile Include="Migrations\201507311551298_Make_Product_And_ProductCategory_Auditable.Designer.cs">
+      <DependentUpon>201507311551298_Make_Product_And_ProductCategory_Auditable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507311413295_Add_ProductCategory.resx">
       <DependentUpon>201507311413295_Add_ProductCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507311551298_Make_Product_And_ProductCategory_Auditable.resx">
+      <DependentUpon>201507311551298_Make_Product_And_ProductCategory_Auditable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

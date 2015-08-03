@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ENTech.Store.Infrastructure.Cache;
 using ENTech.Store.Infrastructure.Entities;
 
 namespace ENTech.Store.Infrastructure.Database.Repository.Decorators
 {
-	public abstract class CacheRepositoryDecoratorBase<TEntity> : IRepository<TEntity> where TEntity : class, IDomainEntity, IAuditable
+	public abstract class CacheRepositoryDecoratorBase<TEntity> : ICachedRepository<TEntity> where TEntity : class, IDomainEntity, IAuditable
 	{
 		protected IRepository<TEntity> _baseRepository;
 		protected ICache _cache;
@@ -199,7 +197,7 @@ namespace ENTech.Store.Infrastructure.Database.Repository.Decorators
 
 
 
-		public virtual DateTime GetEntityLastUpdatedAt(int entityId)
+		protected virtual DateTime GetEntityLastUpdatedAt(int entityId)
 		{
 			TEntity entity = GetById(entityId);
 			return entity.LastUpdatedAt;

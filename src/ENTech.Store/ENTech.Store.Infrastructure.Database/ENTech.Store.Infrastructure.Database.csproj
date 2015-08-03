@@ -51,6 +51,7 @@
     <Compile Include="Repository\Decorators\CacheRepositoryDecoratorBase.cs" />
     <Compile Include="Repository\Decorators\L3CacheRepositoryDecorator.cs" />
     <Compile Include="Repository\EntityMetaState.cs" />
+    <Compile Include="Repository\ICachedRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryExecuter\PagingOptions.cs" />

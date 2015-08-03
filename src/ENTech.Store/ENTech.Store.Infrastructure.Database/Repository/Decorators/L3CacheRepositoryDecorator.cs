@@ -70,7 +70,7 @@ namespace ENTech.Store.Infrastructure.Database.Repository.Decorators
 
 
 
-		public override DateTime GetEntityLastUpdatedAt(int entityId)
+		protected override DateTime GetEntityLastUpdatedAt(int entityId)
 		{
 			var lastUpdatedAtCacheKey = CacheKey.ForEntityLastUpdatedAt<TEntity>(entityId);
 

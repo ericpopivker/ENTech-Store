@@ -13,7 +13,6 @@ namespace ENTech.Store.Infrastructure.IntegrationTests.Cache
 	[TestFixture]
 	public abstract class CacheTestBase 
 	{
-
 		private ICache _cache;
 
 		[SetUp]
@@ -30,7 +29,7 @@ namespace ENTech.Store.Infrastructure.IntegrationTests.Cache
 
 		public CacheTestBase(ICache cache)
 		{
-			_cache = new DictionaryCache();
+			_cache = cache;
 		}
 
 
@@ -59,6 +58,45 @@ namespace ENTech.Store.Infrastructure.IntegrationTests.Cache
 
 		}
 
+		[Test]
+		public void FindByKeys_When_keys_exist_Then_returns_objects_with_correct_data()
+		{
+			var firstId = 1;
+			var firstCustomerDto = new SuspiciousDto
+			{
+				Id = firstId,
+				Name = "Test",
+				CategoryId = 1,
+				CreatedAt = DateTime.UtcNow,
+				LastUpdatedAt = DateTime.UtcNow
+			};
+			var firstKey = string.Format("Suspicious_{0}", firstId);
+			
+			
+			var secondId = 128; // 128 is the first key that fails to deserialize. Is he deserializing it as byte?!
+			var secondCustomerDto = new SuspiciousDto
+			{
+				Id = secondId,
+				Name = "Test",
+				CategoryId = 1,
+				CreatedAt = DateTime.UtcNow,
+				LastUpdatedAt = DateTime.UtcNow
+			};
+			var secondKey = string.Format("Suspicious_{0}", secondId);
+			_cache.Set(new List<Tuple<string, SuspiciousDto>>
+			{
+				new Tuple<string, SuspiciousDto>(firstKey, firstCustomerDto),
+				new Tuple<string, SuspiciousDto>(secondKey, secondCustomerDto)
+			});
+
+			var result = _cache.FindByKeys<SuspiciousDto>(new[] { firstKey, secondKey });
+
+			var firstItem = result[firstKey];
+			Assert.AreEqual(firstCustomerDto.Id, firstItem.Id);
+
+			var secondItem = result[secondKey];
+			Assert.AreEqual(secondCustomerDto.Id, secondItem.Id);
+		}
 
 
 		[Test]
@@ -76,13 +114,22 @@ namespace ENTech.Store.Infrastructure.IntegrationTests.Cache
 
 		private class CustomerDtoBuilder : BuilderBase<CustomerDto, CustomerDtoBuilder>
 		{
+			private int _id;
 			private string _firstName;
 			private string _lastName;
 
 			public CustomerDtoBuilder()
 			{
+				_id = 1;
 				_firstName = "Josh";
 				_lastName = "Smith";
+			}
+
+			public CustomerDtoBuilder WithId(int id)
+			{
+				_id = id;
+
+				return this;
 			}
 
 			public CustomerDtoBuilder WithFirstName(string firstName)
@@ -103,6 +150,7 @@ namespace ENTech.Store.Infrastructure.IntegrationTests.Cache
 			{
 				var custmerDto = new CustomerDto
 				{
+					Id = _id,
 					FirstName = _firstName,
 					LastName = _lastName,
 
@@ -124,25 +172,43 @@ namespace ENTech.Store.Infrastructure.IntegrationTests.Cache
 			}
 		}
 
+		[ProtoContract]
+		private class SuspiciousDto
+		{
+			[ProtoMember(1)]
+			public int Id { get; set; }
+
+			[ProtoMember(2)]
+			public string Name { get; set; }
+
+			[ProtoMember(3)]
+			public int CategoryId { get; set; }
+
+			public DateTime CreatedAt { get; set; }
+
+			public DateTime LastUpdatedAt { get; set; }
+		}
 
 		[ProtoContract]
 		private class CustomerDto
 		{
 			[ProtoMember(1)]
-			public string FirstName { get; set; }
+			public int Id { get; set; }
 
 			[ProtoMember(2)]
-			public string LastName { get; set; }
+			public string FirstName { get; set; }
 
 			[ProtoMember(3)]
-			public DateTime DateOfBirth { get; set; }
+			public string LastName { get; set; }
 
 			[ProtoMember(4)]
-			public AddressDto Address { get; set; }
+			public DateTime DateOfBirth { get; set; }
 
 			[ProtoMember(5)]
-			public IList<ChildDto> Children { get; set; }
+			public AddressDto Address { get; set; }
 
+			[ProtoMember(6)]
+			public IList<ChildDto> Children { get; set; }
 		}
 
 		[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]

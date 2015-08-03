@@ -13,7 +13,7 @@ namespace ENTech.Store.Services.ProductModule.Commands
 	{
 		private IRepository<Product> _productRepository;
 		private IMapper _mapper;
-		public ProductGetByIdCommand(IDtoValidatorFactory dtoValidatorFactory, IRepository<Product> productRepository, IMapper mapper)
+		public ProductGetByIdCommand(IDtoValidatorFactory dtoValidatorFactory, ICachedRepository<Product> productRepository, IMapper mapper)
 			: base(dtoValidatorFactory, false)
 		{
 			_productRepository = productRepository;

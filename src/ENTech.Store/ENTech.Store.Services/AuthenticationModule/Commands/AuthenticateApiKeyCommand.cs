@@ -16,7 +16,7 @@ namespace ENTech.Store.Services.AuthenticationModule.Commands
 		private readonly IPartnerQuery _partnerQuery;
 		private readonly IMapper _mapper;
 
-		public AuthenticateApiKeyCommand(IRepository<Partner> partnerRepository, IMapper mapper, IPartnerQuery partnerQuery, IDtoValidatorFactory dtoValidatorFactory)
+		public AuthenticateApiKeyCommand(ICachedRepository<Partner> partnerRepository, IMapper mapper, IPartnerQuery partnerQuery, IDtoValidatorFactory dtoValidatorFactory)
 			: base(dtoValidatorFactory, false)
 		{
 			_partnerRepository = partnerRepository;

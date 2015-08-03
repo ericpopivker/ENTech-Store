@@ -11,7 +11,9 @@ using ENTech.Store.Entities.GeoModule;
 using ENTech.Store.Entities.PartnerModule;
 using ENTech.Store.Entities.StoreModule;
 using ENTech.Store.Infrastructure;
+using ENTech.Store.Infrastructure.Cache;
 using ENTech.Store.Infrastructure.Database.Repository;
+using ENTech.Store.Infrastructure.Database.Repository.Decorators;
 using ENTech.Store.Infrastructure.Database.UnitOfWork;
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
@@ -54,16 +56,21 @@ namespace ENTech.Store.Api
 				//queries
 				.RegisterType<IPartnerQuery, PartnerQuery>()
 
+				//cache
+				.RegisterType < IDistributedCache, RedisCache>()
+
 				//repositories
-				.RegisterEntityForRepository<Entities.StoreModule.Store, StoreDbEntity>()
-				.RegisterEntityForRepository<Partner, PartnerDbEntity>()
+				.RegisterEntityForCachedRepository<Entities.StoreModule.Store, StoreDbEntity>()
+				.RegisterEntityForCachedRepository<Partner, PartnerDbEntity>()
 				.RegisterEntityForRepository<Address, AddressDbEntity>()
-				.RegisterEntityForRepository<ProductCategory, ProductCategoryDbEntity>()
+				.RegisterEntityForCachedRepository<ProductCategory, ProductCategoryDbEntity>()
 				
 				.RegisterType<IRepository<Entities.StoreModule.Store>, StoreRepository>()
+				.RegisterType<ICachedRepository<Entities.StoreModule.Store>, L3CacheRepositoryDecorator<Entities.StoreModule.Store>>()
 				.RegisterType<IDbEntityStateKeeper<Entities.StoreModule.Store, StoreDbEntity>, DbEntityStateKeeper<Entities.StoreModule.Store, StoreDbEntity>>()
-				
+
 				.RegisterType<IRepository<Product>, ProductRepository>()
+				.RegisterType<ICachedRepository<Product>, L3CacheRepositoryDecorator<Product>>()
 				.RegisterType<IDbEntityStateKeeper<Product, ProductDbEntity>, DbEntityStateKeeper<Product, ProductDbEntity>>()
 				.RegisterType<IDbContext>(new InjectionFactory(c => DbContextScope.CurrentDbContext))
 

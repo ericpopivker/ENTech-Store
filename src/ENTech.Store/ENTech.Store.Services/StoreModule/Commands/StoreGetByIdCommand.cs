@@ -2,7 +2,6 @@
 using ENTech.Store.Infrastructure.Mapping;
 using ENTech.Store.Infrastructure.Services.Commands;
 using ENTech.Store.Infrastructure.Services.Validators;
-using ENTech.Store.Services.CommandService.Definition;
 using ENTech.Store.Services.ProductModule.Validators.EntityValidators;
 using ENTech.Store.Services.StoreModule.Dtos;
 using ENTech.Store.Services.StoreModule.Requests;
@@ -16,7 +15,7 @@ namespace ENTech.Store.Services.StoreModule.Commands
 		private readonly IMapper _mapper;
 		private readonly IStoreValidator _storeValidator;
 
-		public StoreGetByIdCommand(IRepository<Entities.StoreModule.Store> storeRepository, IStoreValidator storeValidator, IMapper mapper, IDtoValidatorFactory dtoValidatorFactory)
+		public StoreGetByIdCommand(ICachedRepository<Entities.StoreModule.Store> storeRepository, IStoreValidator storeValidator, IMapper mapper, IDtoValidatorFactory dtoValidatorFactory)
 			: base(dtoValidatorFactory, false)
 		{
 			_storeRepository = storeRepository;
